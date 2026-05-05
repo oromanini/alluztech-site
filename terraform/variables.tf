@@ -58,27 +58,7 @@ variable "cloud_run_timeout" {
   default     = 30
 }
 
-# Application Secrets
-variable "groq_api_key" {
-  description = "Groq API Key for LLM integration"
-  type        = string
-  sensitive   = true
-}
+# Note: Application secrets (GROQ_API_KEY, RESEND_API_KEY, CONTACT_EMAIL)
+# are managed by GitHub Actions, which syncs them from GitHub Secrets
+# to GCP Secret Manager on every deploy. No local credentials needed.
 
-variable "resend_api_key" {
-  description = "Resend API Key for sending transactional emails"
-  type        = string
-  sensitive   = true
-}
-
-variable "contact_email" {
-  description = "Email address to receive contact form submissions"
-  type        = string
-  sensitive   = false
-}
-
-variable "groq_model" {
-  description = "Groq model to use"
-  type        = string
-  default     = "llama-3.3-70b-versatile"
-}
