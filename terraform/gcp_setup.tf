@@ -29,6 +29,11 @@ resource "google_project_service" "cloud_build" {
   disable_on_destroy = false
 }
 
+resource "google_project_service" "artifact_registry" {
+  service            = "artifactregistry.googleapis.com"
+  disable_on_destroy = false
+}
+
 # Service Account for GitHub Actions
 resource "google_service_account" "github_actions" {
   account_id   = "github-actions-deployer"
@@ -89,5 +94,17 @@ resource "google_project_iam_member" "cloud_run_secret_accessor" {
   depends_on = [
     google_project_service.secret_manager,
     google_project_service.iam
+  ]
+}
+
+# IAM Role for Cloud Run Service Account (to read container images from Artifact Registry/GCR)
+resource "google_project_iam_member" "cloud_run_artifact_reader" {
+  project = var.gcp_project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${google_service_account.cloud_run.email}"
+  depends_on = [
+    google_project_service.artifact_registry,
+    google_project_service.iam,
+    google_service_account.cloud_run
   ]
 }
