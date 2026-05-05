@@ -76,9 +76,9 @@ resource "google_project_iam_member" "github_service_account_user" {
   depends_on = [google_project_service.iam]
 }
 
-resource "google_project_iam_member" "github_secret_accessor" {
+resource "google_project_iam_member" "github_secret_manager_admin" {
   project = var.gcp_project_id
-  role    = "roles/secretmanager.secretAccessor"
+  role    = "roles/secretmanager.admin"
   member  = "serviceAccount:${google_service_account.github_actions.email}"
   depends_on = [
     google_project_service.secret_manager,
