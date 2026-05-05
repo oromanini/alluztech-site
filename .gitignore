@@ -1,0 +1,18 @@
+# NUNCA commitar
+.env
+.env.*
+*.env
+*.pem
+*.key
+key.json
+
+# Deps
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

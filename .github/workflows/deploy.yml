@@ -1,0 +1,64 @@
+name: Deploy → GCP Cloud Run
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGION:       us-central1
+  SERVICE_NAME: alluz-tech
+  IMAGE:        gcr.io/${{ secrets.GCP_PROJECT_ID }}/alluz-tech
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker --quiet
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t ${{ env.IMAGE }}:${{ github.sha }} \
+            -t ${{ env.IMAGE }}:latest \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
+          docker push ${{ env.IMAGE }}:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image ${{ env.IMAGE }}:${{ github.sha }} \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-secrets="GROQ_API_KEY=GROQ_API_KEY:latest,SMTP_USER=SMTP_USER:latest,SMTP_PASS=SMTP_PASS:latest,SMTP_HOST=SMTP_HOST:latest,SMTP_PORT=SMTP_PORT:latest,CONTACT_EMAIL=CONTACT_EMAIL:latest" \
+            --memory 256Mi \
+            --cpu 1 \
+            --concurrency 80 \
+            --min-instances 0 \
+            --max-instances 3 \
+            --timeout 30
+
+      - name: Print service URL
+        run: |
+          echo "✅ Deploy concluído:"
+          gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --format 'value(status.url)'

@@ -1,0 +1,26 @@
+# Nunca incluir no container
+.env
+.env.*
+*.env
+
+# Dev
+node_modules
+npm-debug.log*
+.npmrc
+
+# Git
+.git
+.gitignore
+.github
+
+# Docs
+README.md
+DEPLOY.md
+*.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI
+.github
