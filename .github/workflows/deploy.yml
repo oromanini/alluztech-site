@@ -48,7 +48,7 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --set-secrets="GROQ_API_KEY=groq-api-key:latest,SMTP_HOST=smtp-host:latest,SMTP_USER=smtp-user:latest,SMTP_PASS=smtp-pass:latest,CONTACT_EMAIL=contact-email:latest" \
+            --set-secrets="GROQ_API_KEY=groq-api-key:latest,RESEND_API_KEY=resend-api-key:latest,CONTACT_EMAIL=contact-email:latest" \
             --memory 256Mi \
             --cpu 1 \
             --concurrency 80 \

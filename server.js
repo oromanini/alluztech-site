@@ -1,16 +1,16 @@
 'use strict';
 
-const express    = require('express');
-const helmet     = require('helmet');
-const rateLimit  = require('express-rate-limit');
-const nodemailer = require('nodemailer');
-const path       = require('path');
+const express   = require('express');
+const helmet    = require('helmet');
+const rateLimit = require('express-rate-limit');
+const { Resend } = require('resend');
+const path      = require('path');
 
 const app  = express();
 const PORT = process.env.PORT || 8080;
 
 // ── VALIDAÇÃO DE AMBIENTE ────────────────────────────────────────────────────
-const REQUIRED_ENV = ['GROQ_API_KEY', 'SMTP_USER', 'SMTP_PASS', 'CONTACT_EMAIL'];
+const REQUIRED_ENV = ['GROQ_API_KEY', 'RESEND_API_KEY', 'CONTACT_EMAIL'];
 const missing = REQUIRED_ENV.filter(k => !process.env[k]);
 if (missing.length) {
   console.error(`[FATAL] Variáveis de ambiente ausentes: ${missing.join(', ')}`);
@@ -19,12 +19,12 @@ if (missing.length) {
 
 const GROQ_API_KEY    = process.env.GROQ_API_KEY;
 const GROQ_MODEL      = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
-const SMTP_HOST       = process.env.SMTP_HOST  || 'smtp.gmail.com';
-const SMTP_PORT       = parseInt(process.env.SMTP_PORT || '587', 10);
-const SMTP_USER       = process.env.SMTP_USER;
-const SMTP_PASS       = process.env.SMTP_PASS;
+const RESEND_API_KEY  = process.env.RESEND_API_KEY;
 const CONTACT_EMAIL   = process.env.CONTACT_EMAIL;
 const ALLOWED_ORIGIN  = process.env.ALLOWED_ORIGIN || '*';
+
+// Inicializar Resend
+const resend = new Resend(RESEND_API_KEY);
 
 // ── SYSTEM PROMPT DA LUZ ────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `Você é a Luz, assistente virtual da Alluz Tech, empresa de inteligência artificial para pequenas e médias empresas brasileiras.
@@ -217,19 +217,11 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host:   SMTP_HOST,
-      port:   SMTP_PORT,
-      secure: SMTP_PORT === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
-
-    await transporter.sendMail({
-      from:    `"Site Alluz Tech" <${SMTP_USER}>`,
+    await resend.emails.send({
+      from:    'Site Alluz Tech <onboarding@resend.dev>',
       to:      CONTACT_EMAIL,
       replyTo: email,
       subject: `Novo contato: ${name}${company ? ` — ${company}` : ''}`,
-      text: `Nome: ${name}\nE-mail: ${email}\nEmpresa: ${company || '—'}\n\n${message}`,
       html: `
         <h2 style="color:#FFAB2E">Novo contato — Alluz Tech</h2>
         <table style="font-family:sans-serif;font-size:14px">

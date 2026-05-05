@@ -27,11 +27,8 @@ Cloud Run Service ← Secret Manager (credenciais)
 ## 📋 Pré-requisitos
 
 - [x] Projeto GCP criado (ID: `728965450469`)
-- [ ] Conta Groq ativa com API Key (grátis em https://console.groq.com)
-- [ ] Credenciais SMTP prontas:
-  - Hostname (ex: `smtp.gmail.com`)
-  - Usuario (ex: `seu@email.com`)
-  - Senha (Gmail: use "Senha de app" em myaccount.google.com → Security)
+- [ ] Conta Groq ativa com API Key (grátis em https://console.groq.com/keys)
+- [ ] Conta Resend ativa com API Key (grátis em https://resend.com/api-keys)
 - [ ] Email para receber contatos (ex: `contato@alluztech.com`)
 - [ ] Terraform >= 1.0 instalado localmente OU usar GCP Cloud Shell
 - [ ] gcloud CLI autenticado (`gcloud auth login`)
@@ -45,43 +42,35 @@ No repositório GitHub, adicionar os segredos sensíveis em:
 
 **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
 
-Adicionar **5 secrets**:
+Adicionar **4 secrets**:
 
 | Nome | Valor |
 |------|-------|
 | `GCP_GROQ_API_KEY` | `gsk_...` (de https://console.groq.com/keys) |
-| `GCP_SMTP_HOST` | `smtp.gmail.com` |
-| `GCP_SMTP_USER` | `seu@email.com` |
-| `GCP_SMTP_PASS` | `xxxx xxxx xxxx xxxx` (Gmail app password) |
+| `GCP_RESEND_API_KEY` | `re_...` (de https://resend.com/api-keys) |
 | `GCP_CONTACT_EMAIL` | `contato@alluztech.com` |
 | `GCP_PROJECT_ID` | `728965450469` |
-| `GCP_SA_KEY` | (adicionaremos depois) |
+| `GCP_SA_KEY` | (adicionaremos depois após `terraform apply`) |
 
 ---
 
 ## ⚡ PASSO 2 — Preparar Variáveis Terraform
 
-Script para copiar dos GitHub Secrets para `terraform.tfvars`:
+Editar `terraform/terraform.tfvars` com suas credenciais:
 
 ```bash
 cd terraform
-
-# Usar variáveis de ambiente (você pode colar do GitHub Secrets)
-cat > terraform.tfvars <<EOF
-gcp_project_id = "728965450469"
-gcp_region     = "us-central1"
-groq_api_key   = "$GCP_GROQ_API_KEY"
-smtp_host      = "$GCP_SMTP_HOST"
-smtp_user      = "$GCP_SMTP_USER"
-smtp_pass      = "$GCP_SMTP_PASS"
-contact_email  = "$GCP_CONTACT_EMAIL"
-EOF
+nano terraform.tfvars
 ```
 
-Ou editar manualmente:
+Preencher com:
 
-```bash
-nano terraform.tfvars
+```hcl
+gcp_project_id = "728965450469"
+gcp_region     = "us-central1"
+groq_api_key   = "gsk_..."        # de https://console.groq.com/keys
+resend_api_key = "re_..."         # de https://resend.com/api-keys
+contact_email  = "seu@email.com"
 ```
 
 ⚠️ **IMPORTANTE**: `terraform.tfvars` nunca é commitado (está no `.gitignore`)

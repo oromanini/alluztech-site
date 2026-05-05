@@ -42,30 +42,10 @@ resource "google_cloud_run_service" "app" {
         }
 
         env {
-          name = "SMTP_HOST"
+          name = "RESEND_API_KEY"
           value_from {
             secret_key_ref {
-              name = google_secret_manager_secret.smtp_host.secret_id
-              key  = "latest"
-            }
-          }
-        }
-
-        env {
-          name = "SMTP_USER"
-          value_from {
-            secret_key_ref {
-              name = google_secret_manager_secret.smtp_user.secret_id
-              key  = "latest"
-            }
-          }
-        }
-
-        env {
-          name = "SMTP_PASS"
-          value_from {
-            secret_key_ref {
-              name = google_secret_manager_secret.smtp_pass.secret_id
+              name = google_secret_manager_secret.resend_api_key.secret_id
               key  = "latest"
             }
           }
@@ -112,9 +92,7 @@ resource "google_cloud_run_service" "app" {
   depends_on = [
     google_project_service.cloud_run,
     google_secret_manager_secret_version.groq_api_key,
-    google_secret_manager_secret_version.smtp_host,
-    google_secret_manager_secret_version.smtp_user,
-    google_secret_manager_secret_version.smtp_pass,
+    google_secret_manager_secret_version.resend_api_key,
     google_secret_manager_secret_version.contact_email,
   ]
 }

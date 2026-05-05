@@ -65,20 +65,8 @@ variable "groq_api_key" {
   sensitive   = true
 }
 
-variable "smtp_host" {
-  description = "SMTP server host"
-  type        = string
-  sensitive   = true
-}
-
-variable "smtp_user" {
-  description = "SMTP username"
-  type        = string
-  sensitive   = true
-}
-
-variable "smtp_pass" {
-  description = "SMTP password"
+variable "resend_api_key" {
+  description = "Resend API Key for sending transactional emails"
   type        = string
   sensitive   = true
 }
