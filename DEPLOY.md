@@ -39,31 +39,56 @@ Cloud Run Service ← Secret Manager (credenciais)
 
 ---
 
-## ⚡ PASSO 1 — Preparar Variáveis Terraform
+## ⚡ PASSO 1 — Adicionar GitHub Secrets
 
-Editar `terraform/terraform.tfvars` com suas credenciais reais:
+No repositório GitHub, adicionar os segredos sensíveis em:
 
-```hcl
+**Settings** → **Secrets and variables** → **Actions** → **New repository secret**
+
+Adicionar **5 secrets**:
+
+| Nome | Valor |
+|------|-------|
+| `GCP_GROQ_API_KEY` | `gsk_...` (de https://console.groq.com/keys) |
+| `GCP_SMTP_HOST` | `smtp.gmail.com` |
+| `GCP_SMTP_USER` | `seu@email.com` |
+| `GCP_SMTP_PASS` | `xxxx xxxx xxxx xxxx` (Gmail app password) |
+| `GCP_CONTACT_EMAIL` | `contato@alluztech.com` |
+| `GCP_PROJECT_ID` | `728965450469` |
+| `GCP_SA_KEY` | (adicionaremos depois) |
+
+---
+
+## ⚡ PASSO 2 — Preparar Variáveis Terraform
+
+Script para copiar dos GitHub Secrets para `terraform.tfvars`:
+
+```bash
+cd terraform
+
+# Usar variáveis de ambiente (você pode colar do GitHub Secrets)
+cat > terraform.tfvars <<EOF
 gcp_project_id = "728965450469"
 gcp_region     = "us-central1"
+groq_api_key   = "$GCP_GROQ_API_KEY"
+smtp_host      = "$GCP_SMTP_HOST"
+smtp_user      = "$GCP_SMTP_USER"
+smtp_pass      = "$GCP_SMTP_PASS"
+contact_email  = "$GCP_CONTACT_EMAIL"
+EOF
+```
 
-# Groq
-groq_api_key = "gsk_XXXXXXXXXXX..."  # de https://console.groq.com/keys
+Ou editar manualmente:
 
-# SMTP
-smtp_host = "smtp.gmail.com"
-smtp_user = "seu@email.com"
-smtp_pass = "xxxx xxxx xxxx xxxx"  # senha de app, não a senha comum
-
-# Email para contatos
-contact_email = "contato@alluztech.com"
+```bash
+nano terraform.tfvars
 ```
 
 ⚠️ **IMPORTANTE**: `terraform.tfvars` nunca é commitado (está no `.gitignore`)
 
 ---
 
-## 🚀 PASSO 2 — Executar Terraform (Cloud Shell do GCP)
+## 🚀 PASSO 3 — Executar Terraform (Cloud Shell do GCP)
 
 Usar terminal do GCP no navegador (é mais fácil):
 
@@ -93,7 +118,7 @@ Salve a saída, especialmente:
 
 ---
 
-## 🔑 PASSO 3 — Gerar Credenciais para GitHub Actions
+## 🔑 PASSO 4 — Gerar Credenciais para GitHub Actions
 
 No **Cloud Shell do GCP** (ou localmente com `gcloud` autenticado):
 
@@ -114,7 +139,7 @@ Copiar todo o conteúdo JSON que aparecer.
 
 ---
 
-## 🐙 PASSO 4 — Adicionar GitHub Secrets
+## 🐙 PASSO 5 — Adicionar GitHub Secrets
 
 No repositório GitHub:
 
@@ -129,7 +154,7 @@ Adicionar dois secrets:
 
 ---
 
-## 📦 PASSO 5 — Primeiro Deploy
+## 📦 PASSO 6 — Primeiro Deploy
 
 Fazer push para main (vai triggar GitHub Actions automaticamente):
 
@@ -153,7 +178,7 @@ O workflow vai:
 
 ---
 
-## ✅ PASSO 6 — Validar Deploy
+## ✅ PASSO 7 — Validar Deploy
 
 Após sucesso no GitHub Actions:
 
