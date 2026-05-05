@@ -1,16 +1,11 @@
 output "service_account_email" {
-  description = "Email of GitHub Actions service account (use for GCP_SA_KEY)"
+  description = "Email of GitHub Actions service account"
   value       = google_service_account.github_actions.email
 }
 
-output "cloud_run_service_url" {
-  description = "URL of the deployed Cloud Run service"
-  value       = google_cloud_run_service.app.status[0].url
-}
-
-output "cloud_run_service_name" {
-  description = "Name of the Cloud Run service"
-  value       = google_cloud_run_service.app.name
+output "cloud_run_service_account_email" {
+  description = "Email of Cloud Run application service account"
+  value       = google_service_account.cloud_run.email
 }
 
 output "gcp_project_id" {
@@ -28,20 +23,20 @@ output "gcr_repository" {
   value       = "gcr.io/${var.gcp_project_id}"
 }
 
-output "github_actions_setup" {
-  description = "Next steps for GitHub Actions setup"
+output "next_steps" {
+  description = "Next steps after terraform apply"
   value       = <<-EOT
-    1. Generate service account key:
+    Infrastructure is ready! Next steps:
+
+    1. Generate GitHub Actions service account key:
        gcloud iam service-accounts keys create sa-key.json \
          --iam-account=${google_service_account.github_actions.email}
 
-    2. Encode key to base64:
-       cat sa-key.json | base64 -w0
-
-    3. Add to GitHub Secrets:
+    2. Add GitHub Secrets:
        - GCP_PROJECT_ID: ${var.gcp_project_id}
-       - GCP_SA_KEY: <base64-encoded-key>
+       - GCP_SA_KEY: (content of sa-key.json)
 
-    4. Push a change to main branch to trigger deployment
+    3. Push to main branch to trigger GitHub Actions deployment.
+       The Cloud Run service will be created automatically on first deploy.
   EOT
 }
