@@ -56,34 +56,25 @@ Adicionar **4 secrets**:
 
 ## ⚡ PASSO 2 — Preparar Variáveis Terraform
 
-Editar `terraform/terraform.tfvars` com suas credenciais:
+⚠️ **SEGURANÇA**: Credenciais sensíveis **nunca vão no arquivo `terraform.tfvars`**.
 
-```bash
-cd terraform
-nano terraform.tfvars
-```
+Vão ser passadas via **variáveis de ambiente** no momento da execução.
 
-Preencher com:
-
-```hcl
-gcp_project_id = "728965450469"
-gcp_region     = "us-central1"
-groq_api_key   = "gsk_..."        # de https://console.groq.com/keys
-resend_api_key = "re_..."         # de https://resend.com/api-keys
-contact_email  = "seu@email.com"
-```
-
-⚠️ **IMPORTANTE**: `terraform.tfvars` nunca é commitado (está no `.gitignore`)
+Você já tem `terraform.tfvars` com valores não-sensíveis pronto. Está seguro commitá-lo.
 
 ---
 
-## 🚀 PASSO 3 — Executar Terraform (Cloud Shell do GCP)
+## ⚡ PASSO 3 — Executar Terraform com Credenciais (Cloud Shell do GCP)
 
-Usar terminal do GCP no navegador (é mais fácil):
+No **Cloud Shell do GCP** (ou localmente), passar as credenciais via variáveis de ambiente:
 
 ```bash
-# Navegue até a pasta do terraform
 cd terraform
+
+# Definir variáveis de ambiente
+export TF_VAR_groq_api_key="gsk_..."        # de https://console.groq.com/keys
+export TF_VAR_resend_api_key="re_..."       # de https://resend.com/api-keys
+export TF_VAR_contact_email="seu@email.com"
 
 # Inicialize o Terraform
 terraform init
@@ -95,15 +86,30 @@ terraform plan
 terraform apply
 ```
 
+Ou tudo de uma vez (sem variáveis persistindo):
+
+```bash
+TF_VAR_groq_api_key="gsk_..." \
+TF_VAR_resend_api_key="re_..." \
+TF_VAR_contact_email="seu@email.com" \
+terraform apply
+```
+
+✅ **Vantagens desta abordagem**:
+- Credenciais nunca são armazenadas em arquivo local
+- Impossível commitar acidentalmente
+- Seguro para CI/CD (GitHub Actions)
+- `terraform.tfvars` é seguro para compartilhar
+
 Terraform vai:
 1. ✅ Ativar APIs necessárias (Cloud Run, GCR, Secret Manager, IAM)
 2. ✅ Criar Service Account `github-actions-deployer`
-3. ✅ Armazenar segredos no GCP Secret Manager
+3. ✅ Armazenar segredos no GCP Secret Manager (com valores passados)
 4. ✅ Preparar Cloud Run (ainda sem imagem Docker)
 
 Salve a saída, especialmente:
 - `service_account_email` → necessário para gerar chave
-- `github_actions_setup` → instruções para próximos passos
+- `cloud_run_service_url` → URL do serviço
 
 ---
 
