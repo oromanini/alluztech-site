@@ -48,7 +48,7 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --set-secrets="GROQ_API_KEY=GROQ_API_KEY:latest,SMTP_USER=SMTP_USER:latest,SMTP_PASS=SMTP_PASS:latest,SMTP_HOST=SMTP_HOST:latest,SMTP_PORT=SMTP_PORT:latest,CONTACT_EMAIL=CONTACT_EMAIL:latest" \
+            --set-secrets="GROQ_API_KEY=groq-api-key:latest,SMTP_HOST=smtp-host:latest,SMTP_USER=smtp-user:latest,SMTP_PASS=smtp-pass:latest,CONTACT_EMAIL=contact-email:latest" \
             --memory 256Mi \
             --cpu 1 \
             --concurrency 80 \
@@ -56,9 +56,16 @@ jobs:
             --max-instances 3 \
             --timeout 30
 
-      - name: Print service URL
+      - name: Get service URL
+        id: url
         run: |
-          echo "✅ Deploy concluído:"
-          gcloud run services describe ${{ env.SERVICE_NAME }} \
+          URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
             --region ${{ env.REGION }} \
-            --format 'value(status.url)'
+            --format 'value(status.url)')
+          echo "service_url=$URL" >> $GITHUB_OUTPUT
+          echo "✅ Deploy concluído: $URL"
+
+      - name: Health check
+        run: |
+          sleep 5
+          curl -f "${{ steps.url.outputs.service_url }}/health" || true
