@@ -69,6 +69,16 @@ resource "google_project_iam_member" "github_storage_admin" {
   ]
 }
 
+resource "google_project_iam_member" "github_artifact_registry_writer" {
+  project = var.gcp_project_id
+  role    = "roles/artifactregistry.writer"
+  member  = "serviceAccount:${google_service_account.github_actions.email}"
+  depends_on = [
+    google_project_service.artifact_registry,
+    google_project_service.iam
+  ]
+}
+
 resource "google_project_iam_member" "github_service_account_user" {
   project    = var.gcp_project_id
   role       = "roles/iam.serviceAccountUser"
