@@ -650,7 +650,7 @@ function handleKey(e) {
 }
 
 // ─── FORM ───
-function submitForm(e) {
+async function submitForm(e) {
   e.preventDefault();
   const btn = e.target.querySelector('.form-submit');
   btn.textContent = 'Enviando...';

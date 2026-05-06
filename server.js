@@ -70,17 +70,18 @@ app.set('trust proxy', 1);
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc:  ["'self'"],
-      scriptSrc:   ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      styleSrc:    ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://fonts.gstatic.com"],
-      fontSrc:     ["'self'", "https://fonts.gstatic.com"],
-      imgSrc:      ["'self'", "data:"],
-      connectSrc:  ["'self'"],
-      objectSrc:   ["'none'"],
+      defaultSrc:     ["'self'"],
+      scriptSrc:      ["'self'", "'unsafe-inline'"],
+      scriptSrcAttr:  ["'unsafe-inline'"],           // permite onclick inline
+      styleSrc:       ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc:        ["'self'", "https://fonts.gstatic.com"],
+      imgSrc:         ["'self'", "data:"],
+      connectSrc:     ["'self'"],
+      objectSrc:      ["'none'"],
       frameAncestors: ["'none'"],
     },
   },
-  crossOriginEmbedderPolicy: false, // compatibilidade com fonts externas
+  crossOriginEmbedderPolicy: false,
 }));
 
 // Remove header que revela stack
