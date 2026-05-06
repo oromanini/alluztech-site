@@ -61,6 +61,11 @@ COMO RESPONDER:
 - Finalize com uma pergunta para engajar
 - Nunca invente informações — se não souber, diga que vai verificar`;
 
+// ── TRUST PROXY (necessário para Cloud Run / load balancers) ────────────────
+// Cloud Run coloca um proxy na frente da aplicação e envia X-Forwarded-For.
+// Sem isso o express-rate-limit não consegue identificar o IP real do cliente.
+app.set('trust proxy', 1);
+
 // ── SEGURANÇA: HELMET (OWASP headers) ───────────────────────────────────────
 app.use(helmet({
   contentSecurityPolicy: {
