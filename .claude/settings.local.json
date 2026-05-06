@@ -10,7 +10,9 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "Bash(terraform apply *)",
-      "Bash(terraform state *)"
+      "Bash(terraform state *)",
+      "Bash(git checkout *)",
+      "Bash(git pull *)"
     ]
   }
 }

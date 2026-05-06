@@ -18,9 +18,9 @@ output "gcp_region" {
   value       = var.gcp_region
 }
 
-output "gcr_repository" {
-  description = "Google Container Registry repository URL"
-  value       = "gcr.io/${var.gcp_project_id}"
+output "docker_repository" {
+  description = "Artifact Registry Docker repository URL"
+  value       = "${var.gcp_region}-docker.pkg.dev/${var.gcp_project_id}/${var.app_name}"
 }
 
 output "next_steps" {

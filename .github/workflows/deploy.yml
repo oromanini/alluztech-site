@@ -7,7 +7,7 @@ on:
 env:
   REGION:       us-central1
   SERVICE_NAME: alluz-tech
-  IMAGE:        gcr.io/${{ secrets.GCP_PROJECT_ID }}/alluz-tech
+  IMAGE:        us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/alluz-tech/alluz-tech
 
 jobs:
   deploy:
@@ -43,8 +43,8 @@ jobs:
             echo -n "${{ secrets.GCP_CONTACT_EMAIL }}" | \
             gcloud secrets create contact-email --data-file=-
 
-      - name: Configure Docker for GCR
-        run: gcloud auth configure-docker --quiet
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       - name: Build Docker image
         run: |
@@ -65,7 +65,7 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --service-account cloud-run-app@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com \
+            --service-account cloud-run-app@728965450469.iam.gserviceaccount.com \
             --set-secrets="GROQ_API_KEY=groq-api-key:latest,RESEND_API_KEY=resend-api-key:latest,CONTACT_EMAIL=contact-email:latest" \
             --memory 256Mi \
             --cpu 1 \
