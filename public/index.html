@@ -195,13 +195,13 @@
 
   <!-- CHATBOT FAB -->
   <button class="chat-fab" onclick="toggleChat()" id="chatFab" aria-label="Abrir chat">
-    <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="white"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" width="24" height="24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   </button>
 
   <!-- CHATBOT WINDOW -->
   <div class="chat-window" id="chatWindow">
     <div class="chat-header">
-      <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="white"/></svg></div>
+      <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" width="18" height="18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
       <div>
         <div class="chat-name">Luz · Alluz Tech</div>
         <div class="chat-status"><div class="chat-dot"></div>Online agora</div>
@@ -455,16 +455,6 @@
                 </div>
               </Reveal>
             </div>
-            <Reveal delay={700}>
-              <div style={{ marginTop: 80, paddingTop: 32, borderTop: '1px solid var(--border)', display: 'flex', flexWrap: 'wrap', gap: 56, justifyContent: 'space-between' }} className="hero-stats">
-                {[['+30','PMEs atendidas'],['8 anos','no mercado'],['LATAM','crossborder'],['Preço fixo','sem surpresas']].map(([n, l]) => (
-                  <div key={l} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <span className="display" style={{ fontSize: 28, color: 'var(--gold)', fontWeight: 700, lineHeight: 1 }}>{n}</span>
-                    <span className="mono" style={{ fontSize: 11, color: 'var(--muted)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{l}</span>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
           </div>
           <style>{`@media(max-width:960px){.hero-grid{grid-template-columns:1fr!important;gap:56px!important}}@media(max-width:600px){.hero-stats{gap:24px!important}}`}</style>
         </section>
@@ -511,114 +501,6 @@
           </div>
           <style>{`@media(max-width:880px){.problem-head{grid-template-columns:1fr!important;gap:24px!important}.problem-grid{grid-template-columns:1fr!important}}`}</style>
         </section>
-      );
-    }
-
-    // ── METHOD ───────────────────────────────────────────────────────
-    function Method() {
-      const sectionRef = useRef(null);
-      const progress = useScrollProgress(sectionRef);
-      const [headRef, headSeen] = useReveal();
-      const pathLen = 2400;
-      const drawn = Math.min(1, Math.max(0, (progress - 0.05) * 1.3));
-
-      const stops = [
-        { n:1, title:'Diagnóstico Estratégico', sub:'Entendemos sua dor real — não vendemos solução genérica.', copy:'Na primeira reunião, você conversa com alguém que entende negócio — não só código. Identificamos a tarefa que mais desperdiça tempo da sua equipe.', details:['Análise do fluxo de trabalho atual','Identificação da principal dor e desperdício','Discussão de escala gradual e expansão futura','Estimativa inicial de viabilidade técnica'], badges:[{t:'90 minutos'},{t:'Grátis'},{t:'Online · qualquer fuso'}], side:'left' },
-        { n:2, title:'Proposta · Orçamento Fixo', sub:'Você vê exatamente o que será entregue. Antes de assinar.', copy:'Apresentamos um fluxograma completo da solução. As ferramentas. Um cronograma realista. O orçamento concreto. Nenhuma surpresa depois.', details:['Fluxograma ponta-a-ponta da automação','Stack técnico especificado','Horas de desenvolvimento estimadas','Preço FIXO — zero surpresas depois','NDA assinado — confidencialidade garantida'], badges:[{t:'5–7 dias úteis'},{t:'Incluído na proposta'},{t:'Documento + apresentação'}], side:'right', highlight:true },
-        { n:3, title:'Implementação · Responsabilidade', sub:'Nós executamos. Você vê cada passo. Cada decisão.', copy:'Entramos no seu sistema, criamos os fluxos, testamos em profundidade. Você recebe relatórios de progresso toda semana. Nada é black-box.', details:['Sprints semanais de desenvolvimento','Documentação completa e legível','Treinamento hands-on da sua equipe','Suporte pós-go-live (30 dias inclusos)','Você é revisor, não passivo'], badges:[{t:'2–4 semanas'},{t:'ROI no 1º mês'},{t:'Garantido'}], side:'left' },
-      ];
-
-      return (
-        <section id="metodo" ref={sectionRef} style={{ position: 'relative', padding: '140px 0 160px', borderTop: '1px solid var(--border)', background: 'var(--void)', overflow: 'hidden' }}>
-          <div aria-hidden style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', width: 900, height: 600, pointerEvents: 'none', background: 'radial-gradient(ellipse at top, rgba(255,171,46,0.08), transparent 60%)', animation: 'breathe 14s ease-in-out infinite' }} />
-          <div className="container" style={{ position: 'relative' }}>
-            <div ref={headRef} className={`reveal ${headSeen?'in':''}`} style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 24px' }}>
-              <span className="eyebrow" style={{ justifyContent: 'center' }}>02 · Nosso Método</span>
-              <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(40px, 5vw, 64px)', color: 'var(--text)', letterSpacing: '-0.035em', fontWeight: 700 }}>
-                Sua jornada da dor ao{' '}<span style={{ color: 'var(--gold)' }}>resultado.</span>
-              </h2>
-              <p style={{ marginTop: 22, fontSize: 17, color: 'var(--text-muted)', lineHeight: 1.6 }}>Três paradas. Você entende cada passo, cada tecnologia, cada custo antes de começar. Nada é caixa preta.</p>
-            </div>
-            <Reveal delay={250}>
-              <div style={{ textAlign: 'center', margin: '24px auto 80px', display: 'inline-flex', gap: 0, alignItems: 'center', padding: '6px', background: 'rgba(255,171,46,0.05)', border: '1px solid var(--border)', borderRadius: 99, position: 'relative', left: '50%', transform: 'translateX(-50%)' }}>
-                {['Diagnóstico','Proposta','Execução'].map((l, i) => (
-                  <a key={l} href={`#stop-${i+1}`} style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-muted)', padding: '8px 18px', borderRadius: 99, transition: 'all .2s' }}
-                    onMouseEnter={e=>{e.currentTarget.style.background='rgba(255,171,46,0.10)';e.currentTarget.style.color='var(--gold)'}}
-                    onMouseLeave={e=>{e.currentTarget.style.background='';e.currentTarget.style.color='var(--text-muted)'}}>0{i+1} · {l}</a>
-                ))}
-              </div>
-            </Reveal>
-            <div style={{ position: 'relative', maxWidth: 1100, margin: '0 auto' }}>
-              <svg aria-hidden viewBox="0 0 1100 1500" preserveAspectRatio="none" className="journey-svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
-                <defs>
-                  <linearGradient id="routeGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.7"/>
-                    <stop offset="50%" stopColor="var(--gold-light)" stopOpacity="0.85"/>
-                    <stop offset="100%" stopColor="var(--gold)" stopOpacity="0.7"/>
-                  </linearGradient>
-                  <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                </defs>
-                <path d="M 550 60 Q 240 150, 320 360 Q 410 560, 760 600 Q 990 650, 800 880 Q 600 1100, 320 1170 Q 200 1230, 550 1430"
-                  stroke="url(#routeGrad)" strokeWidth="2.2" fill="none" filter="url(#glow)"
-                  style={{ strokeDasharray: `${pathLen}, ${pathLen}`, strokeDashoffset: pathLen * (1 - drawn), transition: 'stroke-dashoffset .25s linear' }}/>
-              </svg>
-              <div style={{ position: 'relative', textAlign: 'center', paddingTop: 30, paddingBottom: 60 }}>
-                <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 16, height: 16, borderRadius: '50%', background: 'var(--gold)', animation: 'pin-pulse 2s ease-in-out infinite' }} />
-                  <span className="mono" style={{ fontSize: 11, letterSpacing: 0.18, color: 'var(--gold)', textTransform: 'uppercase', fontWeight: 500 }}>Início · sua dor atual</span>
-                </div>
-              </div>
-              <div className="journey-stops" style={{ position: 'relative', display: 'block' }}>
-                {stops.map((s, i) => <JourneyStop key={s.n} stop={s} index={i} />)}
-              </div>
-              <div style={{ position: 'relative', textAlign: 'center', paddingTop: 32 }}>
-                <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 16px 40px rgba(255,171,46,0.35)', color: '#1A0F00', animation: 'pin-pulse 2.5s ease-in-out infinite' }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h12l-3 5 3 5H6"/></svg>
-                  </div>
-                  <span className="mono" style={{ fontSize: 11, letterSpacing: 0.18, color: 'var(--gold)', textTransform: 'uppercase', fontWeight: 500 }}>Destino · ROI no 1º mês</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <style>{`@media(max-width:880px){.journey-svg{display:none}.journey-stop{justify-content:flex-start!important}.journey-stop-inner{width:100%!important;padding-left:50px!important}.journey-pin{left:-10px!important;right:auto!important;top:-10px!important}}`}</style>
-        </section>
-      );
-    }
-
-    function JourneyStop({ stop, index }) {
-      const [ref, seen] = useReveal({ threshold: 0.25 });
-      const counter = useCounter(stop.n, { duration: 900, run: seen });
-      const isLeft = stop.side === 'left';
-      return (
-        <div ref={ref} id={`stop-${stop.n}`} className="journey-stop" style={{ display: 'flex', justifyContent: isLeft ? 'flex-start' : 'flex-end', marginBottom: index < 2 ? 100 : 60, position: 'relative', opacity: seen ? 1 : 0, transform: seen ? 'translateY(0)' : 'translateY(40px)', transition: 'opacity .9s var(--ease-out), transform .9s var(--ease-out)' }}>
-          <div className="journey-stop-inner" style={{ width: '54%', position: 'relative' }}>
-            <div aria-hidden className="journey-pin" style={{ position: 'absolute', top: 30, [isLeft?'right':'left']: -34, width: 68, height: 68, borderRadius: '50%', background: 'var(--void)', border: '2px solid var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', zIndex: 3, animation: seen ? `pin-pulse 3s ${index*0.4}s ease-in-out infinite` : 'none' }}>
-              {stop.n === 1 ? <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
-              : stop.n === 2 ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-              : <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 L4 14 H11 L9 22 L20 9 H13 Z"/></svg>}
-            </div>
-            <div style={{ background: stop.highlight ? 'linear-gradient(180deg, var(--carbon-2) 0%, var(--carbon) 100%)' : 'var(--carbon)', border: `${stop.highlight?1.5:1}px solid ${stop.highlight?'var(--border-strong)':'var(--border)'}`, borderRadius: 20, padding: 36, boxShadow: stop.highlight ? '0 30px 70px rgba(255,171,46,0.18)' : '0 18px 50px rgba(0,0,0,0.4)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <span className="display" style={{ fontSize: 64, color: 'var(--gold)', fontWeight: 700, lineHeight: 0.9, letterSpacing: '-0.05em' }}>{String(Math.round(counter)).padStart(2,'0')}</span>
-                {stop.highlight && <span className="tag" style={{ background: 'linear-gradient(135deg, var(--gold), var(--gold-deep))', color: '#1A0F00', border: 'none', fontWeight: 600 }}>★ DIFERENCIADOR</span>}
-              </div>
-              <h3 className="display" style={{ fontSize: 30, color: 'var(--text)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.025em', marginTop: 4, marginBottom: 14 }}>{stop.title}</h3>
-              <p className="display" style={{ fontSize: 17, color: 'var(--gold)', fontWeight: 500, lineHeight: 1.4, marginBottom: 18 }}>{stop.sub}</p>
-              <p style={{ fontSize: 15, color: 'var(--text-muted)', lineHeight: 1.65, marginBottom: 22 }}>{stop.copy}</p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9, paddingTop: 18, borderTop: '1px dashed var(--border)' }}>
-                {stop.details.map(d => (
-                  <li key={d} style={{ fontSize: 14, color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'flex-start', lineHeight: 1.55 }}>
-                    <span style={{ color: 'var(--gold)', flexShrink: 0 }}>✓</span>{d}
-                  </li>
-                ))}
-              </ul>
-              <div style={{ marginTop: 22, paddingTop: 20, borderTop: '1px solid var(--border)', display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-                {stop.badges.map((b, j) => <span key={j} className="tag" style={{ background: 'rgba(255,171,46,0.10)' }}>{b.t}</span>)}
-              </div>
-            </div>
-          </div>
-        </div>
       );
     }
 
@@ -686,7 +568,7 @@
     // ── DIFFERENTIATORS ──────────────────────────────────────────────
     function Diff() {
       const pillars = [
-        { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>, t:'8 anos. LATAM. Global.', c:'Quando você quer rigor de grandes empresas com sensibilidade de startup — é a gente. Projetos LATAM e transnacionais com qualidade enterprise.', b:['8 anos','LATAM','Crossborder'] },
+        { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>, t:'Expertise Global', c:'Quando você quer rigor de grandes empresas com sensibilidade de startup — é a gente. Projetos em múltiplas regiões com qualidade enterprise.', b:['Comprovada','Escalável','Enterprise'] },
         { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2 L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>, t:'Você sabe o preço antes de começar.', c:'Preço fixo. Nenhuma surpresa. NDA assinado. Confidencialidade garantida. Relatórios semanais de progresso.', b:['Zero surpresas','Confidencial','Relatórios semanais'] },
         { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.5 5.5l4 4M14.5 14.5l4 4M5.5 18.5l4-4M14.5 9.5l4-4"/></svg>, t:'Usamos o melhor. Você entende.', c:'Claude, GPT-4, Devin, n8n. Tecnologia de ponta — traduzida em benefícios reais. Você não precisa entender ML para economizar 10h/semana.', b:['Techniquês = Resultados'] },
       ];
@@ -819,14 +701,14 @@
     // ── FAQ ──────────────────────────────────────────────────────────
     function FAQ() {
       const qs = [
-        ['Qual é o investimento mínimo?','Projetos pequenos (uma automação simples) começam em torno de R$8k–15k. Fazemos diagnóstico grátis, então você sabe o preço concreto antes de qualquer compromisso.'],
+        ['Qual é o investimento mínimo?','Depende da reunião de diagnóstico. Não conseguimos aplicar um valor mínimo sem entender exatamente o que a sua empresa precisa. Agendamos uma conversa grátis, e você sabe o preço concreto antes de qualquer compromisso.'],
         ['Quanto tempo leva para implementar?','A maioria dos projetos de uma automação simples: 2–4 semanas. Podemos começar rápido e adicionar funcionalidades semana a semana.'],
         ['E se a solução não der certo?','Nós nos responsabilizamos. Testamos em profundidade, você revisa em sandbox, oferecemos 30 dias de suporte pós-implementação. Se algo não funcionar, corrigimos.'],
         ['Preciso entender de programação?','Não. Zero. Você entende seu negócio, a gente entende tecnologia. Nós traduzimos uma para a outra. Treinamento hands-on e suporte inclusos.'],
         ['Como vocês garantem meus dados seguros?','NDA assinado. Infraestrutura em nível enterprise. Criptografia end-to-end. Seus dados não saem do seu domínio sem autorização explícita.'],
         ['Posso cancelar no meio do projeto?','Sim. Sem penalidade. Você paga apenas pelas horas já trabalhadas. Entregamos a documentação completa.'],
-        ['Qual a diferença vs agências normais de automação?','Agências tradicionais fazem automação. A Alluz faz IA + automação + orquestração. Além disso: preço fixo, transparência total, expertise LATAM comprovada.'],
-        ['Vocês oferecem suporte contínuo?','Sim. 30 dias inclusos no projeto. Depois oferecemos pacotes de suporte mensal (monitoramento, ajustes, melhorias).'],
+        ['Qual a diferença vs agências normais de automação?','Agências tradicionais fazem automação. A Alluz faz IA + automação + orquestração. Além disso: preço justo, transparência total, expertise global comprovada.'],
+        ['Vocês oferecem suporte contínuo?','Sim. 90 dias de monitoramento contínuo. 30 dias para ajustes e melhorias. Depois, a mensalidade é obrigatória (inclui ferramentas + uso do produto).'],
       ];
       const [openIdx, setOpenIdx] = useState(0);
       return (
@@ -959,9 +841,9 @@
                 <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 18, lineHeight: 1.6 }}>Implementamos IA e automação para PMEs.<br/>Diagnóstico grátis, preço fixo, suporte garantido.</p>
               </div>
               {[
-                { t:'Navegação', items:[['Método','#metodo'],['Cases','#cases'],['FAQ','#faq'],['Contato','#contato']] },
-                { t:'Contato', items:[['contato@alluztech.com','mailto:contato@alluztech.com'],['LinkedIn','#']] },
-                { t:'Legal', items:[['Privacidade','#'],['Termos','#'],['© 2025 Alluz Tech','#']] },
+                { t:'Navegação', items:[['FAQ','#faq'],['Contato','#contato']] },
+                { t:'Contato', items:[['contato@alluz.tech','mailto:contato@alluz.tech']] },
+                { t:'Legal', items:[['Privacidade','#'],['Termos','#'],['© 2026 Alluz Tech','#']] },
               ].map(col => (
                 <div key={col.t}>
                   <div className="mono" style={{ fontSize: 11, letterSpacing: 0.18, textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 16 }}>{col.t}</div>
@@ -996,7 +878,6 @@
           <main>
             <Hero />
             <Problem />
-            <Method />
             <Cases />
             <Diff />
             <Tech />
