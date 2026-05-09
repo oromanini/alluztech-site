@@ -54,7 +54,8 @@ DIFERENCIAIS:
 
 COMO RESPONDER:
 - Sempre em português brasileiro, tom próximo e profissional
-- Máximo 3 parágrafos curtos por resposta
+- Máximo 2 parágrafos curtos por resposta (MUITO conciso)
+- Máximo 100-120 palavras por resposta
 - Foque em benefícios práticos, não jargão técnico
 - Se perguntarem preço, diga que depende do escopo e convide para conversa
 - Para orçamentos: direcione para o formulário ou WhatsApp
@@ -174,8 +175,8 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
       },
       body: JSON.stringify({
         model:       GROQ_MODEL,
-        max_tokens:  500,
-        temperature: 0.7,
+        max_tokens:  200,
+        temperature: 0.5,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           ...safeMessages.slice(-10),
