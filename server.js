@@ -71,12 +71,12 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:     ["'self'"],
-      scriptSrc:      ["'self'", "'unsafe-inline'"],
+      scriptSrc:      ["'self'", "'unsafe-inline'", "https://unpkg.com"],
       scriptSrcAttr:  ["'unsafe-inline'"],           // permite onclick inline
       styleSrc:       ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc:        ["'self'", "https://fonts.gstatic.com"],
+      fontSrc:        ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com"],
       imgSrc:         ["'self'", "data:"],
-      connectSrc:     ["'self'"],
+      connectSrc:     ["'self'", "https://api.groq.com", "https://unpkg.com"],
       objectSrc:      ["'none'"],
       frameAncestors: ["'none'"],
     },
