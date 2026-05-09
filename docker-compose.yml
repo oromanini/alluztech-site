@@ -1,5 +1,6 @@
 services:
-  alluz-tech:
+  # API Backend (Express)
+  api:
     build: .
     ports:
       - "8080:8080"
@@ -15,3 +16,19 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+
+  # Vite Dev Server (React + Tailwind)
+  vite:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules  # cache node_modules
+    command: npm run dev
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
