@@ -383,6 +383,14 @@
     // ── HERO ─────────────────────────────────────────────────────────
     function Hero() {
       const y = useScrollY();
+      const splineRef = useRef(null);
+      useEffect(() => {
+        if (splineRef.current && !splineRef.current.querySelector('spline-viewer')) {
+          const viewer = document.createElement('spline-viewer');
+          viewer.setAttribute('url', 'https://prod.spline.design/bY9h-K6EzWwSQeFq/scene.splinecode');
+          splineRef.current.appendChild(viewer);
+        }
+      }, []);
       return (
         <section id="top" style={{ position: 'relative', minHeight: '100vh', paddingTop: 120, paddingBottom: 100, overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
           <div aria-hidden style={{ position: 'absolute', top: -120, right: -160, width: 720, height: 720, pointerEvents: 'none', background: 'radial-gradient(circle, rgba(255,171,46,0.18), rgba(255,171,46,0.04) 35%, transparent 65%)', filter: 'blur(20px)', animation: 'breathe 9s ease-in-out infinite', transform: `translateY(${y * 0.18}px)` }} />
@@ -433,8 +441,7 @@
                 </Reveal>
               </div>
               <Reveal delay={400}>
-                <div style={{ border: '1px solid var(--border)', borderRadius: 22, overflow: 'hidden', boxShadow: '0 30px 80px rgba(0,0,0,0.4)', height: 500, position: 'relative' }}>
-                  <spline-viewer url="https://prod.spline.design/bY9h-K6EzWwSQeFq/scene.splinecode"></spline-viewer>
+                <div ref={splineRef} style={{ border: '1px solid var(--border)', borderRadius: 22, overflow: 'hidden', boxShadow: '0 30px 80px rgba(0,0,0,0.4)', height: 500, position: 'relative' }}>
                 </div>
               </Reveal>
             </div>
