@@ -237,6 +237,7 @@
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.92/build/spline-viewer.js"></script>
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
@@ -335,7 +336,7 @@
         window.addEventListener('scroll', on, { passive: true });
         return () => window.removeEventListener('scroll', on);
       }, []);
-      const links = [['Método','#metodo'],['Cases','#cases'],['Tecnologias','#tech'],['Sobre','#sobre'],['FAQ','#faq']];
+      const links = [['Método','#metodo'],['Cases','#cases'],['3D','#3d'],['Tecnologias','#tech'],['Sobre','#sobre'],['FAQ','#faq']];
       return (
         <header style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
@@ -562,6 +563,38 @@
             <div className="mono" style={{ fontSize: 11, color: 'var(--muted)', marginTop: 8 }}>— {author}</div>
           </div>
         </div>
+      );
+    }
+
+    // ── SPLINE 3D ────────────────────────────────────────────────────────
+    function Spline3D() {
+      return (
+        <section id="3d" style={{ padding: '140px 0', borderTop: '1px solid var(--border)', background: 'var(--carbon)', position: 'relative', overflow: 'hidden' }}>
+          <div aria-hidden style={{ position: 'absolute', top: -80, right: -100, width: 520, height: 520, background: 'radial-gradient(circle, rgba(255,171,46,0.12), transparent 65%)', pointerEvents: 'none' }} />
+          <div className="container">
+            <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 56px' }}>
+              <Reveal><span className="eyebrow" style={{ justifyContent: 'center' }}>02 · Visualização</span>
+                <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(36px, 4.4vw, 56px)', color: 'var(--text)' }}>Veja a IA em <span style={{ color: 'var(--gold)' }}>ação.</span></h2>
+              </Reveal>
+              <Reveal delay={150}><p style={{ marginTop: 22, fontSize: 17, color: 'var(--text-muted)', lineHeight: 1.6 }}>Modelo 3D interativo que representa como a inteligência flui através de seus processos. Clique, arraste, explore.</p></Reveal>
+            </div>
+            <Reveal delay={200}>
+              <div style={{ borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)', boxShadow: '0 40px 80px rgba(0,0,0,0.5)', background: 'var(--void)', height: '600px', position: 'relative' }}>
+                <spline-viewer url="https://prod.spline.design/bY9h-K6EzWwSQeFq/scene.splinecode" style={{ width: '100%', height: '100%' }}></spline-viewer>
+                <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(circle at center, transparent 30%, rgba(12,11,9,0.2) 100%)' }} />
+              </div>
+            </Reveal>
+            <Reveal delay={350}>
+              <div style={{ textAlign: 'center', marginTop: 32 }}>
+                <p style={{ fontSize: 14, color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2"><path d="M9 3v6h6V3M9 15v6h6v-6M3 9h6V3M3 21h6v-6M15 3v6h6V3M15 15v6h6v-6"/></svg>
+                  Interativo • Rotação 3D • Zoom em detalhes • Prototipagem visual
+                </p>
+              </div>
+            </Reveal>
+          </div>
+          <style>{`@media(max-width:880px){}`}</style>
+        </section>
       );
     }
 
@@ -879,6 +912,7 @@
             <Hero />
             <Problem />
             <Cases />
+            <Spline3D />
             <Diff />
             <Tech />
             <About />
