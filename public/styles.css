@@ -159,7 +159,7 @@ img, svg { display: block; max-width: 100%; }
   position: relative; z-index: 2;
   width: 100%; max-width: var(--max-w); margin: 0 auto;
   padding: 0 var(--pad-x);
-  padding-top: 12vh;
+  padding-top: 8vh;
 }
 .hero-eyebrow {
   display: inline-flex; gap: 10px; align-items: center;
@@ -176,10 +176,10 @@ img, svg { display: block; max-width: 100%; }
   animation: pulse 2.4s ease-in-out infinite;
 }
 .hero h1 {
-  font-size: clamp(48px, 9vw, 132px);
-  font-weight: 200; letter-spacing: -0.04em; line-height: 0.95;
-  margin-bottom: 32px; text-wrap: balance;
-  padding-bottom: 0.08em; /* keep descenders (g, q, p) from clipping */
+  font-size: clamp(40px, 6.2vw, 88px);
+  font-weight: 200; letter-spacing: -0.035em; line-height: 1;
+  margin-bottom: 28px; text-wrap: balance;
+  padding-bottom: 0.18em; /* keep descenders (g, q, p) from clipping */
 }
 .hero h1 strong {
   font-weight: 700;
@@ -187,14 +187,14 @@ img, svg { display: block; max-width: 100%; }
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
-  padding-bottom: 0.12em; /* descenders inside the gradient need extra room */
-  margin-bottom: -0.12em;
+  padding-bottom: 0.22em; /* descenders inside the gradient need extra room */
+  margin-bottom: -0.22em;
 }
 .hero-sub {
   font-size: clamp(15px, 1.4vw, 19px);
   line-height: 1.5; color: rgba(245, 249, 255, 0.65);
   max-width: 560px; font-weight: 300;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 .hero-ctas {
   display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
@@ -244,10 +244,10 @@ img, svg { display: block; max-width: 100%; }
 .btn:hover .arr { width: 24px; }
 
 .hero-metrics {
-  margin-top: 80px;
+  margin-top: 56px;
   display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 32px; max-width: 720px;
-  padding-top: 32px;
+  gap: 28px; max-width: 720px;
+  padding-top: 28px;
   border-top: 1px solid var(--line-s);
 }
 .metric-num {
