@@ -1,988 +1,434 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alluz Tech — A IA que trabalha enquanto você lidera</title>
-  <meta name="description" content="Implementamos IA e automação para PMEs. Diagnóstico grátis, preço fixo, suporte garantido.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
-  <link rel="icon" type="image/png" href="assets/alluz-logo.png">
-  <style>
-    :root {
-      --void: #0C0B09;
-      --carbon: #161310;
-      --carbon-2: #1F1B14;
-      --surface: #2A2519;
-      --gold: #FFAB2E;
-      --gold-light: #FFD080;
-      --gold-deep: #D4891A;
-      --gold-pale: #FFF3D6;
-      --text: #F5EED8;
-      --text-muted: #C0B490;
-      --muted: #7A7060;
-      --border: rgba(255,171,46,0.12);
-      --border-strong: rgba(255,171,46,0.30);
-      --ff-display: 'Outfit', system-ui, sans-serif;
-      --ff-body: 'Outfit', system-ui, sans-serif;
-      --ff-mono: 'JetBrains Mono', ui-monospace, monospace;
-      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; padding: 0;
-      background: var(--void); color: var(--text);
-      font-family: var(--ff-body);
-      -webkit-font-smoothing: antialiased;
-      letter-spacing: -0.005em;
-      overflow-x: hidden;
-    }
-    h1, h2, h3, h4, p { margin: 0; }
-    button { font-family: inherit; cursor: pointer; }
-    a { color: inherit; text-decoration: none; }
-    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 32px; }
-    @media (max-width: 768px) { .container { padding: 0 20px; } }
-    .eyebrow {
-      font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--gold);
-      display: inline-flex; gap: 10px; align-items: center; font-weight: 500;
-    }
-    .eyebrow::before { content: ''; width: 24px; height: 1px; background: currentColor; opacity: 0.5; }
-    .display { font-family: var(--ff-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
-    .mono { font-family: var(--ff-mono); }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--ff-display); font-weight: 700; font-size: 14px; letter-spacing: 0.005em;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
-      color: #1A0F00; padding: 14px 26px; border-radius: 10px; border: 0; outline: none;
-      box-shadow: 0 8px 22px rgba(255,171,46,0.25), inset 0 1px 0 rgba(255,255,255,0.18);
-      transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), filter .25s var(--ease-out);
-      cursor: pointer;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 14px 32px rgba(255,171,46,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
-      filter: brightness(1.05);
-    }
-    .btn-primary:active { transform: translateY(0) scale(1); }
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--ff-display); font-weight: 600; font-size: 14px;
-      background: transparent; color: var(--gold); padding: 13px 25px; border-radius: 10px;
-      border: 1.5px solid rgba(255,171,46,0.40);
-      transition: all .25s var(--ease-out); cursor: pointer;
-    }
-    .btn-outline:hover { background: rgba(255,171,46,0.06); border-color: var(--gold); transform: translateY(-2px); }
-    .tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--ff-mono); font-size: 11px; font-weight: 500;
-      letter-spacing: 0.04em; color: var(--gold);
-      background: rgba(255,171,46,0.08); border: 1px solid var(--border);
-      border-radius: 99px; padding: 5px 11px; white-space: nowrap;
-    }
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-    ::selection { background: var(--gold); color: #1A0F00; }
-    ::-webkit-scrollbar { width: 12px; }
-    ::-webkit-scrollbar-track { background: var(--void); }
-    ::-webkit-scrollbar-thumb { background: rgba(255,171,46,0.25); border-radius: 99px; border: 3px solid var(--void); }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255,171,46,0.5); }
-    @keyframes breathe {
-      0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 0.9; transform: scale(1.08); }
-    }
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,171,46,0.45), 0 0 30px rgba(255,171,46,0.45); }
-      50% { box-shadow: 0 0 0 18px rgba(255,171,46,0.0), 0 0 60px rgba(255,171,46,0.65); }
-    }
-    @keyframes pin-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,171,46,0.35), 0 0 24px rgba(255,171,46,0.25); }
-      50% { box-shadow: 0 0 0 14px rgba(255,171,46,0), 0 0 36px rgba(255,171,46,0.4); }
-    }
-    @keyframes sparkle {
-      0%, 100% { opacity: 0.4; transform: scale(0.95); }
-      50% { opacity: 1; transform: scale(1.1); }
-    }
-    @keyframes draw { to { stroke-dashoffset: 0; } }
-    @keyframes typing { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-    /* ── CHATBOT ── */
-    .chat-fab {
-      position: fixed; bottom: 28px; right: 28px; z-index: 200;
-      width: 56px; height: 56px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
-      border-radius: 50%; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 24px rgba(255,171,46,0.3);
-      transition: transform .2s;
-    }
-    .chat-fab:hover { transform: scale(1.08); }
-    .chat-window {
-      position: fixed; bottom: 96px; right: 28px; z-index: 200;
-      width: 380px; max-height: 560px;
-      background: var(--carbon-2); border: 1px solid var(--border);
-      border-radius: 20px; display: flex; flex-direction: column;
-      box-shadow: 0 24px 64px rgba(0,0,0,.6);
-      transform: scale(0.95) translateY(10px); opacity: 0; pointer-events: none;
-      transition: all .25s cubic-bezier(.34,1.56,.64,1);
-    }
-    .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-    .chat-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-    .chat-avatar { width: 36px; height: 36px; background: linear-gradient(135deg,var(--gold),var(--gold-deep)); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .chat-name { font-size: 14px; font-weight: 600; color: var(--text); }
-    .chat-status { font-size: 11px; color: #1ED278; display: flex; align-items: center; gap: 5px; }
-    .chat-dot { width: 6px; height: 6px; border-radius: 50%; background: #1ED278; animation: pulse 2s infinite; }
-    .chat-close { margin-left: auto; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 4px; }
-    .chat-close:hover { color: var(--text); }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 200px; max-height: 340px; }
-    .chat-messages::-webkit-scrollbar { width: 4px; }
-    .chat-messages::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 2px; }
-    .msg { max-width: 85%; display: flex; flex-direction: column; gap: 4px; }
-    .msg-bot { align-self: flex-start; }
-    .msg-user { align-self: flex-end; }
-    .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
-    .msg-bot .msg-bubble { background: var(--carbon); color: var(--text); border-radius: 4px 12px 12px 12px; }
-    .msg-user .msg-bubble { background: linear-gradient(135deg,var(--gold),var(--gold-deep)); color: #1A0F00; font-weight: 500; border-radius: 12px 4px 12px 12px; }
-    .msg-time { font-size: 10px; color: var(--muted); padding: 0 4px; }
-    .typing { display: flex; gap: 5px; padding: 12px 14px; background: var(--carbon); border-radius: 4px 12px 12px 12px; width: fit-content; }
-    .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: typing .8s ease-in-out infinite; }
-    .typing span:nth-child(2) { animation-delay: .15s; }
-    .typing span:nth-child(3) { animation-delay: .3s; }
-    .chat-input-row { padding: 14px; border-top: 1px solid var(--border); display: flex; gap: 10px; flex-shrink: 0; }
-    .chat-input { flex: 1; background: var(--void); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: var(--ff-body); font-size: 13px; color: var(--text); outline: none; resize: none; }
-    .chat-input:focus { border-color: rgba(255,171,46,0.4); }
-    .chat-input::placeholder { color: var(--muted); }
-    .chat-send { background: linear-gradient(135deg,var(--gold),var(--gold-deep)); border: none; border-radius: 8px; width: 38px; height: 38px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity .2s; }
-    .chat-send:hover { opacity: .9; }
-    .chat-suggestions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 14px 10px; }
-    .suggestion { background: rgba(255,171,46,0.08); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 11px; color: var(--gold); font-weight: 600; cursor: pointer; transition: background .2s; white-space: nowrap; }
-    .suggestion:hover { background: rgba(255,171,46,0.15); }
-
-    /* ── COOKIE ── */
-    .cookie { position: fixed; bottom: 0; left: 0; right: 0; z-index: 300; background: var(--carbon-2); border-top: 1px solid var(--border); padding: 16px 48px; display: flex; align-items: center; gap: 20px; transform: translateY(100%); transition: transform .4s ease; box-shadow: 0 -8px 32px rgba(0,0,0,.4); }
-    .cookie.show { transform: translateY(0); }
-    .cookie-text { flex: 1; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-    .cookie-text a { color: var(--gold); }
-    .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
-    .cookie-accept { background: linear-gradient(135deg,var(--gold),var(--gold-deep)); color: #1A0F00; border: none; padding: 9px 18px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
-    .cookie-minimal { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 9px 18px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .cookie-minimal:hover { border-color: var(--muted); }
-
-    /* ── CONTACT FORM ── */
-    .contact-form { display: flex; flex-direction: column; gap: 12px; }
-    .contact-form input, .contact-form textarea {
-      background: var(--void); border: 1px solid var(--border); border-radius: 8px;
-      padding: 12px 16px; font-family: var(--ff-body); font-size: 14px;
-      color: var(--text); outline: none; width: 100%;
-    }
-    .contact-form input:focus, .contact-form textarea:focus { border-color: rgba(255,171,46,0.4); }
-    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
-    .contact-form textarea { resize: vertical; min-height: 90px; }
-    #formSuccess { display: none; color: var(--gold); font-size: 14px; text-align: center; padding: 12px; }
-
-    @media (max-width: 880px) {
-      .chat-window { width: calc(100vw - 32px); right: 16px; bottom: 80px; }
-      .cookie { flex-direction: column; align-items: flex-start; padding: 16px 24px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alluz Tech · Inteligência que devolve tempo, foco e margem</title>
+<meta name="description" content="Soluções de IA e automação para pequenos e médios empresários. Método DRI: Diagnóstico, Réplica de Comportamento, Implementação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="assets/alluz-logo.png">
 </head>
 <body>
-  <div id="root"></div>
 
-  <!-- CHATBOT FAB -->
-  <button class="chat-fab" onclick="toggleChat()" id="chatFab" aria-label="Abrir chat">
-    <svg viewBox="0 0 24 24" fill="none" width="24" height="24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  </button>
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav">
+  <a href="#top" class="logo nav-logo" style="font-size:30px">
+    <span class="logo-top"><span class="logo-alluz">Alluz</span><span class="logo-node"></span></span>
+    <span class="logo-bottom"><span class="logo-bar"></span><span class="logo-tech">Tech</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#problema">Problema</a>
+    <a href="#engrenagens">Tecnologia</a>
+    <a href="#dri">Método DRI</a>
+    <a href="#chat">Alluz IA</a>
+    <a href="#contato" class="nav-cta">Diagnóstico grátis</a>
+  </div>
+</nav>
 
-  <!-- CHATBOT WINDOW -->
-  <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-      <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" width="18" height="18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero" id="top">
+  <canvas id="hero-canvas" class="hero-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow reveal">IA · Automação · Engenharia</span>
+    <h1 class="reveal reveal-d1">
+      Inteligência<br>que devolve <strong>tempo, foco<br>e margem.</strong>
+    </h1>
+    <p class="hero-sub reveal reveal-d2">
+      A Alluz Tech automatiza o trabalho que repete na sua operação — com engenharia de IA séria, pensada para o pequeno e médio empresário brasileiro.
+    </p>
+    <div class="hero-ctas reveal reveal-d3">
+      <a href="#contato" class="btn btn-primary">
+        <span>Agendar diagnóstico</span><span class="arr"></span>
+      </a>
+      <a href="#dri" class="btn btn-ghost">
+        <span>Conhecer o método DRI</span><span class="arr"></span>
+      </a>
+    </div>
+
+    <div class="hero-metrics reveal reveal-d4">
       <div>
-        <div class="chat-name">Luz · Alluz Tech</div>
-        <div class="chat-status"><div class="chat-dot"></div>Online agora</div>
+        <div class="metric-num"><span data-count="8" data-suffix=" anos">0</span></div>
+        <div class="metric-lbl">Engenharia de software</div>
       </div>
-      <button class="chat-close" onclick="toggleChat()">×</button>
+      <div>
+        <div class="metric-num"><span data-count="80" data-suffix="%">0</span></div>
+        <div class="metric-lbl">Tarefas automatizadas em média</div>
+      </div>
+      <div>
+        <div class="metric-num"><span data-count="12" data-suffix="k/mês">0</span></div>
+        <div class="metric-lbl">Economizado vs. dev interno</div>
+      </div>
+      <div>
+        <div class="metric-num">R$ 0</div>
+        <div class="metric-lbl">Para o diagnóstico inicial</div>
+      </div>
     </div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-suggestions" id="chatSuggestions">
-      <button class="suggestion" onclick="sendSuggestion(this)">O que vocês fazem?</button>
-      <button class="suggestion" onclick="sendSuggestion(this)">Quanto custa?</button>
-      <button class="suggestion" onclick="sendSuggestion(this)">Como começar?</button>
-      <button class="suggestion" onclick="sendSuggestion(this)">Exemplos práticos</button>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Role para baixo</span>
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<!-- ═══════════════ PROBLEMA ═══════════════ -->
+<section class="problem" id="problema">
+  <div class="section">
+    <span class="eyebrow reveal">O Problema</span>
+    <h2 class="title reveal reveal-d1">
+      Três sintomas que travam<br>o seu <strong>crescimento.</strong>
+    </h2>
+    <p class="lead reveal reveal-d2">
+      Identificamos o padrão em centenas de PMEs brasileiras. Provavelmente um (ou os três) está acontecendo na sua agora.
+    </p>
+
+    <div class="problem-grid">
+      <article class="problem-card reveal reveal-d1">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div class="problem-num">SINTOMA 01</div>
+        <h3>Custo de oportunidade<br>elevado</h3>
+        <p>Equipes qualificadas gastando horas em tarefas que um robô poderia fazer — digitação, e-mails padrão, relatórios manuais.</p>
+      </article>
+
+      <article class="problem-card reveal reveal-d2">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="4" width="7" height="7" rx="1"/>
+            <rect x="14" y="4" width="7" height="7" rx="1"/>
+            <rect x="3" y="13" width="7" height="7" rx="1"/>
+            <rect x="14" y="13" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <div class="problem-num">SINTOMA 02</div>
+        <h3>Silos de dados<br>e retrabalho</h3>
+        <p>Sistemas que não conversam entre si geram inconsistências, planilhas duplicadas e horas de copy/paste manual entre ferramentas.</p>
+      </article>
+
+      <article class="problem-card reveal reveal-d3">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12h18M12 3v18"/>
+            <path d="M7 7l10 10M17 7L7 17"/>
+          </svg>
+        </div>
+        <div class="problem-num">SINTOMA 03</div>
+        <h3>Operação<br>como gargalo</h3>
+        <p>O negócio não escala porque a equipe está atolada no dia a dia. Cresce a receita, cresce o custo — e a margem fica para trás.</p>
+      </article>
     </div>
-    <div class="chat-input-row">
-      <textarea class="chat-input" id="chatInput" placeholder="Pergunte sobre IA para o seu negócio..." rows="1" onkeydown="handleKey(event)"></textarea>
-      <button class="chat-send" onclick="sendMessage()" aria-label="Enviar">
-        <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════════ ENGRENAGENS ═══════════════ -->
+<section class="engrenagens" id="engrenagens">
+  <div class="section">
+    <div class="engr-head">
+      <div>
+        <span class="eyebrow reveal">A Solução · 5 Engrenagens</span>
+        <h2 class="title reveal reveal-d1">
+          Stack séria.<br><strong>Resultado mensurável.</strong>
+        </h2>
+      </div>
+      <p class="lead reveal reveal-d2">
+        Selecionamos cinco tecnologias de ponta e as combinamos para entregar automações que aguentam carga real — longe de soluções superficiais ou app de "vibe coding".
+      </p>
+    </div>
+
+    <div class="engr-list">
+      <div class="engr-row reveal">
+        <span class="engr-num">01</span>
+        <div>
+          <div class="engr-name"><strong>LLMs</strong> — cérebros de IA</div>
+          <div class="engr-tag mono">PROCESSAMENTO DE LINGUAGEM NATURAL</div>
+        </div>
+        <p class="engr-func">Modelos que entendem contexto e linguagem natural.</p>
+        <p class="engr-impact">Leitura de e-mails, análise de documentos e assistentes que falam a sua língua.</p>
+      </div>
+
+      <div class="engr-row reveal">
+        <span class="engr-num">02</span>
+        <div>
+          <div class="engr-name"><strong>RAG</strong> — memória empresarial</div>
+          <div class="engr-tag mono">CONSULTA SEGURA AOS SEUS DADOS</div>
+        </div>
+        <p class="engr-func">A IA responde com base no histórico real da empresa.</p>
+        <p class="engr-impact">Zero alucinação. Respostas precisas e auditáveis baseadas no que existe.</p>
+      </div>
+
+      <div class="engr-row reveal">
+        <span class="engr-num">03</span>
+        <div>
+          <div class="engr-name"><strong>n8n</strong> — orquestrador</div>
+          <div class="engr-tag mono">CONEXÃO ENTRE CENTENAS DE APPS</div>
+        </div>
+        <p class="engr-func">Liga sistemas que hoje vivem isolados.</p>
+        <p class="engr-impact">Acabam as tarefas manuais entre Shopify, CRM, e-mail e planilhas.</p>
+      </div>
+
+      <div class="engr-row reveal">
+        <span class="engr-num">04</span>
+        <div>
+          <div class="engr-name"><strong>MCP</strong> — integração padronizada</div>
+          <div class="engr-tag mono">FERRAMENTAS QUE A IA ENXERGA</div>
+        </div>
+        <p class="engr-func">Padrão aberto para a IA acessar suas ferramentas.</p>
+        <p class="engr-impact">A IA interage com todo o ecossistema digital da empresa, com segurança.</p>
+      </div>
+
+      <div class="engr-row reveal">
+        <span class="engr-num">05</span>
+        <div>
+          <div class="engr-name"><strong>OpenClaw</strong> — ações em sistemas legados</div>
+          <div class="engr-tag mono">RPA ONDE NÃO HÁ API</div>
+        </div>
+        <p class="engr-func">A IA age: preenche formulários e clica em botões.</p>
+        <p class="engr-impact">Automatiza até aquele ERP antigo da contabilidade — sem precisar trocar de sistema.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DRI METHOD ═══════════════ -->
+<section class="dri" id="dri">
+  <div class="dri-inner">
+    <div class="dri-head">
+      <div>
+        <span class="eyebrow reveal">O Diferencial · Método DRI</span>
+        <h2 class="title reveal reveal-d1">
+          Diagnóstico.<br>Réplica.<br><strong>Implementação.</strong>
+        </h2>
+      </div>
+      <p class="lead reveal reveal-d2">
+        Não vendemos app pronto. Construímos a partir da sua operação real — com 8 anos de engenharia de software e parceria técnica Anthropic por trás.
+      </p>
+    </div>
+  </div>
+
+  <div class="dri-stage">
+    <div class="dri-nav">
+      <button class="dri-tab" aria-current="true">
+        <span class="dri-tab-num">01</span>
+        <span class="dri-tab-name">Diagnóstico</span>
+        <span class="dri-tab-prog"></span>
+      </button>
+      <button class="dri-tab">
+        <span class="dri-tab-num">02</span>
+        <span class="dri-tab-name">Réplica de Comportamento</span>
+        <span class="dri-tab-prog"></span>
+      </button>
+      <button class="dri-tab">
+        <span class="dri-tab-num">03</span>
+        <span class="dri-tab-name">Implementação</span>
+        <span class="dri-tab-prog"></span>
       </button>
     </div>
-  </div>
 
-  <!-- COOKIE BANNER -->
-  <div class="cookie" id="cookieBanner">
-    <div class="cookie-text">
-      Utilizamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade e com a LGPD.
-    </div>
-    <div class="cookie-btns">
-      <button class="cookie-minimal" onclick="acceptCookies('essential')">Apenas essenciais</button>
-      <button class="cookie-accept" onclick="acceptCookies('all')">Aceitar todos</button>
-    </div>
-  </div>
+    <div class="dri-track">
+      <canvas class="dri-canvas"></canvas>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
-
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
-
-    // ── Hooks ──────────────────────────────────────────────────────────
-    function useReveal(opts = {}) {
-      const ref = useRef(null);
-      const [seen, setSeen] = useState(false);
-      useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const obs = new IntersectionObserver(([entry]) => {
-          if (entry.isIntersecting) { setSeen(true); obs.disconnect(); }
-        }, { threshold: opts.threshold ?? 0.18, rootMargin: opts.rootMargin ?? '0px 0px -8% 0px' });
-        obs.observe(el);
-        return () => obs.disconnect();
-      }, []);
-      return [ref, seen];
-    }
-
-    function useCounter(target, { duration = 1200, start = 0, run = true } = {}) {
-      const [val, setVal] = useState(start);
-      useEffect(() => {
-        if (!run) return;
-        const t0 = performance.now();
-        let raf;
-        const tick = (now) => {
-          const t = Math.min(1, (now - t0) / duration);
-          const eased = 1 - Math.pow(1 - t, 3);
-          setVal(start + (target - start) * eased);
-          if (t < 1) raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(raf);
-      }, [target, duration, start, run]);
-      return val;
-    }
-
-    function useScrollProgress(ref) {
-      const [p, setP] = useState(0);
-      useEffect(() => {
-        const onScroll = () => {
-          const el = ref.current;
-          if (!el) return;
-          const r = el.getBoundingClientRect();
-          const vh = window.innerHeight;
-          const total = r.height + vh;
-          const dist = vh - r.top;
-          setP(Math.max(0, Math.min(1, dist / total)));
-        };
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
-      }, []);
-      return p;
-    }
-
-    function useScrollY() {
-      const [y, setY] = useState(0);
-      useEffect(() => {
-        const on = () => setY(window.scrollY || 0);
-        on();
-        window.addEventListener('scroll', on, { passive: true });
-        return () => window.removeEventListener('scroll', on);
-      }, []);
-      return y;
-    }
-
-    function Reveal({ children, delay = 0, style, className, ...rest }) {
-      const [ref, seen] = useReveal();
-      return (
-        <div ref={ref} className={`reveal ${seen ? 'in' : ''} ${className || ''}`}
-          style={{ transitionDelay: `${delay}ms`, ...style }} {...rest}>
-          {children}
+      <div class="dri-slide active">
+        <div class="dri-slide-left">
+          <div class="dri-slide-num">FASE 01 · DIAGNÓSTICO</div>
+          <h3 class="dri-slide-title">Entender antes<br>de <strong>automatizar.</strong></h3>
+          <p class="dri-slide-desc">
+            Um brainstorm com profundidade técnica. Mapeamos sua operação, identificamos onde a IA gera o maior retorno e desenhamos a melhor relação custo-benefício.
+          </p>
+          <ul class="dri-slide-bullets">
+            <li>Mapeamento da operação real</li>
+            <li>Priorização por impacto financeiro</li>
+            <li>Estimativa de horas técnicas + mensalidade</li>
+          </ul>
         </div>
-      );
-    }
+        <div class="dri-slide-right"></div>
+      </div>
 
-    // ── Logo ──────────────────────────────────────────────────────────
-    function Logo({ height = 30 }) {
-      return (
-        <a href="#top" style={{ display: 'inline-flex', alignItems: 'center' }}>
-          <img src="assets/alluz-logo.png" alt="Alluz Tech" style={{ height, width: 'auto', display: 'block' }} />
+      <div class="dri-slide">
+        <div class="dri-slide-left">
+          <div class="dri-slide-num">FASE 02 · RÉPLICA DE COMPORTAMENTO</div>
+          <h3 class="dri-slide-title">A IA aprende com<br>seu <strong>melhor colaborador.</strong></h3>
+          <p class="dri-slide-desc">
+            Sob NDA, documentamos e gravamos como sua operação realmente acontece. A IA copia o "mindset" da sua equipe — não responde como um chatbot genérico.
+          </p>
+          <ul class="dri-slide-bullets">
+            <li>Sessões de captura de comportamento</li>
+            <li>NDA + LGPD em todo o processo</li>
+            <li>IA fala como a sua empresa fala</li>
+          </ul>
+        </div>
+        <div class="dri-slide-right"></div>
+      </div>
+
+      <div class="dri-slide">
+        <div class="dri-slide-left">
+          <div class="dri-slide-num">FASE 03 · IMPLEMENTAÇÃO</div>
+          <h3 class="dri-slide-title">Engenharia,<br>não <strong>vibe coding.</strong></h3>
+          <p class="dri-slide-desc">
+            Desenvolvimento focado em horas técnicas reais, com observabilidade desde o dia um e garantia de duas mudanças de escopo gratuitas no caminho.
+          </p>
+          <ul class="dri-slide-bullets">
+            <li>2 mudanças de escopo gratuitas</li>
+            <li>Observabilidade + suporte contínuo</li>
+            <li>Atualizações de modelo inclusas na mensalidade</li>
+          </ul>
+        </div>
+        <div class="dri-slide-right"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CHAT IA ═══════════════ -->
+<section class="chat" id="chat">
+  <div class="section">
+    <span class="eyebrow reveal">Alluz IA · Demonstração</span>
+    <h2 class="title reveal reveal-d1">
+      Converse com a IA<br>que <strong>construímos.</strong>
+    </h2>
+    <p class="lead reveal reveal-d2">
+      Esta é uma amostra do que entregamos: uma IA que entende sua dor, fala como sua marca e sugere o próximo passo. Pergunte qualquer coisa sobre automação, IA aplicada ou o método DRI.
+    </p>
+
+    <div class="chat-shell reveal reveal-d3">
+      <div class="chat-head">
+        <span class="chat-dot"></span>
+        <span class="chat-title">Alluz IA</span>
+        <span class="chat-status">ON · Anthropic</span>
+      </div>
+      <div class="chat-log">
+        <div class="msg msg-ai">
+          <span class="msg-tag">Alluz IA</span>
+          <div>Oi! Sou a IA da Alluz Tech. Posso te explicar o que automatizamos, o método DRI ou estimar onde a IA traria mais retorno no seu negócio. Por onde a gente começa?</div>
+        </div>
+      </div>
+      <div class="chat-suggests">
+        <button class="chat-suggest">Como funciona o método DRI?</button>
+        <button class="chat-suggest">Quanto custa um projeto?</button>
+        <button class="chat-suggest">O que vocês automatizam?</button>
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Pergunte qualquer coisa..." aria-label="Mensagem" />
+        <button class="chat-send" aria-label="Enviar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ EXPERTISE ═══════════════ -->
+<section class="expertise" id="expertise">
+  <div class="section">
+    <span class="eyebrow reveal">Por que confiar</span>
+    <h2 class="title reveal reveal-d1">
+      Engenharia séria.<br><strong>Não experimento.</strong>
+    </h2>
+    <p class="lead reveal reveal-d2">
+      O time que constrói a Alluz Tech tem rodagem real em produção. Você contrata o resultado, não a curva de aprendizado.
+    </p>
+
+    <div class="expertise-grid">
+      <div class="exp-card reveal reveal-d1">
+        <div class="big">8 anos</div>
+        <div class="lbl">de engenharia</div>
+        <div class="sub">Construindo software em produção — backend, integrações e infraestrutura.</div>
+      </div>
+      <div class="exp-card reveal reveal-d2">
+        <div class="big">Anthropic</div>
+        <div class="lbl">parceria técnica</div>
+        <div class="sub">Acesso direto aos modelos Claude e suporte arquitetural do time Anthropic.</div>
+      </div>
+      <div class="exp-card reveal reveal-d3">
+        <div class="big">NDA</div>
+        <div class="lbl">confidencialidade total</div>
+        <div class="sub">Cada projeto é tratado com a ética de quem cuida do segredo industrial alheio.</div>
+      </div>
+      <div class="exp-card reveal reveal-d4">
+        <div class="big">2 trocas</div>
+        <div class="lbl">de escopo gratuitas</div>
+        <div class="sub">Sabemos que a operação muda durante o projeto. Você não paga por isso.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="cta" id="contato">
+  <div class="cta-inner">
+    <span class="eyebrow reveal" style="justify-content:center">Diagnóstico Gratuito</span>
+    <h2 class="reveal reveal-d1">
+      Em 30 minutos<br>a gente <strong>te mostra onde<br>a IA paga sozinha.</strong>
+    </h2>
+    <p class="reveal reveal-d2">
+      Conversa rápida, sem compromisso e sem pitch genérico. Você sai com um diagnóstico claro do que dá pra automatizar e do retorno esperado.
+    </p>
+    <div class="cta-ctas reveal reveal-d3">
+      <a href="mailto:contato@alluz.tech?subject=Diagnóstico%20gratuito" class="btn btn-primary">
+        <span>Agendar agora</span><span class="arr"></span>
+      </a>
+      <a href="#chat" class="btn btn-ghost">
+        <span>Conversar com a IA primeiro</span><span class="arr"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col">
+        <a href="#top" class="logo" style="font-size:32px">
+          <span class="logo-top"><span class="logo-alluz">Alluz</span><span class="logo-node"></span></span>
+          <span class="logo-bottom"><span class="logo-bar"></span><span class="logo-tech">Tech</span></span>
         </a>
-      );
-    }
+        <p class="footer-tag">Inteligência que devolve tempo, foco e margem. Para o pequeno e médio empresário brasileiro.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegar</h4>
+        <a href="#problema">O Problema</a>
+        <a href="#engrenagens">Tecnologia</a>
+        <a href="#dri">Método DRI</a>
+        <a href="#chat">Alluz IA</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="mailto:contato@alluz.tech">contato@alluz.tech</a>
+        <a href="#">linkedin.com/company/alluztech</a>
+        <a href="#">@alluztech</a>
+      </div>
+      <div class="footer-col">
+        <h4>Parcerias</h4>
+        <a href="#">Anthropic</a>
+        <a href="#">n8n</a>
+        <a href="#">MCP</a>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <span>© <span id="year">2026</span> · Alluz Tech · Todos os direitos reservados</span>
+      <span>V1.0 · 2026</span>
+    </div>
+  </div>
+</footer>
 
-    // ── NAV ───────────────────────────────────────────────────────────
-    function Nav() {
-      const [scrolled, setScrolled] = useState(false);
-      const [mobileOpen, setMobileOpen] = useState(false);
-      useEffect(() => {
-        const on = () => setScrolled((window.scrollY || 0) > 24);
-        on();
-        window.addEventListener('scroll', on, { passive: true });
-        return () => window.removeEventListener('scroll', on);
-      }, []);
-      const links = [['Método','#metodo'],['Cases','#cases'],['Tecnologias','#tech'],['Sobre','#sobre'],['FAQ','#faq']];
-      return (
-        <header style={{
-          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-          transition: 'background .3s, border-color .3s',
-          background: scrolled ? 'rgba(12,11,9,0.78)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(14px) saturate(1.4)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(14px) saturate(1.4)' : 'none',
-          borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-        }}>
-          <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-            <Logo height={28} />
-            <nav style={{ display: 'flex', alignItems: 'center', gap: 36 }} className="desktop-nav">
-              {links.map(([l, h]) => (
-                <a key={l} href={h} style={{ fontSize: 14, color: 'var(--text-muted)', fontWeight: 500, transition: 'color .2s' }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>{l}</a>
-              ))}
-              <a href="#contato" className="btn-primary" style={{ padding: '10px 20px', fontSize: 13 }}>
-                Diagnóstico grátis
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-              </a>
-            </nav>
-            <button className="mobile-toggle" aria-label="menu" onClick={() => setMobileOpen(v => !v)}
-              style={{ display: 'none', background: 'transparent', border: 'none', color: 'var(--gold)', padding: 8, fontSize: 22 }}>☰</button>
-          </div>
-          {mobileOpen && (
-            <div style={{ padding: '16px 20px 24px', background: 'rgba(12,11,9,0.96)', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {links.map(([l, h]) => (
-                <a key={l} href={h} onClick={() => setMobileOpen(false)} style={{ fontSize: 15, color: 'var(--text)', padding: '8px 0' }}>{l}</a>
-              ))}
-              <a href="#contato" className="btn-primary" onClick={() => setMobileOpen(false)} style={{ marginTop: 8 }}>Diagnóstico grátis →</a>
-            </div>
-          )}
-          <style>{`@media(max-width:880px){.desktop-nav{display:none!important}.mobile-toggle{display:block!important}}`}</style>
-        </header>
-      );
-    }
+<div class="noise"></div>
 
-    // ── HERO ─────────────────────────────────────────────────────────
-    function Hero() {
-      const y = useScrollY();
-      return (
-        <section id="top" style={{ position: 'relative', minHeight: '100vh', paddingTop: 120, paddingBottom: 100, overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
-          <div aria-hidden style={{ position: 'absolute', top: -120, right: -160, width: 720, height: 720, pointerEvents: 'none', background: 'radial-gradient(circle, rgba(255,171,46,0.18), rgba(255,171,46,0.04) 35%, transparent 65%)', filter: 'blur(20px)', animation: 'breathe 9s ease-in-out infinite', transform: `translateY(${y * 0.18}px)` }} />
-          <div aria-hidden style={{ position: 'absolute', bottom: -240, left: -180, width: 640, height: 640, pointerEvents: 'none', background: 'radial-gradient(circle, rgba(212,137,26,0.14), transparent 65%)', filter: 'blur(28px)', animation: 'breathe 12s ease-in-out infinite reverse', transform: `translateY(${y * 0.10}px)` }} />
-          <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.4, backgroundImage: 'radial-gradient(rgba(255,171,46,0.10) 1px, transparent 1px)', backgroundSize: '32px 32px', maskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 80%)', WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 80%)' }} />
-          <div className="container" style={{ position: 'relative' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 72, alignItems: 'center' }} className="hero-grid">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-                <Reveal delay={0}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <span style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, var(--carbon-2), var(--carbon))', border: '1px solid var(--border-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', animation: 'pulse-glow 2.4s ease-in-out infinite' }}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2 L4 14 H11 L9 22 L20 9 H13 Z" fill="var(--gold)" stroke="var(--gold-light)" strokeWidth="0.5" strokeLinejoin="round"/></svg>
-                    </span>
-                    <span className="eyebrow">Alluz Tech · IA para PMEs</span>
-                  </div>
-                </Reveal>
-                <Reveal delay={120}>
-                  <h1 className="display" style={{ fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.98, color: 'var(--text)', letterSpacing: '-0.035em', fontWeight: 700 }}>
-                    Automatize o que você sempre delegou{' '}
-                    <span style={{ color: 'var(--gold)', position: 'relative', display: 'inline-block' }}>
-                      manualmente
-                      <svg aria-hidden viewBox="0 0 300 16" preserveAspectRatio="none" style={{ position: 'absolute', left: 0, right: 0, bottom: -6, width: '100%', height: 14, overflow: 'visible' }}>
-                        <path d="M 4 10 Q 80 2, 150 8 T 296 6" fill="none" stroke="var(--gold)" strokeWidth="2.5" strokeLinecap="round" style={{ strokeDasharray: 600, strokeDashoffset: 600, animation: 'draw 1.4s 1.0s var(--ease-out) forwards' }}/>
-                      </svg>
-                    </span>.
-                  </h1>
-                </Reveal>
-                <Reveal delay={260}>
-                  <p style={{ fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.55, maxWidth: 520, fontWeight: 400 }}>
-                    Recupere horas de trabalho toda semana. Implementamos a IA que se integra ao seu negócio —{' '}
-                    <strong style={{ color: 'var(--text)', fontWeight: 600 }}>sem complicações técnicas.</strong>
-                  </p>
-                </Reveal>
-                <Reveal delay={380}>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
-                    <a href="#contato" className="btn-primary">
-                      Agendar diagnóstico
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="#cases" className="btn-outline">Ver cases</a>
-                  </div>
-                </Reveal>
-                <Reveal delay={520}>
-                  <div style={{ fontSize: 15, color: 'var(--gold)', fontWeight: 500, marginTop: 8, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--gold)', boxShadow: '0 0 10px var(--gold)', animation: 'sparkle 2s ease-in-out infinite' }} />
-                    A IA que trabalha enquanto você lidera.
-                  </div>
-                </Reveal>
-              </div>
-              <Reveal delay={400}>
-                <div style={{ background: 'linear-gradient(180deg, rgba(31,27,20,0.85), rgba(22,19,16,0.85))', backdropFilter: 'blur(8px)', border: '1px solid var(--border)', borderRadius: 22, padding: 32, position: 'relative', boxShadow: '0 30px 80px rgba(0,0,0,0.4)' }}>
-                  <div aria-hidden style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, background: 'radial-gradient(circle, rgba(255,171,46,0.18), transparent 70%)', pointerEvents: 'none', borderRadius: '50%' }} />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-                    <span className="mono" style={{ fontSize: 11, letterSpacing: 0.18, color: 'var(--muted)', textTransform: 'uppercase', fontWeight: 500 }}>Sua jornada · 3 paradas</span>
-                    <span className="tag">Método Alluz</span>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-                    {[{n:'01',t:'Diagnóstico',sub:'90 min · grátis'},{n:'02',t:'Proposta',sub:'5–7 dias · preço fixo'},{n:'03',t:'Execução',sub:'2–4 semanas · suporte 30d'}].map((s, i) => (
-                      <div key={s.n} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-                        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--void)', border: '1.5px solid var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--ff-display)', fontSize: 14, color: 'var(--gold)', fontWeight: 700, animation: `pin-pulse 3s ${i*0.6}s ease-in-out infinite` }}>{s.n}</div>
-                        <div style={{ flex: 1 }}>
-                          <div className="display" style={{ fontSize: 16, color: 'var(--text)', fontWeight: 600 }}>{s.t}</div>
-                          <div className="mono" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 3 }}>{s.sub}</div>
-                        </div>
-                        {i < 2 && <div aria-hidden style={{ position: 'absolute', left: 22, top: 44, height: 22, borderLeft: '1.5px dashed var(--border-strong)' }} />}
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ marginTop: 26, paddingTop: 18, borderTop: '1px dashed var(--border)', fontSize: 12.5, color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>Diagnóstico → ROI no 1º mês</span>
-                    <a href="#metodo" style={{ color: 'var(--gold)', fontWeight: 500, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                      ver mapa completo
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                    </a>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-          <style>{`@media(max-width:960px){.hero-grid{grid-template-columns:1fr!important;gap:56px!important}}@media(max-width:600px){.hero-stats{gap:24px!important}}`}</style>
-        </section>
-      );
-    }
+<script src="main.js"></script>
+<script src="hero-canvas.js"></script>
+<script src="dri-motion.js"></script>
+<script src="chat.js"></script>
 
-    // ── PROBLEM ──────────────────────────────────────────────────────
-    function Problem() {
-      const cards = [
-        { ico: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>, title: 'Seu time custa caro para fazer tarefas que um robô poderia fazer', desc: 'Pessoas digitando dados, redigindo e-mails padrão, montando relatórios manualmente.', stat: '8–15h/semana em tarefas repetitivas' },
-        { ico: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.5 5.5l2 2M16.5 16.5l2 2M5.5 18.5l2-2M16.5 7.5l2-2"/></svg>, title: 'Seus sistemas não conversam entre si', desc: 'Dados saem de um sistema, entram à mão em outro. Inconsistências que ninguém consegue rastrear.', stat: '3–5 sistemas desconectados' },
-        { ico: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>, title: 'Você não cresce porque sua operação te segura', desc: 'Oportunidades existem, mas a equipe está atolada na operação do dia a dia.', stat: '40–50% do tempo gasto em operação' },
-      ];
-      return (
-        <section style={{ padding: '120px 0', borderTop: '1px solid var(--border)', background: 'var(--carbon)', position: 'relative' }}>
-          <div className="container">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 64, alignItems: 'flex-end' }} className="problem-head">
-              <Reveal>
-                <span className="eyebrow">01 · Onde estamos</span>
-                <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(36px, 4.4vw, 56px)', color: 'var(--text)' }}>Três sintomas. <span style={{ color: 'var(--gold)' }}>Sempre os mesmos.</span></h2>
-              </Reveal>
-              <Reveal delay={150}><p style={{ fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.65, maxWidth: 460 }}>Em quase todo cliente que atendemos nos últimos 8 anos, a dor começa em uma dessas três frentes. Reconhece alguma?</p></Reveal>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="problem-grid">
-              {cards.map((c, i) => (
-                <Reveal key={i} delay={i * 120}>
-                  <div style={{ background: 'var(--void)', border: '1px solid var(--border)', borderRadius: 18, padding: 28, height: '100%', display: 'flex', flexDirection: 'column', gap: 18, transition: 'transform .35s, border-color .35s, box-shadow .35s' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='translateY(-6px)'; e.currentTarget.style.borderColor='var(--border-strong)'; e.currentTarget.style.boxShadow='0 18px 40px rgba(255,171,46,0.10)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.borderColor='var(--border)'; e.currentTarget.style.boxShadow=''; }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <div style={{ width: 52, height: 52, borderRadius: 12, background: 'rgba(255,171,46,0.07)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)' }}>{c.ico}</div>
-                      <span className="mono" style={{ fontSize: 11, color: 'var(--muted)' }}>0{i+1}</span>
-                    </div>
-                    <h3 className="display" style={{ fontSize: 21, color: 'var(--text)', fontWeight: 600, lineHeight: 1.2 }}>{c.title}</h3>
-                    <p style={{ fontSize: 14.5, color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>{c.desc}</p>
-                    <div style={{ paddingTop: 18, borderTop: '1px dashed var(--border)', display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ color: 'var(--gold)', fontSize: 16 }}>→</span>
-                      <span className="mono" style={{ fontSize: 12, color: 'var(--gold-light)', fontWeight: 500 }}>{c.stat}</span>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <style>{`@media(max-width:880px){.problem-head{grid-template-columns:1fr!important;gap:24px!important}.problem-grid{grid-template-columns:1fr!important}}`}</style>
-        </section>
-      );
-    }
-
-    // ── CASES ────────────────────────────────────────────────────────
-    function Cases() {
-      const cases = [
-        { co:'LojaVest', kind:'E-commerce', loc:'São Paulo', dor:'20h/semana em descrições manuais', sol:'Assistente IA que gera descrições automáticas', from:20, to:4, unit:'h/sem', extras:['Catálogo 5×','Qualidade ↑'], quote:'"Voltamos criatividade para o lugar certo."', author:'Marina · Diretora' },
-        { co:'BrainBox', kind:'Agência', loc:'Rio de Janeiro', dor:'4h toda segunda em relatórios manuais', sol:'Fluxo n8n + PDF gerado automaticamente', from:4, to:0, unit:'h/sem', extras:['+2h strategy','Churn estável'], quote:'"Ninguém quer montar relatório. Agora analisamos estratégia."', author:'Carlos · Sócio' },
-        { co:'CloudSync', kind:'SaaS', loc:'Salvador', dor:'8h/cliente novo em onboarding manual', sol:'Chatbot RAG + vídeos automáticos', from:8, to:2, unit:'h/cliente', extras:['Churn -15%','CSAT +20%'], quote:'"Onboarding escala com a gente."', author:'Ana · Head CS' },
-      ];
-      return (
-        <section id="cases" style={{ padding: '140px 0', borderTop: '1px solid var(--border)', background: 'var(--carbon)' }}>
-          <div className="container">
-            <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 72px' }}>
-              <Reveal><span className="eyebrow" style={{ justifyContent: 'center' }}>03 · Cases</span>
-                <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(36px, 4.4vw, 56px)', color: 'var(--text)' }}>O método na <span style={{ color: 'var(--gold)' }}>prática.</span></h2>
-              </Reveal>
-              <Reveal delay={150}><p style={{ marginTop: 22, fontSize: 17, color: 'var(--text-muted)', lineHeight: 1.6 }}>Três PMEs, três dores diferentes, mesmo método. Resultados reais e mensuráveis.</p></Reveal>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 22 }} className="cases-grid">
-              {cases.map((c, i) => <Reveal key={c.co} delay={i*140}><CaseCard {...c} /></Reveal>)}
-            </div>
-          </div>
-          <style>{`@media(max-width:980px){.cases-grid{grid-template-columns:1fr 1fr!important}}@media(max-width:720px){.cases-grid{grid-template-columns:1fr!important}}`}</style>
-        </section>
-      );
-    }
-
-    function CaseCard({ co, kind, loc, dor, sol, from, to, unit, extras, quote, author }) {
-      const [ref, seen] = useReveal({ threshold: 0.4 });
-      const fromVal = useCounter(from, { duration: 1100, run: seen, start: from });
-      const toVal = useCounter(to, { duration: 1300, run: seen, start: from });
-      return (
-        <div ref={ref} style={{ background: 'var(--void)', border: '1px solid var(--border)', borderRadius: 18, padding: 28, height: '100%', display: 'flex', flexDirection: 'column', gap: 18, transition: 'all .35s var(--ease-out)' }}
-          onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-6px)';e.currentTarget.style.borderColor='var(--border-strong)';e.currentTarget.style.boxShadow='0 18px 40px rgba(255,171,46,0.12)'}}
-          onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.boxShadow=''}}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <div className="display" style={{ fontSize: 18, color: 'var(--text)', fontWeight: 600 }}>{co}</div>
-              <div className="mono" style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>{kind} · {loc}</div>
-            </div>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(255,171,46,0.06)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', fontSize: 14, fontWeight: 600 }}>{co[0]}</div>
-          </div>
-          <div style={{ background: 'linear-gradient(135deg, rgba(255,171,46,0.10), rgba(255,171,46,0.03))', border: '1px solid var(--border-strong)', borderRadius: 14, padding: 20, textAlign: 'center' }}>
-            <div className="display" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1 }}>
-              {Math.round(fromVal)}<span style={{ color: 'var(--text-muted)', margin: '0 12px', fontWeight: 400, fontSize: 28 }}>→</span>{Math.round(toVal)}
-            </div>
-            <div className="mono" style={{ fontSize: 11, color: 'var(--gold-light)', marginTop: 6 }}>{unit}</div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
-              {extras.map(e => <span key={e} className="mono" style={{ fontSize: 11, color: 'var(--text)', background: 'rgba(0,0,0,0.25)', padding: '4px 9px', borderRadius: 99, border: '1px solid var(--border)', fontWeight: 500 }}>{e}</span>)}
-            </div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div><div className="mono" style={{ fontSize: 10, color: 'var(--muted)', letterSpacing: 0.18, textTransform: 'uppercase', marginBottom: 6 }}>Dor</div><div style={{ fontSize: 13.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>{dor}</div></div>
-            <div><div className="mono" style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: 0.18, textTransform: 'uppercase', marginBottom: 6 }}>Solução</div><div style={{ fontSize: 13.5, color: 'var(--text)', lineHeight: 1.5 }}>{sol}</div></div>
-          </div>
-          <div style={{ marginTop: 'auto', paddingTop: 18, borderTop: '1px dashed var(--border)' }}>
-            <p className="display" style={{ fontSize: 15, color: 'var(--gold)', fontWeight: 500, lineHeight: 1.4 }}>{quote}</p>
-            <div className="mono" style={{ fontSize: 11, color: 'var(--muted)', marginTop: 8 }}>— {author}</div>
-          </div>
-        </div>
-      );
-    }
-
-    // ── DIFFERENTIATORS ──────────────────────────────────────────────
-    function Diff() {
-      const pillars = [
-        { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>, t:'Expertise Global', c:'Quando você quer rigor de grandes empresas com sensibilidade de startup — é a gente. Projetos em múltiplas regiões com qualidade enterprise.', b:['Comprovada','Escalável','Enterprise'] },
-        { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2 L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>, t:'Você sabe o preço antes de começar.', c:'Preço fixo. Nenhuma surpresa. NDA assinado. Confidencialidade garantida. Relatórios semanais de progresso.', b:['Zero surpresas','Confidencial','Relatórios semanais'] },
-        { ico: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.5 5.5l4 4M14.5 14.5l4 4M5.5 18.5l4-4M14.5 9.5l4-4"/></svg>, t:'Usamos o melhor. Você entende.', c:'Claude, GPT-4, Devin, n8n. Tecnologia de ponta — traduzida em benefícios reais. Você não precisa entender ML para economizar 10h/semana.', b:['Techniquês = Resultados'] },
-      ];
-      return (
-        <section style={{ padding: '140px 0', borderTop: '1px solid var(--border)' }}>
-          <div className="container">
-            <div style={{ textAlign: 'center', maxWidth: 700, margin: '0 auto 72px' }}>
-              <Reveal>
-                <span className="eyebrow" style={{ justifyContent: 'center' }}>04 · Diferenciadores</span>
-                <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(36px, 4.4vw, 56px)', color: 'var(--text)' }}>Três pilares — <span style={{ color: 'var(--gold)' }}>repetidos toda semana.</span></h2>
-              </Reveal>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {pillars.map((p, i) => (
-                <Reveal key={p.t} delay={i*100}>
-                  <div style={{ background: 'var(--carbon)', border: '1px solid var(--border)', borderRadius: 18, padding: 32, display: 'grid', gridTemplateColumns: '64px 1fr auto', gap: 32, alignItems: 'center', transition: 'all .35s var(--ease-out)' }} className="pillar-row"
-                    onMouseEnter={e=>{e.currentTarget.style.transform='translateX(6px)';e.currentTarget.style.borderColor='var(--border-strong)'}}
-                    onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.borderColor='var(--border)'}}>
-                    <div style={{ width: 64, height: 64, borderRadius: 16, background: 'rgba(255,171,46,0.08)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)' }}>{p.ico}</div>
-                    <div>
-                      <h3 className="display" style={{ fontSize: 24, color: 'var(--text)', fontWeight: 600, letterSpacing: '-0.02em' }}>{p.t}</h3>
-                      <p style={{ fontSize: 14.5, color: 'var(--text-muted)', lineHeight: 1.6, marginTop: 10, maxWidth: 620 }}>{p.c}</p>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end' }} className="pillar-badges">
-                      {p.b.map(b => <span key={b} className="tag">{b}</span>)}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <style>{`@media(max-width:880px){.pillar-row{grid-template-columns:56px 1fr!important}.pillar-badges{grid-column:1/-1;flex-direction:row!important;align-items:flex-start!important;flex-wrap:wrap}}`}</style>
-        </section>
-      );
-    }
-
-    // ── TECH ─────────────────────────────────────────────────────────
-    function Tech() {
-      const tech = [
-        { tag:'LLMs', t:'Cérebros IA', sub:'Processam palavras. Entendem contexto.', c:'Processam textos, analisam documentos, criam assistentes que entendem linguagem natural como membros da equipe.', ex:'Cliente manda e-mail complexo. IA entende, redige resposta. Você revisa em 30s.', ico:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3a3 3 0 0 0-3 3v.5a3 3 0 0 0-3 3v3a3 3 0 0 0 1.5 2.6V18a3 3 0 0 0 4.5 2.6V21a1 1 0 0 0 2 0V4a1 1 0 0 0-2 0v-1zM15 3a3 3 0 0 1 3 3v.5a3 3 0 0 1 3 3v3a3 3 0 0 1-1.5 2.6V18a3 3 0 0 1-4.5 2.6"/></svg> },
-        { tag:'RAG', t:'Memória Empresarial', sub:'Conhece sua empresa. Nunca mente.', c:'Consulta seus dados com segurança. Respostas precisas baseadas na realidade da sua empresa. Zero alucinações.', ex:'"Qual histórico do cliente X?" → IA consulta seu DB → resposta instantânea.', ico:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h12a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4V4zM4 18a2 2 0 0 0 0 4h13M8 8h8M8 12h6"/></svg> },
-        { tag:'n8n', t:'Diretor de Trânsito', sub:'Conecta tudo. Elimina manual.', c:'Conecta centenas de apps. Eles trabalham sozinhos. Elimina tarefas manuais entre sistemas.', ex:'Novo pedido Shopify → e-mail enviado → produção atualizada → cliente notificado (tudo auto).', ico:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h6a4 4 0 0 1 4 6 M7 18h6a4 4 0 0 0 4-6"/></svg> },
-        { tag:'MCP', t:'Integração Padronizada', sub:'Sistemas conversam como se fossem feitos um pro outro.', c:'Conecta fontes de dados e ferramentas à IA de forma padronizada. Assistentes enxergam seu ecossistema digital inteiro.', ex:null, ico:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7L12.5 17"/></svg> },
-        { tag:'OpenClaw', t:'Ações Invisíveis', sub:'Não apenas pensa. Faz.', c:'IA não só analisa — ela age. Preenche formulários, clica em botões, RPA em sistemas que dependiam 100% de cliques.', ex:'Relatório chega → IA extrai dados → preenche sistemas legados (sem clique humano).', ico:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><circle cx="9" cy="13" r="1" fill="currentColor"/><circle cx="15" cy="13" r="1" fill="currentColor"/><path d="M9 17h6M12 4v4M10 4h4"/></svg> },
-      ];
-      return (
-        <section id="tech" style={{ padding: '140px 0', borderTop: '1px solid var(--border)', background: 'var(--carbon)' }}>
-          <div className="container">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'flex-end', marginBottom: 60 }} className="tech-head">
-              <Reveal>
-                <span className="eyebrow">05 · Stack Técnica</span>
-                <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(36px, 4.4vw, 56px)', color: 'var(--text)' }}>Cinco engrenagens — <span style={{ color: 'var(--gold)' }}>em português.</span></h2>
-              </Reveal>
-              <Reveal delay={150}><p style={{ fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.65, maxWidth: 460 }}>Sem buzzwords: o que cada peça faz, e por quê isso importa pra você. Você não precisa entender ML para se beneficiar dele.</p></Reveal>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {tech.map((tk, i) => (
-                <Reveal key={tk.tag} delay={i*80}>
-                  <div style={{ background: 'var(--void)', border: '1px solid var(--border)', borderRadius: 16, padding: 24, display: 'grid', gridTemplateColumns: '64px 200px 1fr 1.4fr', gap: 28, alignItems: 'center', transition: 'all .3s var(--ease-out)' }} className="tech-row"
-                    onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--border-strong)';e.currentTarget.style.background='rgba(255,171,46,0.04)'}}
-                    onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.background='var(--void)'}}>
-                    <div style={{ width: 56, height: 56, borderRadius: 12, background: 'rgba(255,171,46,0.08)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)' }}>{tk.ico}</div>
-                    <div>
-                      <span className="mono" style={{ fontSize: 10, color: 'var(--muted)', letterSpacing: 0.18, textTransform: 'uppercase' }}>{tk.tag}</span>
-                      <h3 className="display" style={{ fontSize: 20, color: 'var(--gold)', fontWeight: 600, marginTop: 6 }}>{tk.t}</h3>
-                    </div>
-                    <div>
-                      <p className="display" style={{ fontSize: 14, color: 'var(--gold-light)', fontWeight: 500, marginBottom: 8 }}>{tk.sub}</p>
-                      <p style={{ fontSize: 13.5, color: 'var(--text-muted)', lineHeight: 1.6 }}>{tk.c}</p>
-                    </div>
-                    {tk.ex ? <div style={{ padding: '14px 18px', background: 'rgba(0,0,0,0.3)', border: '1px dashed var(--border)', borderRadius: 10 }}><div className="mono" style={{ fontSize: 9.5, color: 'var(--muted)', textTransform: 'uppercase', marginBottom: 6 }}>Exemplo real</div><p style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.55, fontStyle: 'italic' }}>→ {tk.ex}</p></div> : <div/>}
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <style>{`@media(max-width:980px){.tech-row{grid-template-columns:56px 1fr!important}.tech-row>div:nth-child(3),.tech-row>div:nth-child(4){grid-column:1/-1!important}}@media(max-width:880px){.tech-head{grid-template-columns:1fr!important;gap:24px!important}}`}</style>
-        </section>
-      );
-    }
-
-    // ── ABOUT ────────────────────────────────────────────────────────
-    function About() {
-      const values = [
-        { t:'Pragmatismo', c:'Focamos na dor maior primeiro. Valor imediato. Não promessas vagas.' },
-        { t:'Transparência', c:'Ética absoluta. Confidencialidade garantida. Você sabe sempre onde está.' },
-        { t:'Humanização', c:'Tecnologia é o meio. Sucesso das pessoas é o fim.' },
-        { t:'Excelência Técnica', c:'Rigor arquitetural global, em qualquer escala de projeto.' },
-      ];
-      return (
-        <section id="sobre" style={{ padding: '140px 0', borderTop: '1px solid var(--border)', background: 'linear-gradient(180deg, var(--carbon) 0%, var(--void) 100%)' }}>
-          <div className="container">
-            <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 64 }} className="about-grid">
-              <div>
-                <Reveal><span className="eyebrow">06 · Sobre nós</span></Reveal>
-                <Reveal delay={120}><p className="display" style={{ fontSize: 'clamp(28px, 3.4vw, 42px)', color: 'var(--gold)', lineHeight: 1.18, fontWeight: 600, marginTop: 22 }}>Dominamos algoritmos, arquiteturas e sistemas. Mas ao automatizar um negócio, somos apenas humanos ajudando outros humanos.</p></Reveal>
-                <Reveal delay={250}><p style={{ fontSize: 16, color: 'var(--text-muted)', lineHeight: 1.7, marginTop: 28, maxWidth: 520 }}>A maioria das empresas de tech adora deixar tudo complicado para parecer especializada. <strong style={{ color: 'var(--text)' }}>A Alluz fez o oposto.</strong> Tecnologia é complexa por dentro — mas o resultado pra você precisa ser simples, claro e útil.</p></Reveal>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                {[{t:'Missão',c:'Potencializar o crescimento de PMEs através de IA e automação, devolvendo tempo e recursos ao empresário para que foque em estratégia e crescimento.'},{t:'Visão',c:'Ser a principal parceira tecnológica de PMEs no Brasil, transformando processos complexos em soluções invisíveis e acessíveis.'}].map((b, i) => (
-                  <Reveal key={b.t} delay={300+i*100}>
-                    <div style={{ background: 'var(--carbon)', border: '1px solid var(--border)', borderRadius: 14, padding: 24, borderLeft: '3px solid var(--gold)' }}>
-                      <div className="mono" style={{ fontSize: 11, letterSpacing: 0.2, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 10 }}>{b.t}</div>
-                      <p style={{ fontSize: 14.5, color: 'var(--text)', lineHeight: 1.55 }}>{b.c}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-            <div style={{ marginTop: 56, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }} className="values-grid">
-              {values.map((v, i) => (
-                <Reveal key={v.t} delay={i*80}>
-                  <div style={{ background: 'var(--carbon)', border: '1px solid var(--border)', borderRadius: 14, padding: 22, height: '100%', transition: 'all .3s var(--ease-out)' }}
-                    onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--border-strong)';e.currentTarget.style.transform='translateY(-4px)'}}
-                    onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.transform=''}}>
-                    <div className="display" style={{ fontSize: 16, color: 'var(--gold)', fontWeight: 600, marginBottom: 10, display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                      <span className="mono" style={{ fontSize: 11, opacity: 0.7 }}>0{i+1}</span>{v.t}
-                    </div>
-                    <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.55 }}>{v.c}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <style>{`@media(max-width:880px){.about-grid{grid-template-columns:1fr!important;gap:32px!important}.values-grid{grid-template-columns:1fr 1fr!important}}`}</style>
-        </section>
-      );
-    }
-
-    // ── FAQ ──────────────────────────────────────────────────────────
-    function FAQ() {
-      const qs = [
-        ['Qual é o investimento mínimo?','Depende da reunião de diagnóstico. Não conseguimos aplicar um valor mínimo sem entender exatamente o que a sua empresa precisa. Agendamos uma conversa grátis, e você sabe o preço concreto antes de qualquer compromisso.'],
-        ['Quanto tempo leva para implementar?','A maioria dos projetos de uma automação simples: 2–4 semanas. Podemos começar rápido e adicionar funcionalidades semana a semana.'],
-        ['E se a solução não der certo?','Nós nos responsabilizamos. Testamos em profundidade, você revisa em sandbox, oferecemos 30 dias de suporte pós-implementação. Se algo não funcionar, corrigimos.'],
-        ['Preciso entender de programação?','Não. Zero. Você entende seu negócio, a gente entende tecnologia. Nós traduzimos uma para a outra. Treinamento hands-on e suporte inclusos.'],
-        ['Como vocês garantem meus dados seguros?','NDA assinado. Infraestrutura em nível enterprise. Criptografia end-to-end. Seus dados não saem do seu domínio sem autorização explícita.'],
-        ['Posso cancelar no meio do projeto?','Sim. Sem penalidade. Você paga apenas pelas horas já trabalhadas. Entregamos a documentação completa.'],
-        ['Qual a diferença vs agências normais de automação?','Agências tradicionais fazem automação. A Alluz faz IA + automação + orquestração. Além disso: preço justo, transparência total, expertise global comprovada.'],
-        ['Vocês oferecem suporte contínuo?','Sim. 90 dias de monitoramento contínuo. 30 dias para ajustes e melhorias. Depois, a mensalidade é obrigatória (inclui ferramentas + uso do produto).'],
-      ];
-      const [openIdx, setOpenIdx] = useState(0);
-      return (
-        <section id="faq" style={{ padding: '140px 0', borderTop: '1px solid var(--border)', background: 'var(--void)' }}>
-          <div className="container">
-            <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 64px' }}>
-              <Reveal>
-                <span className="eyebrow" style={{ justifyContent: 'center' }}>07 · FAQ</span>
-                <h2 className="display" style={{ marginTop: 18, fontSize: 'clamp(36px, 4.4vw, 56px)', color: 'var(--text)' }}>Perguntas que recebemos <span style={{ color: 'var(--gold)' }}>toda semana.</span></h2>
-              </Reveal>
-            </div>
-            <div style={{ maxWidth: 820, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {qs.map(([q, a], i) => (
-                <Reveal key={i} delay={i*50}>
-                  <FaqItem q={q} a={a} open={openIdx===i} onToggle={() => setOpenIdx(openIdx===i ? -1 : i)} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    function FaqItem({ q, a, open, onToggle }) {
-      const bodyRef = useRef(null);
-      const [maxH, setMaxH] = useState(0);
-      useEffect(() => { if (bodyRef.current) setMaxH(open ? bodyRef.current.scrollHeight : 0); }, [open, a]);
-      return (
-        <div style={{ background: open ? 'var(--carbon-2)' : 'var(--carbon)', border: `1px solid ${open?'var(--border-strong)':'var(--border)'}`, borderRadius: 14, transition: 'background .3s, border-color .3s' }}>
-          <button onClick={onToggle} aria-expanded={open} style={{ width: '100%', padding: '20px 24px', background: 'transparent', border: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, textAlign: 'left', color: 'var(--text)' }}>
-            <span className="display" style={{ fontSize: 16, fontWeight: 500, color: open?'var(--gold)':'var(--text)', transition: 'color .25s' }}>{q}</span>
-            <span style={{ width: 30, height: 30, borderRadius: '50%', background: open?'var(--gold)':'rgba(255,171,46,0.08)', color: open?'#1A0F00':'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all .3s', transform: open?'rotate(180deg)':'rotate(0)' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            </span>
-          </button>
-          <div style={{ maxHeight: maxH, overflow: 'hidden', transition: 'max-height .4s var(--ease-out)' }}>
-            <div ref={bodyRef} style={{ padding: '0 24px 22px' }}>
-              <p style={{ fontSize: 14.5, color: 'var(--text-muted)', lineHeight: 1.7, paddingTop: 18, borderTop: '1px dashed var(--border)' }}>{a}</p>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // ── CTA ──────────────────────────────────────────────────────────
-    function CTA() {
-      const [status, setStatus] = useState('idle');
-
-      async function handleSubmit(e) {
-        e.preventDefault();
-        setStatus('sending');
-        const fd = new FormData(e.target);
-        try {
-          const res = await fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: fd.get('name'), email: fd.get('email'), company: fd.get('company'), message: fd.get('message') }),
-          });
-          const data = await res.json();
-          if (res.ok && data.success) { setStatus('done'); e.target.reset(); }
-          else setStatus('error');
-        } catch { setStatus('error'); }
-      }
-
-      return (
-        <section id="contato" style={{ padding: '120px 0', borderTop: '1px solid var(--border)', background: 'linear-gradient(135deg, var(--void) 0%, var(--carbon) 100%)', position: 'relative', overflow: 'hidden' }}>
-          <div aria-hidden style={{ position: 'absolute', top: -120, right: -120, width: 540, height: 540, background: 'radial-gradient(circle, rgba(255,171,46,0.18), transparent 60%)', animation: 'breathe 10s ease-in-out infinite', pointerEvents: 'none' }} />
-          <div aria-hidden style={{ position: 'absolute', bottom: -120, left: -120, width: 460, height: 460, background: 'radial-gradient(circle, rgba(212,137,26,0.14), transparent 60%)', animation: 'breathe 12s ease-in-out infinite reverse', pointerEvents: 'none' }} />
-          <div className="container" style={{ position: 'relative' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 56, alignItems: 'center' }} className="cta-grid">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                <Reveal><span className="eyebrow">Próximo passo</span></Reveal>
-                <Reveal delay={120}><h2 className="display" style={{ fontSize: 'clamp(40px, 5.2vw, 64px)', color: 'var(--gold)', lineHeight: 1.0, fontWeight: 700 }}>Vamos conversar sobre seu negócio.</h2></Reveal>
-                <Reveal delay={240}><p style={{ fontSize: 17, color: 'var(--text-muted)', lineHeight: 1.65, maxWidth: 520 }}>Reunião grátis de 90 minutos. Nenhuma obrigação. Você sai com um diagnóstico claro do que pode ser automatizado — e quanto economizaria.</p></Reveal>
-                <Reveal delay={360}>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
-                    <a href="https://wa.me/5544999999999" target="_blank" rel="noopener" className="btn-primary">
-                      Agendar via WhatsApp
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="mailto:contato@alluztech.com" className="btn-outline">Enviar e-mail</a>
-                  </div>
-                </Reveal>
-                <Reveal delay={500}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, fontSize: 13, color: 'var(--text-muted)', marginTop: 12 }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7"/></svg>
-                    Já ajudamos +30 empresas no Brasil a economizar tempo e escalar operação.
-                  </div>
-                </Reveal>
-              </div>
-              <Reveal delay={300}>
-                <div style={{ background: 'var(--carbon)', border: '1px solid var(--border-strong)', borderRadius: 18, padding: 28, boxShadow: '0 30px 70px rgba(0,0,0,0.4)' }}>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: 0.18, color: 'var(--muted)', textTransform: 'uppercase', marginBottom: 18 }}>Mande uma mensagem</div>
-                  {status === 'done' ? (
-                    <div style={{ textAlign: 'center', padding: '32px 0' }}>
-                      <div style={{ fontSize: 36, marginBottom: 12 }}>✓</div>
-                      <p className="display" style={{ fontSize: 18, color: 'var(--gold)', fontWeight: 600 }}>Mensagem enviada!</p>
-                      <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 8, lineHeight: 1.5 }}>Retornaremos em até 1 dia útil.</p>
-                    </div>
-                  ) : (
-                    <form className="contact-form" onSubmit={handleSubmit}>
-                      <input name="name" type="text" placeholder="Seu nome" required />
-                      <input name="email" type="email" placeholder="E-mail profissional" required />
-                      <input name="company" type="text" placeholder="Empresa (opcional)" />
-                      <textarea name="message" placeholder="Qual processo mais desperdiça tempo na sua empresa?" required></textarea>
-                      <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status==='sending'}>
-                        {status === 'sending' ? 'Enviando…' : status === 'error' ? 'Erro — tente novamente' : 'Enviar mensagem'}
-                        {status === 'idle' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>}
-                      </button>
-                    </form>
-                  )}
-                </div>
-              </Reveal>
-            </div>
-          </div>
-          <style>{`@media(max-width:880px){.cta-grid{grid-template-columns:1fr!important;gap:40px!important}}`}</style>
-        </section>
-      );
-    }
-
-    // ── FOOTER ───────────────────────────────────────────────────────
-    function Footer() {
-      return (
-        <footer style={{ background: 'var(--carbon)', borderTop: '1px solid var(--border)', padding: '64px 0 32px' }}>
-          <div className="container">
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48 }} className="footer-grid">
-              <div>
-                <Logo height={32} />
-                <p className="display" style={{ fontSize: 18, color: 'var(--gold-light)', lineHeight: 1.4, marginTop: 18, fontWeight: 500, maxWidth: 320 }}>A IA que trabalha enquanto você lidera.</p>
-                <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 18, lineHeight: 1.6 }}>Implementamos IA e automação para PMEs.<br/>Diagnóstico grátis, preço fixo, suporte garantido.</p>
-              </div>
-              {[
-                { t:'Navegação', items:[['FAQ','#faq'],['Contato','#contato']] },
-                { t:'Contato', items:[['contato@alluz.tech','mailto:contato@alluz.tech']] },
-                { t:'Legal', items:[['Privacidade','#'],['Termos','#'],['© 2026 Alluz Tech','#']] },
-              ].map(col => (
-                <div key={col.t}>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: 0.18, textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 16 }}>{col.t}</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {col.items.map(([l, h]) => (
-                      <a key={l} href={h} style={{ fontSize: 13.5, color: 'var(--text-muted)', transition: 'color .2s' }}
-                        onMouseEnter={e=>e.currentTarget.style.color='var(--gold)'}
-                        onMouseLeave={e=>e.currentTarget.style.color='var(--text-muted)'}>{l}</a>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <style>{`@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}}@media(max-width:480px){.footer-grid{grid-template-columns:1fr!important}}`}</style>
-        </footer>
-      );
-    }
-
-    // ── APP ──────────────────────────────────────────────────────────
-    function App() {
-      useEffect(() => {
-        const obs = new IntersectionObserver(entries => {
-          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
-        }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-        return () => obs.disconnect();
-      }, []);
-      return (
-        <React.Fragment>
-          <Nav />
-          <main>
-            <Hero />
-            <Problem />
-            <Cases />
-            <Diff />
-            <Tech />
-            <About />
-            <FAQ />
-            <CTA />
-          </main>
-          <Footer />
-        </React.Fragment>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
-
-  <script>
-    // ── CHATBOT ───────────────────────────────────────────────────────
-    let chatOpen = false, chatHistory = [], isTyping = false;
-
-    function toggleChat() {
-      chatOpen = !chatOpen;
-      document.getElementById('chatWindow').classList.toggle('open', chatOpen);
-      if (chatOpen && chatHistory.length === 0) {
-        setTimeout(() => addBotMessage("Olá! Sou a **Luz**, assistente da Alluz Tech. 👋\n\nEstou aqui para responder suas dúvidas sobre como a inteligência artificial pode transformar o seu negócio.\n\nComo posso te ajudar hoje?"), 400);
-      }
-      if (chatOpen) document.getElementById('chatInput').focus();
-    }
-
-    function addBotMessage(text) {
-      const msgs = document.getElementById('chatMessages');
-      const div = document.createElement('div');
-      div.className = 'msg msg-bot';
-      const formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-      div.innerHTML = `<div class="msg-bubble">${formatted}</div><div class="msg-time">${getTime()}</div>`;
-      msgs.appendChild(div);
-      msgs.scrollTop = msgs.scrollHeight;
-      chatHistory.push({ role: 'assistant', content: text });
-    }
-
-    function addUserMessage(text) {
-      const msgs = document.getElementById('chatMessages');
-      const div = document.createElement('div');
-      div.className = 'msg msg-user';
-      div.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${getTime()}</div>`;
-      msgs.appendChild(div);
-      msgs.scrollTop = msgs.scrollHeight;
-      chatHistory.push({ role: 'user', content: text });
-      document.getElementById('chatSuggestions').style.display = 'none';
-    }
-
-    function showTyping() {
-      const msgs = document.getElementById('chatMessages');
-      const div = document.createElement('div');
-      div.className = 'msg msg-bot'; div.id = 'typingIndicator';
-      div.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
-      msgs.appendChild(div);
-      msgs.scrollTop = msgs.scrollHeight;
-    }
-
-    function removeTyping() { const t = document.getElementById('typingIndicator'); if (t) t.remove(); }
-    function getTime() { return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
-
-    async function sendMessage() {
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if (!text || isTyping) return;
-      input.value = ''; input.style.height = 'auto';
-      addUserMessage(text);
-      isTyping = true; showTyping();
-      try {
-        const response = await fetch('/api/chat', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: chatHistory.slice(-10) })
-        });
-        const data = await response.json();
-        removeTyping();
-        addBotMessage(data.reply || 'Desculpe, tive um problema. Tente novamente em instantes!');
-      } catch(e) {
-        removeTyping();
-        addBotMessage('Ops! Houve uma instabilidade. Tente novamente ou entre em contato pelo formulário. 😊');
-      }
-      isTyping = false;
-    }
-
-    function sendSuggestion(btn) { document.getElementById('chatInput').value = btn.textContent; sendMessage(); }
-    function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
-
-    document.getElementById('chatInput').addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 80) + 'px';
-    });
-
-    // ── COOKIES ───────────────────────────────────────────────────────
-    function acceptCookies(type) {
-      localStorage.setItem('alluztech_cookies', type);
-      const b = document.getElementById('cookieBanner');
-      b.style.transform = 'translateY(100%)';
-      setTimeout(() => b.style.display = 'none', 400);
-    }
-
-    window.addEventListener('load', () => {
-      if (!localStorage.getItem('alluztech_cookies')) {
-        setTimeout(() => document.getElementById('cookieBanner').classList.add('show'), 1500);
-      }
-    });
-  </script>
 </body>
 </html>
