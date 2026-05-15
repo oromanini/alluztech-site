@@ -3,6 +3,7 @@ name: Deploy → GCP Cloud Run
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 env:
   REGION:       us-central1
