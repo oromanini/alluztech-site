@@ -197,10 +197,9 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
 
 // ── ROTA: FORMULÁRIO DE CONTATO ───────────────────────────────────────────────
 app.post('/api/contact', contactLimiter, async (req, res) => {
-  const name    = sanitize(req.body.name,    100);
-  const email   = sanitize(req.body.email,   200);
-  const company = sanitize(req.body.company, 100);
-  const message = sanitize(req.body.message, 2000);
+  const name  = sanitize(req.body.name,  100);
+  const email = sanitize(req.body.email, 200);
+  const phone = sanitize(req.body.phone, 20);
 
   // Validações
   if (!name || name.length < 2) {
@@ -209,25 +208,30 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   if (!isValidEmail(email)) {
     return res.status(400).json({ error: 'E-mail inválido.' });
   }
-  if (!message || message.length < 10) {
-    return res.status(400).json({ error: 'Mensagem muito curta.' });
-  }
 
   try {
     await resend.emails.send({
       from:    'Site Alluz Tech <onboarding@resend.dev>',
       to:      CONTACT_EMAIL,
       replyTo: email,
-      subject: `Novo contato: ${name}${company ? ` — ${company}` : ''}`,
+      subject: `Novo agendamento de diagnóstico: ${name}`,
       html: `
-        <h2 style="color:#FFAB2E">Novo contato — Alluz Tech</h2>
-        <table style="font-family:sans-serif;font-size:14px">
-          <tr><td><b>Nome:</b></td><td>${name}</td></tr>
-          <tr><td><b>E-mail:</b></td><td>${email}</td></tr>
-          <tr><td><b>Empresa:</b></td><td>${company || '—'}</td></tr>
+        <h2 style="color:#2EEAFF;font-family:sans-serif">Novo agendamento — Diagnóstico Gratuito</h2>
+        <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;width:100%;margin-bottom:24px">
+          <tr>
+            <td style="padding:8px;border-bottom:1px solid #e0e0e0"><b>Nome:</b></td>
+            <td style="padding:8px;border-bottom:1px solid #e0e0e0">${name}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border-bottom:1px solid #e0e0e0"><b>E-mail:</b></td>
+            <td style="padding:8px;border-bottom:1px solid #e0e0e0"><a href="mailto:${email}">${email}</a></td>
+          </tr>
+          ${phone ? `<tr>
+            <td style="padding:8px;border-bottom:1px solid #e0e0e0"><b>Telefone:</b></td>
+            <td style="padding:8px;border-bottom:1px solid #e0e0e0">${phone}</td>
+          </tr>` : ''}
         </table>
-        <h3>Mensagem:</h3>
-        <p style="font-family:sans-serif">${message.replace(/\n/g, '<br>')}</p>
+        <p style="font-family:sans-serif;color:#888;font-size:12px">Responda este e-mail para confirmar o horário do diagnóstico.</p>
       `,
     });
 
