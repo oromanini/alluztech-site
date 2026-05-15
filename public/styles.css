@@ -159,7 +159,7 @@ img, svg { display: block; max-width: 100%; }
   position: relative; z-index: 2;
   width: 100%; max-width: var(--max-w); margin: 0 auto;
   padding: 0 var(--pad-x);
-  padding-top: 8vh;
+  padding-top: 120px;
 }
 .hero-eyebrow {
   display: inline-flex; gap: 10px; align-items: center;
@@ -245,8 +245,8 @@ img, svg { display: block; max-width: 100%; }
 
 .hero-metrics {
   margin-top: 56px;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 28px; max-width: 720px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
   padding-top: 28px;
   border-top: 1px solid var(--line-s);
 }
@@ -258,11 +258,12 @@ img, svg { display: block; max-width: 100%; }
   margin-top: 8px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--muted);
+  color: var(--muted); white-space: nowrap;
+  text-overflow: ellipsis; overflow: hidden;
 }
 
 .hero-scroll {
-  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  position: absolute; bottom: 110px; left: 50%; transform: translateX(-50%);
   z-index: 2;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
@@ -738,7 +739,7 @@ section { position: relative; }
   border: 1px solid var(--line-s);
   border-radius: 12px;
   background: rgba(14, 23, 41, 0.4);
-  position: relative; overflow: hidden;
+  position: relative; overflow: visible;
   transition: all 0.5s var(--ease);
 }
 .exp-card:hover {
@@ -746,12 +747,14 @@ section { position: relative; }
   transform: translateY(-4px);
 }
 .exp-card .big {
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(24px, 4vw, 48px);
   font-weight: 200; letter-spacing: -0.03em;
   background: var(--grad);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1; margin-bottom: 16px;
+  line-height: 1.1; padding-top: 0.05em; padding-bottom: 0.05em;
+  margin-bottom: 16px;
+  overflow: hidden;
 }
 .exp-card .lbl {
   font-size: 14px; color: var(--white); font-weight: 500;
