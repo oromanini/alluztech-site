@@ -371,7 +371,7 @@
       Conversa rápida, sem compromisso e sem pitch genérico. Você sai com um diagnóstico claro do que dá pra automatizar e do retorno esperado.
     </p>
     <div class="cta-ctas reveal reveal-d3">
-      <a href="mailto:contato@alluz.tech?subject=Diagnóstico%20gratuito" class="btn btn-primary">
+      <a href="#contato" class="btn btn-primary">
         <span>Agendar agora</span><span class="arr"></span>
       </a>
       <a href="#chat" class="btn btn-ghost">
@@ -419,12 +419,88 @@
   </div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════
+     MODAL — Formulário de Diagnóstico Gratuito
+     ═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="contact-modal-overlay">
+  <div class="modal-content" role="dialog" aria-labelledby="modal-title">
+    <button class="modal-close" aria-label="Fechar modal" id="modal-close-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="modal-head">
+      <h2 id="modal-title">Diagnóstico Gratuito</h2>
+      <p>Preencha seus dados e agende uma conversa rápida com nosso time.</p>
+    </div>
+
+    <form class="contact-form" id="contact-form">
+      <div class="form-group">
+        <label for="contact-name">Nome completo *</label>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          placeholder="Seu nome"
+          required
+          maxlength="100"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contact-email">E-mail *</label>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          placeholder="seu@email.com"
+          required
+          maxlength="200"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contact-phone">Telefone (opcional)</label>
+        <input
+          type="tel"
+          id="contact-phone"
+          name="phone"
+          placeholder="(11) 99999-9999"
+          maxlength="20"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+        <span>Agendar Diagnóstico</span><span class="arr"></span>
+      </button>
+
+      <p class="form-footer">Responderemos em até 1 dia útil. NDA garantida.</p>
+    </form>
+
+    <div class="form-success" id="form-success" style="display: none;">
+      <div style="text-align: center;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--cyan); margin-bottom: 16px;">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <h3>Recebido! ✓</h3>
+        <p>Obrigado por agendar. Nosso time entrará em contato em até 1 dia útil.</p>
+      </div>
+    </div>
+
+    <div class="form-error" id="form-error" style="display: none;">
+      <p id="error-message"></p>
+    </div>
+  </div>
+</div>
+
 <div class="noise"></div>
 
 <script src="main.js"></script>
 <script src="hero-canvas.js"></script>
 <script src="dri-motion.js"></script>
 <script src="chat.js"></script>
+<script src="contact.js"></script>
 
 </body>
 </html>
