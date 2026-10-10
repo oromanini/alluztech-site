@@ -3,504 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alluz Tech · Inteligência que devolve tempo, foco e margem</title>
-<meta name="description" content="Soluções de IA e automação para pequenos e médios empresários. Método DRI: Diagnóstico, Réplica de Comportamento, Implementação.">
+<title>Valiqon · O trabalho repetitivo da sua empresa, feito por uma IA</title>
+<meta name="description" content="O trabalho repetitivo da sua empresa, feito por uma IA. Automação com IA para todos os tipos de negócios. Método DRI: Diagnóstico, Réplica de Comportamento, Implementação.">
+<meta name="theme-color" content="#04192B">
+<!-- DEPLOY STEP: trocar pelas URLs absolutas do domínio Valiqon -->
+<meta property="og:title" content="Valiqon · O trabalho repetitivo da sua empresa, feito por uma IA">
+<meta property="og:description" content="Automação com IA para todos os tipos de negócios.">
+<meta property="og:image" content="/assets/brand/valiqon-capa-1200x660.svg">
+<link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<link rel="icon" type="image/png" href="assets/alluz-logo.png">
 </head>
 <body>
 
-<!-- ═══════════════ NAV ═══════════════ -->
-<nav class="nav">
-  <a href="#top" class="logo nav-logo" style="font-size:30px">
-    <span class="logo-top"><span class="logo-alluz">Alluz</span><span class="logo-node"></span></span>
-    <span class="logo-bottom"><span class="logo-bar"></span><span class="logo-tech">Tech</span></span>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+
+<!-- Símbolos oficiais do manual v9 (desenhados, nunca digitados) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="wordmark" fill="none" stroke-width="7" stroke-linecap="butt" stroke-linejoin="miter">
+      <path d="M 0 0 L 40 100 L 72 20"/><path d="M 160 100 L 200 0 L 240 100"/><path d="M 320 0 L 320 100"/><path d="M 332 100 L 380 100"/><path d="M 460 0 L 460 100"/>
+      <path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/>
+      <circle cx="770" cy="50" r="50"/><path d="M 900 40 L 900 100"/><path d="M 900 0 L 980 100"/><path d="M 980 0 L 980 100"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="ambient" aria-hidden="true"></div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="nav" aria-label="Principal">
+  <a href="#top" class="nav-logo" aria-label="Valiqon, início">
+    <svg viewBox="-4 -4 988 126" role="img" aria-label="Valiqon"><use href="#wordmark" stroke="#FFFFFF"/></svg>
   </a>
   <div class="nav-links">
     <a href="#problema">Problema</a>
     <a href="#engrenagens">Tecnologia</a>
     <a href="#dri">Método DRI</a>
-    <a href="#chat">Alluz IA</a>
-    <a href="#contato" class="nav-cta">Diagnóstico grátis</a>
+    <a href="#chat">Valiqon IA</a>
+    <a href="#contato" class="btn btn-primary btn-sm" data-action="contact">Diagnóstico grátis</a>
   </div>
 </nav>
 
-<!-- ═══════════════ HERO ═══════════════ -->
+<main id="main" tabindex="-1">
+
+<!-- ═══════════ HERO · a fila do dia ═══════════ -->
 <header class="hero" id="top">
-  <canvas id="hero-canvas" class="hero-canvas"></canvas>
-  <div class="hero-grid"></div>
-  <div class="hero-vignette"></div>
-
-  <div class="hero-content">
-    <span class="hero-eyebrow reveal">IA · Automação · Engenharia</span>
-    <h1 class="reveal reveal-d1">
-      Inteligência<br>que devolve<br><strong>tempo,</strong><br><strong>foco </strong>&nbsp;<strong>e margem.</strong>
-    </h1>
-    <p class="hero-sub reveal reveal-d2">
-      A Alluz Tech automatiza o trabalho que repete na sua operação — com engenharia de IA séria, pensada para o pequeno e médio empresário brasileiro.
-    </p>
-    <div class="hero-ctas reveal reveal-d3">
-      <a href="#contato" class="btn btn-primary">
-        <span>Agendar diagnóstico</span><span class="arr"></span>
-      </a>
-      <a href="#dri" class="btn btn-ghost">
-        <span>Conhecer o método DRI</span><span class="arr"></span>
-      </a>
-    </div>
-
-    <div class="hero-metrics reveal reveal-d4">
-      <div>
-        <div class="metric-num"><span data-count="8" data-suffix=" anos">0</span></div>
-        <div class="metric-lbl">Engenharia de software</div>
-      </div>
-      <div>
-        <div class="metric-num"><span data-count="80" data-suffix="%">0</span></div>
-        <div class="metric-lbl">Tarefas automatizadas em média</div>
-      </div>
-      <div>
-        <div class="metric-num"><span data-count="12" data-suffix="k/mês">0</span></div>
-        <div class="metric-lbl">Economizado vs. dev interno</div>
-      </div>
-      <div>
-        <div class="metric-num">R$ <span data-count="0">0</span></div>
-        <div class="metric-lbl">Para o diagnóstico inicial</div>
+  <div class="stage">
+    <div class="hero-copy">
+      <span class="caption">IA · Automação · Engenharia</span>
+      <h1 class="hero-title">O trabalho repetitivo da sua empresa, feito por uma IA.</h1>
+      <p class="hero-sub">Automação com IA para todos os tipos de negócios.</p>
+      <div class="hero-ctas">
+        <a href="#contato" class="btn btn-primary" data-action="contact"><span>Agendar diagnóstico</span><span class="arr" aria-hidden="true"></span></a>
+        <a href="#dri" class="btn btn-ghost"><span>Conhecer o método DRI</span><span class="arr" aria-hidden="true"></span></a>
       </div>
     </div>
+
+    <section class="flow" aria-labelledby="flow-title">
+      <div class="flow-head">
+        <h2 class="flow-title" id="flow-title">Sua operação no automático</h2>
+        <span class="flow-status" aria-hidden="true">6 pendentes</span>
+      </div>
+      <p class="sr-only">Cada tarefa repetitiva passa pela Valiqon IA e sai resolvida.</p>
+      <div class="flow-body">
+        <svg class="wires" aria-hidden="true"></svg>
+        <ul class="flow-col flow-in" aria-label="O que chega">
+          <li class="node node-in"><span class="node-name">Perguntas no WhatsApp</span><span class="node-meta">o dia todo</span></li>
+          <li class="node node-in"><span class="node-name">Notas fiscais do dia</span><span class="node-meta">todo dia</span></li>
+          <li class="node node-in"><span class="node-name">Pix, cartão e boleto</span><span class="node-meta">todo dia</span></li>
+          <li class="node node-in"><span class="node-name">Clientes atrasados</span><span class="node-meta">toda semana</span></li>
+          <li class="node node-in"><span class="node-name">Planilha de estoque</span><span class="node-meta">toda semana</span></li>
+          <li class="node node-in"><span class="node-name">Relatório do mês</span><span class="node-meta">todo mês</span></li>
+        </ul>
+        <div class="hub" aria-hidden="true">
+          <div class="hub-core"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></div>
+          <span class="hub-lbl">Valiqon IA</span>
+        </div>
+        <ul class="flow-col flow-out" aria-label="O que sai resolvido">
+          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Respondidas na hora</span></li>
+          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Notas emitidas</span></li>
+          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Recebimentos conferidos</span></li>
+          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Atrasados cobrados</span></li>
+          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Estoque atualizado</span></li>
+          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Relatório pronto</span></li>
+        </ul>
+      </div>
+      <div class="flow-foot">
+        <div class="hours"><span class="hours-num" aria-hidden="true">0h</span><span class="hours-lbl">por semana de volta</span><span class="sr-only">9 horas por semana de volta</span></div>
+        <p class="hours-src">Média de horas que donos de pequenos negócios gastam com burocracia financeira. Pesquisa Nu Empresas e Bridge Research, 2026.</p>
+      </div>
+    </section>
+
+    <div class="cue" aria-hidden="true"><span class="cue-line"></span><span>Role para ver</span></div>
   </div>
-
 </header>
 
-<!-- ═══════════════ PROBLEMA ═══════════════ -->
-<section class="problem" id="problema">
-  <div class="section">
-    <span class="eyebrow reveal">O Problema</span>
-    <h2 class="title reveal reveal-d1">
-      Três sintomas que travam<br>o seu <strong>crescimento.</strong>
-    </h2>
-    <p class="lead reveal reveal-d2">
-      Identificamos o padrão em centenas de PMEs brasileiras. Provavelmente um (ou os três) está acontecendo na sua agora.
-    </p>
-
-    <div class="problem-grid">
-      <article class="problem-card reveal reveal-d1">
-        <div class="icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 6v6l4 2"/>
-          </svg>
-        </div>
-        <div class="problem-num">SINTOMA 01</div>
-        <h3>Custo de oportunidade<br>elevado</h3>
-        <p>Equipes qualificadas gastando horas em tarefas que um robô poderia fazer — digitação, e-mails padrão, relatórios manuais.</p>
-      </article>
-
-      <article class="problem-card reveal reveal-d2">
-        <div class="icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="4" width="7" height="7" rx="1"/>
-            <rect x="14" y="4" width="7" height="7" rx="1"/>
-            <rect x="3" y="13" width="7" height="7" rx="1"/>
-            <rect x="14" y="13" width="7" height="7" rx="1"/>
-          </svg>
-        </div>
-        <div class="problem-num">SINTOMA 02</div>
-        <h3>Silos de dados<br>e retrabalho</h3>
-        <p>Sistemas que não conversam entre si geram inconsistências, planilhas duplicadas e horas de copy/paste manual entre ferramentas.</p>
-      </article>
-
-      <article class="problem-card reveal reveal-d3">
-        <div class="icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M3 12h18M12 3v18"/>
-            <path d="M7 7l10 10M17 7L7 17"/>
-          </svg>
-        </div>
-        <div class="problem-num">SINTOMA 03</div>
-        <h3>Operação<br>como gargalo</h3>
-        <p>O negócio não escala porque a equipe está atolada no dia a dia. Cresce a receita, cresce o custo — e a margem fica para trás.</p>
-      </article>
-    </div>
+<!-- ═══════════ NÚMEROS ═══════════ -->
+<section class="metrics" aria-label="Números">
+  <div class="metrics-inner">
+    <div class="metric reveal"><div class="metric-num"><span data-count="8" data-suffix=" anos">8 anos</span></div><div class="metric-lbl">Engenharia de software</div></div>
+    <div class="metric reveal"><div class="metric-num"><span data-count="80" data-suffix="%">80%</span></div><div class="metric-lbl">Tarefas automatizadas em média</div></div>
+    <div class="metric reveal"><div class="metric-num"><span data-count="12" data-suffix="k/mês">12k/mês</span></div><div class="metric-lbl">Economizado vs. dev interno</div></div>
+    <div class="metric reveal"><div class="metric-num">R$ <span data-count="0">0</span></div><div class="metric-lbl">Para o diagnóstico inicial</div></div>
   </div>
 </section>
 
-<!-- ═══════════════ ENGRENAGENS ═══════════════ -->
-<section class="engrenagens" id="engrenagens">
-  <div class="section">
-    <div class="engr-head">
-      <div>
-        <span class="eyebrow reveal">A Solução · 5 Engrenagens</span>
-        <h2 class="title reveal reveal-d1">
-          Stack séria.<br><strong>Resultado mensurável.</strong>
-        </h2>
-      </div>
-      <p class="lead reveal reveal-d2">
-        Selecionamos cinco tecnologias de ponta e as combinamos para entregar automações que aguentam carga real — longe de soluções superficiais ou app de "vibe coding".
-      </p>
-    </div>
+<div class="cut-rule" aria-hidden="true"><svg viewBox="0 0 1200 4" preserveAspectRatio="none"><path pathLength="1" d="M0 2 H560 M640 2 H1200"/></svg></div>
 
+<!-- ═══════════ PROBLEMA ═══════════ -->
+<section class="problem" id="problema">
+  <div class="section">
+    <div class="problem-head">
+      <span class="caption reveal">O problema</span>
+      <h2 class="title reveal">Três sintomas que travam o seu <strong>crescimento.</strong></h2>
+      <p class="lead reveal">Identificamos o padrão em centenas de PMEs brasileiras. Provavelmente um (ou os três) está acontecendo na sua agora.</p>
+    </div>
+    <ol class="symptoms">
+      <li class="symptom reveal">
+        <span class="symptom-num">Sintoma 01</span>
+        <h3>Custo de oportunidade elevado</h3>
+        <p>Equipes qualificadas gastando horas em tarefas que um robô poderia fazer: digitação, e-mails padrão, relatórios manuais.</p>
+      </li>
+      <li class="symptom reveal">
+        <span class="symptom-num">Sintoma 02</span>
+        <h3>Silos de dados e retrabalho</h3>
+        <p>Sistemas que não conversam entre si geram inconsistências, planilhas duplicadas e horas de copiar e colar entre ferramentas.</p>
+      </li>
+      <li class="symptom reveal">
+        <span class="symptom-num">Sintoma 03</span>
+        <h3>Operação como gargalo</h3>
+        <p>O negócio não escala porque a equipe está atolada no dia a dia. Cresce a receita, cresce o custo, e a margem fica para trás.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════ ENGRENAGENS ═══════════ -->
+<section class="engrenagens" id="engrenagens">
+  <div class="section engr-layout">
+    <div class="engr-head">
+      <span class="caption reveal">Como resolvemos · 5 engrenagens</span>
+      <h2 class="title reveal">Stack séria.<br><strong>Resultado mensurável.</strong></h2>
+      <p class="lead reveal">Selecionamos cinco tecnologias de ponta e as combinamos para entregar automações que aguentam carga real. Longe de remendo superficial ou app de "vibe coding".</p>
+    </div>
     <div class="engr-list">
       <div class="engr-row reveal">
         <span class="engr-num">01</span>
-        <div>
-          <div class="engr-name"><strong>LLMs</strong> — cérebros de IA</div>
-          <div class="engr-tag mono">PROCESSAMENTO DE LINGUAGEM NATURAL</div>
-        </div>
+        <div><div class="engr-name"><strong>LLMs</strong>, cérebros de IA</div><div class="engr-tag">Processamento de linguagem natural</div></div>
         <p class="engr-func">Modelos que entendem contexto e linguagem natural.</p>
         <p class="engr-impact">Leitura de e-mails, análise de documentos e assistentes que falam a sua língua.</p>
       </div>
-
       <div class="engr-row reveal">
         <span class="engr-num">02</span>
-        <div>
-          <div class="engr-name"><strong>RAG</strong> — memória empresarial</div>
-          <div class="engr-tag mono">CONSULTA SEGURA AOS SEUS DADOS</div>
-        </div>
+        <div><div class="engr-name"><strong>RAG</strong>, memória empresarial</div><div class="engr-tag">Consulta segura aos seus dados</div></div>
         <p class="engr-func">A IA responde com base no histórico real da empresa.</p>
         <p class="engr-impact">Zero alucinação. Respostas precisas e auditáveis baseadas no que existe.</p>
       </div>
-
       <div class="engr-row reveal">
         <span class="engr-num">03</span>
-        <div>
-          <div class="engr-name"><strong>n8n</strong> — orquestrador</div>
-          <div class="engr-tag mono">CONEXÃO ENTRE CENTENAS DE APPS</div>
-        </div>
+        <div><div class="engr-name"><strong>n8n</strong>, orquestrador</div><div class="engr-tag">Conexão entre centenas de apps</div></div>
         <p class="engr-func">Liga sistemas que hoje vivem isolados.</p>
         <p class="engr-impact">Acabam as tarefas manuais entre Shopify, CRM, e-mail e planilhas.</p>
       </div>
-
       <div class="engr-row reveal">
         <span class="engr-num">04</span>
-        <div>
-          <div class="engr-name"><strong>MCP</strong> — integração padronizada</div>
-          <div class="engr-tag mono">FERRAMENTAS QUE A IA ENXERGA</div>
-        </div>
+        <div><div class="engr-name"><strong>MCP</strong>, integração padronizada</div><div class="engr-tag">Ferramentas que a IA enxerga</div></div>
         <p class="engr-func">Padrão aberto para a IA acessar suas ferramentas.</p>
         <p class="engr-impact">A IA interage com todo o ecossistema digital da empresa, com segurança.</p>
       </div>
-
       <div class="engr-row reveal">
         <span class="engr-num">05</span>
-        <div>
-          <div class="engr-name"><strong>OpenClaw</strong> — ações em sistemas legados</div>
-          <div class="engr-tag mono">RPA ONDE NÃO HÁ API</div>
-        </div>
+        <div><div class="engr-name"><strong>OpenClaw</strong>, ações em sistemas legados</div><div class="engr-tag">RPA onde não há API</div></div>
         <p class="engr-func">A IA age: preenche formulários e clica em botões.</p>
-        <p class="engr-impact">Automatiza até aquele ERP antigo da contabilidade — sem precisar trocar de sistema.</p>
+        <p class="engr-impact">Automatiza até aquele ERP antigo da contabilidade, sem precisar trocar de sistema.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ DRI METHOD ═══════════════ -->
+<div class="cut-rule" aria-hidden="true"><svg viewBox="0 0 1200 4" preserveAspectRatio="none"><path pathLength="1" d="M0 2 H780 M860 2 H1200"/></svg></div>
+
+<!-- ═══════════ MÉTODO DRI ═══════════ -->
 <section class="dri" id="dri">
-  <div class="dri-inner">
+  <div class="section">
     <div class="dri-head">
       <div>
-        <span class="eyebrow reveal">O Diferencial · Método DRI</span>
-        <h2 class="title reveal reveal-d1">
-          Diagnóstico.<br>Réplica.<br><strong>Implementação.</strong>
-        </h2>
+        <span class="caption reveal">O diferencial · Método DRI</span>
+        <h2 class="title reveal">Diagnóstico.<br>Réplica.<br><strong>Implementação.</strong></h2>
       </div>
-      <p class="lead reveal reveal-d2">
-        Não vendemos app pronto. Construímos a partir da sua operação real — com 8 anos de engenharia de software e parceria técnica Anthropic por trás.
-      </p>
-    </div>
-  </div>
-
-  <div class="dri-stage">
-    <div class="dri-nav">
-      <button class="dri-tab" aria-current="true">
-        <span class="dri-tab-num">01</span>
-        <span class="dri-tab-name">Diagnóstico</span>
-        <span class="dri-tab-prog"></span>
-      </button>
-      <button class="dri-tab">
-        <span class="dri-tab-num">02</span>
-        <span class="dri-tab-name">Réplica de Comportamento</span>
-        <span class="dri-tab-prog"></span>
-      </button>
-      <button class="dri-tab">
-        <span class="dri-tab-num">03</span>
-        <span class="dri-tab-name">Implementação</span>
-        <span class="dri-tab-prog"></span>
-      </button>
+      <p class="lead reveal">Não vendemos app pronto. Construímos a partir da sua operação real, com 8 anos de engenharia de software e parceria técnica Anthropic por trás.</p>
     </div>
 
-    <div class="dri-track">
-      <canvas class="dri-canvas"></canvas>
-
-      <div class="dri-slide active">
-        <div class="dri-slide-left">
-          <div class="dri-slide-num">FASE 01 · DIAGNÓSTICO</div>
-          <h3 class="dri-slide-title">Entender antes<br>de <strong>automatizar.</strong></h3>
-          <p class="dri-slide-desc">
-            Um brainstorm com profundidade técnica. Mapeamos sua operação, identificamos onde a IA gera o maior retorno e desenhamos a melhor relação custo-benefício.
-          </p>
-          <ul class="dri-slide-bullets">
-            <li>Mapeamento da operação real</li>
-            <li>Priorização por impacto financeiro</li>
-            <li>Estimativa de horas técnicas + mensalidade</li>
-          </ul>
-        </div>
-        <div class="dri-slide-right"></div>
+    <div class="dri-stage reveal">
+      <div class="dri-tabs" role="tablist" aria-label="Fases do método DRI">
+        <button class="dri-tab" role="tab" id="tab-1" aria-controls="fase-1" aria-selected="true"><span class="dri-tab-num">01</span><span class="dri-tab-name">Diagnóstico</span><span class="dri-tab-prog" aria-hidden="true"></span></button>
+        <button class="dri-tab" role="tab" id="tab-2" aria-controls="fase-2" aria-selected="false" tabindex="-1"><span class="dri-tab-num">02</span><span class="dri-tab-name">Réplica de Comportamento</span><span class="dri-tab-prog" aria-hidden="true"></span></button>
+        <button class="dri-tab" role="tab" id="tab-3" aria-controls="fase-3" aria-selected="false" tabindex="-1"><span class="dri-tab-num">03</span><span class="dri-tab-name">Implementação</span><span class="dri-tab-prog" aria-hidden="true"></span></button>
       </div>
 
-      <div class="dri-slide">
-        <div class="dri-slide-left">
-          <div class="dri-slide-num">FASE 02 · RÉPLICA DE COMPORTAMENTO</div>
-          <h3 class="dri-slide-title">A IA aprende com<br>seu <strong>melhor colaborador.</strong></h3>
-          <p class="dri-slide-desc">
-            Sob NDA, documentamos e gravamos como sua operação realmente acontece. A IA copia o "mindset" da sua equipe — não responde como um chatbot genérico.
-          </p>
-          <ul class="dri-slide-bullets">
-            <li>Sessões de captura de comportamento</li>
-            <li>NDA + LGPD em todo o processo</li>
-            <li>IA fala como a sua empresa fala</li>
-          </ul>
+      <div class="dri-panels">
+        <div class="dri-panel" role="tabpanel" id="fase-1" aria-labelledby="tab-1">
+          <div class="dri-copy">
+            <span class="caption">Fase 01 · Diagnóstico</span>
+            <h3 class="dri-title">Entender antes de <strong>automatizar.</strong></h3>
+            <p>Um brainstorm com profundidade técnica. Mapeamos sua operação, identificamos onde a IA gera o maior retorno e desenhamos a melhor relação custo-benefício.</p>
+            <ul><li>Mapeamento da operação real</li><li>Priorização por impacto financeiro</li><li>Estimativa de horas técnicas + mensalidade</li></ul>
+          </div>
+          <svg class="dri-art" viewBox="0 0 320 320" aria-hidden="true"><circle cx="160" cy="160" r="110" pathLength="1"/><circle cx="160" cy="160" r="70" pathLength="1"/><path d="M160 20 V60 M160 260 V300 M20 160 H60 M260 160 H300" pathLength="1"/></svg>
         </div>
-        <div class="dri-slide-right"></div>
-      </div>
-
-      <div class="dri-slide">
-        <div class="dri-slide-left">
-          <div class="dri-slide-num">FASE 03 · IMPLEMENTAÇÃO</div>
-          <h3 class="dri-slide-title">Engenharia,<br>não <strong>vibe coding.</strong></h3>
-          <p class="dri-slide-desc">
-            Desenvolvimento focado em horas técnicas reais, com observabilidade desde o dia um e garantia de duas mudanças de escopo gratuitas no caminho.
-          </p>
-          <ul class="dri-slide-bullets">
-            <li>2 mudanças de escopo gratuitas</li>
-            <li>Observabilidade + suporte contínuo</li>
-            <li>Atualizações de modelo inclusas na mensalidade</li>
-          </ul>
+        <div class="dri-panel" role="tabpanel" id="fase-2" aria-labelledby="tab-2" hidden>
+          <div class="dri-copy">
+            <span class="caption">Fase 02 · Réplica de comportamento</span>
+            <h3 class="dri-title">A IA aprende com seu <strong>melhor colaborador.</strong></h3>
+            <p>Sob NDA, documentamos e gravamos como sua operação realmente acontece. A IA copia o "mindset" da sua equipe, em vez de responder como um chatbot genérico.</p>
+            <ul><li>Sessões de captura de comportamento</li><li>NDA + LGPD em todo o processo</li><li>IA fala como a sua empresa fala</li></ul>
+          </div>
+          <svg class="dri-art" viewBox="0 0 320 320" aria-hidden="true"><circle cx="120" cy="160" r="80" pathLength="1"/><circle cx="200" cy="160" r="80" pathLength="1"/></svg>
         </div>
-        <div class="dri-slide-right"></div>
+        <div class="dri-panel" role="tabpanel" id="fase-3" aria-labelledby="tab-3" hidden>
+          <div class="dri-copy">
+            <span class="caption">Fase 03 · Implementação</span>
+            <h3 class="dri-title">Engenharia, não <strong>vibe coding.</strong></h3>
+            <p>Desenvolvimento focado em horas técnicas reais, com observabilidade desde o dia um e garantia de duas mudanças de escopo gratuitas no caminho.</p>
+            <ul><li>2 mudanças de escopo gratuitas</li><li>Observabilidade + suporte contínuo</li><li>Atualizações de modelo inclusas na mensalidade</li></ul>
+          </div>
+          <svg class="dri-art" viewBox="530 -12 120 140" aria-hidden="true"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97" pathLength="1"/><path d="M 572 118 L 620 118" pathLength="1"/></svg>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ CHAT IA ═══════════════ -->
+<!-- ═══════════ CHAT ═══════════ -->
 <section class="chat" id="chat">
-  <div class="section">
-    <span class="eyebrow reveal">Alluz IA · Demonstração</span>
-    <h2 class="title reveal reveal-d1">
-      Converse com a IA<br>que <strong>construímos.</strong>
-    </h2>
-    <p class="lead reveal reveal-d2">
-      Esta é uma amostra do que entregamos: uma IA que entende sua dor, fala como sua marca e sugere o próximo passo. Pergunte qualquer coisa sobre automação, IA aplicada ou o método DRI.
-    </p>
+  <div class="section chat-layout">
+    <div class="chat-intro">
+      <span class="caption reveal">Valiqon IA · Demonstração</span>
+      <h2 class="title reveal">Converse com a IA que <strong>construímos.</strong></h2>
+      <p class="lead reveal">Esta é uma amostra do que entregamos: uma IA que entende sua dor, fala como sua marca e sugere o próximo passo. Pergunte qualquer coisa sobre automação, IA aplicada ou o método DRI.</p>
+    </div>
 
-    <div class="chat-shell reveal reveal-d3">
+    <div class="chat-shell reveal">
       <div class="chat-head">
-        <span class="chat-dot"></span>
-        <span class="chat-title">Alluz IA</span>
-        <span class="chat-status">ON · Anthropic</span>
+        <span class="chat-dot" aria-hidden="true"></span>
+        <span class="chat-title">Valiqon IA</span>
+        <span class="chat-status">Online</span>
       </div>
-      <div class="chat-log">
+      <div class="chat-log" aria-live="polite">
         <div class="msg msg-ai">
-          <span class="msg-tag">Alluz IA</span>
-          <div>Oi! Sou a IA da Alluz Tech. Posso te explicar o que automatizamos, o método DRI ou estimar onde a IA traria mais retorno no seu negócio. Por onde a gente começa?</div>
+          <span class="msg-tag">Valiqon IA</span>
+          <div>Oi! Sou a IA da Valiqon. Posso te explicar o que automatizamos, o método DRI ou estimar onde a IA traria mais retorno no seu negócio. Por onde a gente começa?</div>
         </div>
       </div>
       <div class="chat-suggests">
-        <button class="chat-suggest">Como funciona o método DRI?</button>
-        <button class="chat-suggest">Quanto custa um projeto?</button>
-        <button class="chat-suggest">O que vocês automatizam?</button>
+        <button class="chat-suggest" type="button">Como funciona o método DRI?</button>
+        <button class="chat-suggest" type="button">Quanto custa um projeto?</button>
+        <button class="chat-suggest" type="button">O que vocês automatizam?</button>
       </div>
       <div class="chat-input">
-        <input type="text" placeholder="Pergunte qualquer coisa..." aria-label="Mensagem" />
-        <button class="chat-send" aria-label="Enviar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
+        <label class="sr-only" for="chat-msg">Mensagem</label>
+        <input id="chat-msg" type="text" placeholder="Pergunte qualquer coisa..." autocomplete="off">
+        <button class="chat-send" type="button" aria-label="Enviar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ EXPERTISE ═══════════════ -->
+<!-- ═══════════ POR QUE CONFIAR ═══════════ -->
 <section class="expertise" id="expertise">
   <div class="section">
-    <span class="eyebrow reveal">Por que confiar</span>
-    <h2 class="title reveal reveal-d1">
-      Engenharia séria.<br><strong>Não experimento.</strong>
-    </h2>
-    <p class="lead reveal reveal-d2">
-      O time que constrói a Alluz Tech tem rodagem real em produção. Você contrata o resultado, não a curva de aprendizado.
-    </p>
-
+    <div class="expertise-head">
+      <span class="caption reveal">Por que confiar</span>
+      <h2 class="title reveal">Engenharia séria. <strong>Não experimento.</strong></h2>
+      <p class="lead reveal">O time por trás da Valiqon tem rodagem real em produção. Você contrata o resultado, não a curva de aprendizado.</p>
+    </div>
     <div class="expertise-grid">
-      <div class="exp-card reveal reveal-d1">
-        <div class="big">8 anos</div>
-        <div class="lbl">de engenharia</div>
-        <div class="sub">Construindo software em produção — backend, integrações e infraestrutura.</div>
-      </div>
-      <div class="exp-card reveal reveal-d2">
-        <div class="big">Anthropic</div>
-        <div class="lbl">parceria técnica</div>
-        <div class="sub">Acesso direto aos modelos Claude e suporte arquitetural do time Anthropic.</div>
-      </div>
-      <div class="exp-card reveal reveal-d3">
-        <div class="big">NDA</div>
-        <div class="lbl">confidencialidade total</div>
-        <div class="sub">Cada projeto é tratado com a ética de quem cuida do segredo industrial alheio.</div>
-      </div>
-      <div class="exp-card reveal reveal-d4">
-        <div class="big">2 trocas</div>
-        <div class="lbl">de escopo gratuitas</div>
-        <div class="sub">Sabemos que a operação muda durante o projeto. Você não paga por isso.</div>
-      </div>
+      <div class="exp reveal"><div class="exp-big">8 anos</div><div class="exp-lbl">de engenharia</div><p>Construindo software em produção: backend, integrações e infraestrutura.</p></div>
+      <div class="exp reveal"><div class="exp-big">Anthropic</div><div class="exp-lbl">parceria técnica</div><p>Acesso direto aos modelos Claude e suporte arquitetural do time Anthropic.</p></div>
+      <div class="exp reveal"><div class="exp-big">NDA</div><div class="exp-lbl">confidencialidade total</div><p>Cada projeto é tratado com a ética de quem cuida do segredo industrial alheio.</p></div>
+      <div class="exp reveal"><div class="exp-big">2 trocas</div><div class="exp-lbl">de escopo gratuitas</div><p>Sabemos que a operação muda durante o projeto. Você não paga por isso.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ CTA ═══════════════ -->
+<!-- ═══════════ CTA ═══════════ -->
 <section class="cta" id="contato">
   <div class="cta-inner">
-    <span class="eyebrow reveal" style="justify-content:center">Diagnóstico Gratuito</span>
-    <h2 class="reveal reveal-d1">
-      Em 30 minutos<br>a gente <strong>te mostra onde<br>a IA paga sozinha.</strong>
-    </h2>
-    <p class="reveal reveal-d2">
-      Conversa rápida, sem compromisso e sem pitch genérico. Você sai com um diagnóstico claro do que dá pra automatizar e do retorno esperado.
-    </p>
-    <div class="cta-ctas reveal reveal-d3">
-      <a href="#contato" class="btn btn-primary">
-        <span>Agendar agora</span><span class="arr"></span>
-      </a>
-      <a href="#chat" class="btn btn-ghost">
-        <span>Conversar com a IA primeiro</span><span class="arr"></span>
-      </a>
+    <button class="qhold" type="button" aria-describedby="qhold-hint">
+      <svg viewBox="530 -12 120 140" aria-hidden="true">
+        <path class="qh-ghost" d="M 607.1 97 A 50 50 0 1 0 572.9 97"/>
+        <path class="qh-arc" pathLength="1" d="M 607.1 97 A 50 50 0 1 0 572.9 97"/>
+        <path class="qh-bar" pathLength="1" d="M 572 118 L 620 118"/>
+      </svg>
+      <span class="sr-only">Segure para encontrar a resposta</span>
+    </button>
+    <span class="qhold-hint caption" id="qhold-hint">Segure o Q</span>
+    <span class="caption reveal">Diagnóstico gratuito</span>
+    <h2 class="cta-title reveal">Em 30 minutos, a gente te mostra <strong>onde a IA paga sozinha.</strong></h2>
+    <p class="cta-sub reveal">Conversa rápida, sem compromisso e sem pitch genérico. Você sai com um diagnóstico claro do que dá para automatizar e do retorno esperado.</p>
+    <div class="cta-ctas reveal">
+      <a href="#contato" class="btn btn-primary" data-action="contact"><span>Agendar agora</span><span class="arr" aria-hidden="true"></span></a>
+      <a href="#chat" class="btn btn-ghost"><span>Conversar com a IA primeiro</span><span class="arr" aria-hidden="true"></span></a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ FOOTER ═══════════════ -->
+</main>
+
+<!-- ═══════════ RODAPÉ ═══════════ -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-top">
-      <div class="footer-col">
-        <a href="#top" class="logo" style="font-size:32px">
-          <span class="logo-top"><span class="logo-alluz">Alluz</span><span class="logo-node"></span></span>
-          <span class="logo-bottom"><span class="logo-bar"></span><span class="logo-tech">Tech</span></span>
-        </a>
-        <p class="footer-tag">Inteligência que devolve tempo, foco e margem. Para o pequeno e médio empresário brasileiro.</p>
+      <div class="footer-brand">
+        <img src="assets/brand/valiqon-assinatura.svg" alt="Valiqon, Intelligence Solutions" width="260" height="67">
+        <p>Inteligência que devolve tempo, foco e margem. Para o pequeno e médio empresário brasileiro.</p>
       </div>
       <div class="footer-col">
         <h4>Navegar</h4>
-        <a href="#problema">O Problema</a>
+        <a href="#problema">O problema</a>
         <a href="#engrenagens">Tecnologia</a>
         <a href="#dri">Método DRI</a>
-        <a href="#chat">Alluz IA</a>
+        <a href="#chat">Valiqon IA</a>
       </div>
       <div class="footer-col">
         <h4>Contato</h4>
-        <a href="mailto:contato@alluz.tech">contato@alluz.tech</a>
-        <a href="#">linkedin.com/company/alluztech</a>
-        <a href="#">@alluztech</a>
+        <a href="mailto:contato@valiqon.com.br">contato@valiqon.com.br</a>
+        <a href="#">linkedin.com/company/valiqon</a>
+        <a href="#">@valiqon</a>
       </div>
       <div class="footer-col">
         <h4>Parcerias</h4>
-        <a href="#">Anthropic</a>
-        <a href="#">n8n</a>
-        <a href="#">MCP</a>
+        <span>Anthropic</span>
+        <span>n8n</span>
+        <span>MCP</span>
       </div>
     </div>
     <div class="footer-bot">
-      <span>© <span id="year">2026</span> · Alluz Tech · Todos os direitos reservados</span>
+      <span>© <span id="year">2026</span> · Valiqon · Todos os direitos reservados</span>
       <span>V1.0 · 2026</span>
     </div>
   </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════
-     MODAL — Formulário de Diagnóstico Gratuito
-     ═══════════════════════════════════════════════ -->
+<!-- ═══════════ MODAL · Diagnóstico gratuito ═══════════ -->
 <div class="modal-overlay" id="contact-modal-overlay">
-  <div class="modal-content" role="dialog" aria-labelledby="modal-title">
-    <button class="modal-close" aria-label="Fechar modal" id="modal-close-btn">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" aria-label="Fechar" id="modal-close-btn" type="button">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
-
     <div class="modal-head">
-      <h2 id="modal-title">Diagnóstico Gratuito</h2>
+      <h2 id="modal-title">Diagnóstico gratuito</h2>
       <p>Preencha seus dados e agende uma conversa rápida com nosso time.</p>
     </div>
-
-    <form class="contact-form" id="contact-form">
+    <form class="contact-form" id="contact-form" novalidate>
       <div class="form-group">
         <label for="contact-name">Nome completo *</label>
-        <input
-          type="text"
-          id="contact-name"
-          name="name"
-          placeholder="Seu nome"
-          required
-          maxlength="100"
-        />
+        <input type="text" id="contact-name" name="name" placeholder="Seu nome" required maxlength="100" autocomplete="name">
       </div>
-
       <div class="form-group">
         <label for="contact-email">E-mail *</label>
-        <input
-          type="email"
-          id="contact-email"
-          name="email"
-          placeholder="seu@email.com"
-          required
-          maxlength="200"
-        />
+        <input type="email" id="contact-email" name="email" placeholder="seu@email.com" required maxlength="200" autocomplete="email">
       </div>
-
       <div class="form-group">
         <label for="contact-phone">Telefone (opcional)</label>
-        <input
-          type="tel"
-          id="contact-phone"
-          name="phone"
-          placeholder="(11) 99999-9999"
-          maxlength="20"
-        />
+        <input type="tel" id="contact-phone" name="phone" placeholder="(11) 99999-9999" maxlength="20" autocomplete="tel">
       </div>
-
-      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
-        <span>Agendar Diagnóstico</span><span class="arr"></span>
-      </button>
-
+      <button type="submit" class="btn btn-primary btn-block"><span>Agendar diagnóstico</span><span class="arr" aria-hidden="true"></span></button>
       <p class="form-footer">Responderemos em até 1 dia útil. NDA garantida.</p>
     </form>
-
-    <div class="form-success" id="form-success" style="display: none;">
-      <div style="text-align: center;">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--cyan); margin-bottom: 16px;">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <h3>Recebido! ✓</h3>
-        <p>Obrigado por agendar. Nosso time entrará em contato em até 1 dia útil.</p>
-      </div>
+    <div class="form-success" id="form-success" hidden>
+      <svg viewBox="530 -12 120 140" width="52" height="60" aria-hidden="true"><g fill="none" stroke="#6FE3E0" stroke-width="7"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path d="M 572 118 L 620 118"/></g></svg>
+      <h3>Recebido.</h3>
+      <p>Obrigado por agendar. Nosso time entra em contato em até 1 dia útil.</p>
     </div>
-
-    <div class="form-error" id="form-error" style="display: none;">
-      <p id="error-message"></p>
-    </div>
+    <div class="form-error" id="form-error" role="alert" hidden><p id="error-message"></p></div>
   </div>
 </div>
 
-<div class="noise"></div>
+<!-- ═══════════ BOTÃO FLUTUANTE · Fale com a nossa IA ═══════════ -->
+<a href="#chat" class="fab" data-chat-link>
+  <span class="fab-icon" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span>
+  <span class="fab-label">Fale com a nossa IA</span>
+</a>
 
 <script src="main.js"></script>
-<script src="hero-canvas.js"></script>
-<script src="dri-motion.js"></script>
+<script src="hero.js"></script>
 <script src="chat.js"></script>
 <script src="contact.js"></script>
-
 </body>
 </html>
