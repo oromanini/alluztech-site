@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   CHAT IA — Widget conversacional
+   CHAT IA · Widget conversacional
    Integração: POST /api/chat (Groq, backend Express)
    ═══════════════════════════════════════════════ */
 
@@ -20,7 +20,7 @@
     if (role === 'ai') {
       const tag = document.createElement('span');
       tag.className = 'msg-tag';
-      tag.textContent = 'Alluz IA';
+      tag.textContent = 'Valiqon IA';
       el.appendChild(tag);
     }
     const body = document.createElement('div');
@@ -64,20 +64,20 @@
           if (j && j.error) errMsg = j.error;
         } catch (_) {}
         thinking.remove();
-        addMsg('ai', `${errMsg} Você pode escrever pra contato@alluz.tech que retorno em até 1 dia útil.`);
+        addMsg('ai', `${errMsg} Você pode escrever pra contato@valiqon.com.br que retorno em até 1 dia útil.`);
         return;
       }
 
       const data = await res.json();
       const reply = (data.reply || '').trim() ||
-        'Posso te conectar com nosso time para uma conversa rápida — qual seu maior gargalo operacional hoje?';
+        'Posso te conectar com nosso time para uma conversa rápida. Qual seu maior gargalo operacional hoje?';
 
       thinking.remove();
       addMsg('ai', reply);
       history.push({ role: 'assistant', content: reply });
     } catch (err) {
       thinking.remove();
-      addMsg('ai', 'Tive um problema pra responder agora. Você pode escrever pra contato@alluz.tech que retorno em até 1 dia útil.');
+      addMsg('ai', 'Tive um problema pra responder agora. Você pode escrever pra contato@valiqon.com.br que retorno em até 1 dia útil.');
       console.error('[chat]', err);
     } finally {
       sendBtn.disabled = false;

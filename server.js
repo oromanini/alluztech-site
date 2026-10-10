@@ -26,8 +26,8 @@ const ALLOWED_ORIGIN  = process.env.ALLOWED_ORIGIN || '*';
 // Inicializar Resend
 const resend = new Resend(RESEND_API_KEY);
 
-// ── SYSTEM PROMPT DA ALLUZ IA ────────────────────────────────────────────────
-const SYSTEM_PROMPT = `Você é a Alluz IA — assistente da Alluz Tech, empresa brasileira que aplica inteligência artificial e automação para pequenos e médios empresários (PMEs).
+// ── SYSTEM PROMPT DA VALIQON IA ────────────────────────────────────────────────
+const SYSTEM_PROMPT = `Você é a Valiqon IA, assistente da Valiqon (Intelligence Solutions), empresa brasileira que aplica inteligência artificial e automação para pequenos e médios empresários (PMEs).
 
 TOM DE VOZ DA MARCA:
 - Especialista de confiança, não vendedor de hype
@@ -53,7 +53,7 @@ AS 5 ENGRENAGENS (Stack Tecnológica):
 - MCP: integração padronizada — a IA enxerga e interage com todo o ecossistema digital da empresa
 - OpenClaw: RPA em sistemas legados — a IA age, preenche formulários e clica onde não há APIs
 
-MÉTODO DRI / MÉTODO ALLUZ (nosso diferencial central — "DRI" = Diagnóstico, Réplica, Implementação):
+MÉTODO DRI / MÉTODO VALIQON (nosso diferencial central — "DRI" = Diagnóstico, Réplica, Implementação):
 Diferente de agências que "vibecodam" apps, entregamos engenharia de software real com 8 anos de experiência e parceria técnica Anthropic.
 Fase 1 — Diagnóstico: brainstorm para entender a realidade do cliente e buscar a melhor relação custo-benefício.
 Fase 2 — Réplica de Comportamento: sob NDA, documentamos e gravamos a operação real para que a IA copie o "mindset" do melhor funcionário.
@@ -238,12 +238,12 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
 
   try {
     await resend.emails.send({
-      from:    'Site Alluz Tech <onboarding@resend.dev>',
+      from:    'Site Valiqon <onboarding@resend.dev>',
       to:      CONTACT_EMAIL,
       replyTo: email,
       subject: `Novo agendamento de diagnóstico: ${name}`,
       html: `
-        <h2 style="color:#2EEAFF;font-family:sans-serif">Novo agendamento — Diagnóstico Gratuito</h2>
+        <h2 style="color:#0E8F94;font-family:sans-serif">Novo agendamento — Diagnóstico Gratuito</h2>
         <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;width:100%;margin-bottom:24px">
           <tr>
             <td style="padding:8px;border-bottom:1px solid #e0e0e0"><b>Nome:</b></td>
@@ -272,7 +272,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
 
 // ── HEALTH CHECK ──────────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'alluz-tech', ts: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'valiqon', ts: new Date().toISOString() });
 });
 
 // ── 404 — qualquer rota não mapeada serve o index (SPA safe) ─────────────────
@@ -288,5 +288,5 @@ app.use((err, _req, res, _next) => {
 
 // ── START ─────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`Alluz Tech rodando na porta ${PORT}`);
+  console.log(`Valiqon rodando na porta ${PORT}`);
 });
