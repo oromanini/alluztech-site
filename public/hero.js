@@ -1,87 +1,52 @@
 /* ═══════════════════════════════════════════════
-   HERO · Tudo passa pelo Q
-   Fluxograma: as tarefas entram pela esquerda, passam pela Valiqon IA
-   e saem resolvidas à direita. Um progresso (0 a 1) comanda tudo.
-   Desktop: o progresso vem do scroll (hero fixado).
-   Celular: o fluxo roda sozinho uma vez ao aparecer.
-   Movimento reduzido: estado final direto.
+   HERO · Um dia na sua empresa
+   Um filme de 40 s (maquete escura, fio verde-água) atravessa três salas.
+   Desktop: o scroll é a agulha do vídeo (hero fixado), os textos entram
+   por faixa de tempo e o mini-mapa mostra a sala atual.
+   Celular, retrato e movimento reduzido: sem vídeo, carrossel das salas (só CSS).
    ═══════════════════════════════════════════════ */
 
 (function () {
   const hero = document.querySelector('.hero');
   if (!hero) return;
 
-  const flow = hero.querySelector('.flow');
-  const body = flow.querySelector('.flow-body');
-  const svg = flow.querySelector('.wires');
-  const ins = [...flow.querySelectorAll('.node-in')];
-  const outs = [...flow.querySelectorAll('.node-out')];
-  const hubCore = flow.querySelector('.hub-core');
-  const status = flow.querySelector('.flow-status');
-  const hoursNum = flow.querySelector('.hours-num');
+  const stage = hero.querySelector('.stage');
+  const film = hero.querySelector('.film');
+  const poster = film.querySelector('.film-poster');
+  const video = film.querySelector('.film-video');
+  const qEl = film.querySelector('.film-q');
+  const chaps = [...hero.querySelectorAll('.chap')];
+  const rooms = [...hero.querySelectorAll('.mm-room')];
+  const mmNum = hero.querySelector('.mm-num');
+  const mmName = hero.querySelector('.mm-name');
+  const mmLive = hero.querySelector('.mm-live');
+  const mmH = hero.querySelector('.mm-h');
   const cue = hero.querySelector('.cue');
-  const SVGNS = 'http://www.w3.org/2000/svg';
 
+  const SRC = 'assets/hero/salas/hero-salas.mp4';
+  const DUR = 961 / 24;                       // 40,04 s, 961 quadros
+  const FRAME = { w: 1728, h: 974, line: 0.7608 };   // linha de luz do último quadro, medida
+  const Q_BAR = (118 + 12) / 140;             // barra do Q dentro do viewBox "530 -12 120 140"
+  // Onde cada sala começa no filme (s) e o quadro "depois" usado enquanto o vídeo carrega
+  const ROOM_T = [5.04, 15.04, 25.04, 35.04];
+  const STILLS = [
+    'assets/hero/salas/hero-salas-poster.jpg',
+    'assets/hero/salas/sala-1-atendimento.jpg',
+    'assets/hero/salas/sala-2-financeiro.jpg',
+    'assets/hero/salas/sala-3-diretoria.jpg',
+    'assets/hero/salas/hero-salas-final.jpg'
+  ];
+  const NAMES = ['Entrada', 'Atendimento', 'Financeiro', 'Diretoria', 'Sua empresa'];
   const HOURS = 9;
+  const FADE = 0.8;
+
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-  const smoothstep = (p, e0, e1) => {
-    const t = clamp((p - e0) / (e1 - e0), 0, 1);
+  const smoothstep = (x, e0, e1) => {
+    const t = clamp((x - e0) / (e1 - e0), 0, 1);
     return t * t * (3 - 2 * t);
   };
 
-  // Cada tarefa é dona de uma janela do progresso; a última termina em 0.86.
-  const START = 0.04, STEP = 0.13, LEN = 0.17;
-
-  /* ─── Fios: medidos das caixas reais, refeitos a cada resize ─── */
-  const wires = ins.map(() => ({ inBase: null, inLive: null, outBase: null, outLive: null }));
-  function mk(cls) {
-    const p = document.createElementNS(SVGNS, 'path');
-    p.setAttribute('class', cls);
-    p.setAttribute('pathLength', '1');
-    svg.appendChild(p);
-    return p;
-  }
-  wires.forEach(w => {
-    w.inBase = mk('wire-base'); w.outBase = mk('wire-base');
-    w.inLive = mk('wire-live'); w.outLive = mk('wire-live');
-  });
-
-  function layoutWires() {
-    const b = body.getBoundingClientRect();
-    if (!b.width) return;
-    svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
-    const h = hubCore.getBoundingClientRect();
-    const hx = h.left - b.left, hy = h.top - b.top, hw = h.width, hh = h.height;
-    const firstIn = ins[0].getBoundingClientRect();
-    const vertical = h.left < firstIn.right;   // telas estreitas: o Q fica embaixo das entradas, não ao lado
-    const n = ins.length;
-
-    wires.forEach((w, i) => {
-      const a = ins[i].getBoundingClientRect();
-      const o = outs[i].getBoundingClientRect();
-      const spread = (i - (n - 1) / 2);
-      let d1, d2;
-      if (!vertical) {
-        const x1 = a.right - b.left, y1 = a.top - b.top + a.height / 2;
-        const x2 = hx, y2 = hy + hh / 2 + spread * 5;
-        const x3 = hx + hw, y3 = y2;
-        const x4 = o.left - b.left, y4 = o.top - b.top + o.height / 2;
-        const k1 = (x2 - x1) * 0.55, k2 = (x4 - x3) * 0.55;
-        d1 = `M${x1} ${y1} C${x1 + k1} ${y1} ${x2 - k1} ${y2} ${x2} ${y2}`;
-        d2 = `M${x3} ${y3} C${x3 + k2} ${y3} ${x4 - k2} ${y4} ${x4} ${y4}`;
-      } else {
-        const x1 = a.left - b.left + a.width / 2, y1 = a.bottom - b.top;
-        const x2 = hx + hw / 2 + spread * 5, y2 = hy;
-        const x3 = x2, y3 = hy + hh;
-        const x4 = o.left - b.left + o.width / 2, y4 = o.top - b.top;
-        const k1 = (y2 - y1) * 0.6, k2 = (y4 - y3) * 0.6;
-        d1 = `M${x1} ${y1} C${x1} ${y1 + k1} ${x2} ${y2 - k1} ${x2} ${y2}`;
-        d2 = `M${x3} ${y3} C${x3} ${y3 + k2} ${x4} ${y4 - k2} ${x4} ${y4}`;
-      }
-      w.inBase.setAttribute('d', d1); w.inLive.setAttribute('d', d1);
-      w.outBase.setAttribute('d', d2); w.outLive.setAttribute('d', d2);
-    });
-  }
+  const bands = chaps.map(c => ({ el: c, t0: +c.dataset.t0, t1: +c.dataset.t1, live: null }));
 
   /* ─── Escritas de DOM só na mudança ─── */
   const cache = new Map();
@@ -93,66 +58,106 @@
     cache.set(el, m);
     el.style.setProperty(name, r);
   }
-  function setDash(el, v) {
-    const r = Math.round(v * 1000) / 1000;
-    const m = cache.get(el) || {};
-    if (m.dash === r) return;
-    m.dash = r;
-    cache.set(el, m);
-    el.style.strokeDashoffset = r;
-  }
-  let lastHours = '', lastStatus = '', lastCue = null;
+  let lastRoom = null, lastHours = '', lastCue = null;
 
-  function render(p) {
-    let pending = 0, glow = 0;
-    wires.forEach((w, i) => {
-      const a0 = START + i * STEP;
-      const d = smoothstep(p, a0, a0 + LEN);
-      const inP = clamp(d / 0.45, 0, 1);            // pulso da entrada até o Q
-      const outP = clamp((d - 0.55) / 0.45, 0, 1);  // do Q até a saída
-      setDash(w.inLive, 1 - inP);
-      setDash(w.outLive, 1 - outP);
-      setVar(ins[i], '--d', d);
-      setVar(ins[i], '--a', inP > 0 && outP < 1 ? 1 : 0);
-      setVar(outs[i], '--o', outP);
-      glow = Math.max(glow, Math.sin(Math.PI * clamp((d - 0.3) / 0.4, 0, 1)));
-      if (outP < 0.5) pending++;
+  function roomAt(t) {
+    let i = 0;
+    while (i < ROOM_T.length && t >= ROOM_T[i]) i++;
+    return i;                                  // 0 = entrada, 1..3 = salas, 4 = final
+  }
+
+  function render(t) {
+    bands.forEach(b => {
+      const v = (b.t0 <= 0 ? 1 : smoothstep(t, b.t0 - FADE, b.t0)) * (1 - smoothstep(t, b.t1, b.t1 + FADE));
+      setVar(b.el, '--v', v);
+      const live = v > 0.5;
+      if (live !== b.live) { b.el.classList.toggle('live', live); b.live = live; }
     });
-    setVar(hubCore, '--g', pending === 0 ? 0.55 : glow);
 
-    const hrs = Math.round(HOURS * smoothstep(p, START, START + 5 * STEP + LEN)) + 'h';
-    if (hrs !== lastHours) { hoursNum.textContent = hrs; lastHours = hrs; }
+    setVar(qEl, '--q', smoothstep(t, 37.6, 39.8));
+    setVar(mmLive, '--m', clamp((t - ROOM_T[0]) / (ROOM_T[3] - ROOM_T[0]), 0, 1));
 
-    const st = pending === 0 ? 'Tudo em dia' : pending === 1 ? '1 pendente' : pending + ' pendentes';
-    if (st !== lastStatus) { status.textContent = st; lastStatus = st; }
+    const room = roomAt(t);
+    if (room !== lastRoom) {
+      lastRoom = room;
+      mmNum.textContent = room === 0 ? 'Entrada' : `0${room} / 04`;
+      mmName.textContent = room === 0 ? '' : NAMES[room];
+      rooms.forEach((r, i) => {
+        if (i + 1 === room) r.setAttribute('aria-current', 'step'); else r.removeAttribute('aria-current');
+        r.classList.toggle('done', i + 1 < room);
+      });
+      if (!ready) poster.src = STILLS[room];
+    }
 
-    const gone = p > 0.03;
+    const hrs = Math.round(HOURS * smoothstep(t, ROOM_T[0], 37)) + 'h';
+    if (hrs !== lastHours) { mmH.textContent = hrs; lastHours = hrs; }
+
+    const gone = t > 0.6;
     if (gone !== lastCue) { cue.classList.toggle('gone', gone); lastCue = gone; }
+
+    seek(t);
   }
 
-  /* ─── Progresso do scroll ─── */
-  function heroProgress() {
-    const range = hero.offsetHeight - window.innerHeight;
-    if (range <= 0) return 1;
-    return clamp(-hero.getBoundingClientRect().top / range, 0, 1);
+  /* ─── Vídeo: Blob na memória, seeks travados (um por vez, sempre o mais recente) ─── */
+  let ready = false, loading = false, want = 0;
+  function loadFilm() {
+    if (loading) return;
+    loading = true;
+    fetch(SRC)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+      .then(blob => {
+        video.src = URL.createObjectURL(blob);
+        video.addEventListener('loadeddata', () => {
+          ready = true;
+          video.currentTime = want;
+          video.addEventListener('seeked', () => film.classList.add('ready'), { once: true });
+        }, { once: true });
+        video.load();
+      })
+      .catch(() => { loading = false; });     // sem vídeo o hero continua completo (quadros fixos)
+  }
+  function seek(t) {
+    want = clamp(t, 0, DUR - 0.02);
+    if (!ready || video.seeking) return;
+    if (Math.abs(video.currentTime - want) > 1 / 48) video.currentTime = want;
+  }
+  video.addEventListener('seeked', () => {
+    if (Math.abs(video.currentTime - want) > 1 / 48) video.currentTime = want;
+  });
+
+  /* ─── O Q pousa na linha de luz, que muda de lugar com o corte "cover" ─── */
+  function placeQ() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (!w || !h) return;
+    const s = Math.max(w / FRAME.w, h / FRAME.h);
+    const lineY = (h - FRAME.h * s) / 2 + FRAME.line * FRAME.h * s;
+    const qH = qEl.getBoundingClientRect().height || 90;
+    qEl.style.setProperty('--qy', Math.round(lineY - Q_BAR * qH) + 'px');
   }
 
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let scrubOn = false;
+  /* ─── Progresso do scroll → tempo do filme ─── */
+  function range() { return Math.max(1, hero.offsetHeight - window.innerHeight); }
+  function heroTime() {
+    return clamp(-hero.getBoundingClientRect().top / range(), 0, 1) * DUR;
+  }
+  function scrollToTime(t) {
+    const top = hero.getBoundingClientRect().top + window.scrollY + (t / DUR) * range();
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
 
   /* ─── Loop rAF que descansa (suavização normalizada por dt) ─── */
-  let target = 0, shown = 0, rafId = null, lastTick = 0, onScreen = true;
+  let scrubOn = false, target = 0, shown = 0, rafId = null, lastTick = 0, onScreen = true;
   function tick(now) {
     const dt = Math.min(100, now - (lastTick || now));
     lastTick = now;
-    shown += (target - shown) * (1 - Math.pow(1 - 0.16, dt / 16.667));
-    if (Math.abs(target - shown) < 0.0005) { shown = target; rafId = null; lastTick = 0; }
+    shown += (target - shown) * (1 - Math.pow(1 - 0.14, dt / 16.667));
+    if (Math.abs(target - shown) < 0.01) { shown = target; rafId = null; lastTick = 0; }
     else rafId = requestAnimationFrame(tick);
     render(shown);
   }
   function onScroll() {
     if (!scrubOn) return;
-    target = heroProgress();
+    target = heroTime();
     if (rafId === null && onScreen) rafId = requestAnimationFrame(tick);
   }
   new IntersectionObserver(([e]) => {
@@ -160,32 +165,20 @@
     if (onScreen) onScroll();
   }).observe(hero);
 
-  /* ─── Celular: roda sozinho uma vez, quando o fluxo aparece ─── */
-  let autoPlayed = false, autoRaf = null;
-  function autoPlay() {
-    if (autoPlayed) return;
-    autoPlayed = true;
-    const t0 = performance.now(), DUR = 5200;
-    (function step(now) {
-      const p = clamp((now - t0) / DUR, 0, 1);
-      render(p);
-      if (p < 1 && !scrubOn) autoRaf = requestAnimationFrame(step);
-      else autoRaf = null;
-    })(t0);
-  }
-  // Dispara quando o topo do fluxo passa de 75% da tela (no celular isso já
-  // acontece ao abrir a página, com o fluxo logo abaixo do título).
-  // O layout ainda pode mudar depois (fontes carregando), então a mesma checagem
-  // roda no observador, na rolagem e quando as fontes ficam prontas.
-  function maybeAuto() {
-    if (autoPlayed || scrubOn || reduced.matches) return;
-    const r = flow.getBoundingClientRect();
-    if (r.top < window.innerHeight * 0.75 && r.bottom > 0) {
-      removeEventListener('scroll', maybeAuto);
-      autoPlay();
-    }
-  }
-  const autoIO = new IntersectionObserver(maybeAuto, { threshold: [0, 0.05, 0.1, 0.2, 0.3, 0.5] });
+  // Mini-mapa: clicar numa sala leva o scroll até ela (com o texto já visível)
+  rooms.forEach(r => r.addEventListener('click', () => {
+    if (!scrubOn) return;
+    const b = bands[+r.dataset.chap + 1];
+    scrollToTime(b.t0 + 0.4);
+  }));
+  // Teclado: focar um botão do texto final leva o filme até ele
+  hero.addEventListener('focusin', e => {
+    if (!scrubOn) return;
+    const chap = e.target.closest('.chap');
+    if (!chap || chap.classList.contains('live')) return;
+    const b = bands.find(x => x.el === chap);
+    if (b) scrollToTime(Math.min(DUR, b.t0 + 2));
+  });
 
   /* ─── Os cinco portões, decididos ao vivo (iguais ao CSS) ─── */
   const GATES = [
@@ -195,33 +188,25 @@
     '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
     '(prefers-reduced-motion: reduce)'
   ];
-
-  function resetCache() { cache.clear(); lastHours = lastStatus = ''; lastCue = null; }
+  function resetCache() { cache.clear(); lastRoom = null; lastHours = ''; lastCue = null; bands.forEach(b => (b.live = null)); }
   function enableScrub() {
     if (scrubOn) return;
     scrubOn = true;
-    autoIO.disconnect();
-    removeEventListener('scroll', maybeAuto);
-    if (autoRaf) { cancelAnimationFrame(autoRaf); autoRaf = null; }
     addEventListener('scroll', onScroll, { passive: true });
     resetCache();
-    layoutWires();
-    target = shown = heroProgress();
+    placeQ();
+    loadFilm();
+    target = shown = heroTime();
     render(shown);
   }
   function disableScrub() {
-    if (scrubOn) {
-      scrubOn = false;
-      removeEventListener('scroll', onScroll);
-      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-    }
+    if (!scrubOn) return;
+    scrubOn = false;
+    removeEventListener('scroll', onScroll);
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    // O CSS estático assume o layout; limpa os estados que o JS escreveu
+    bands.forEach(b => { b.el.style.removeProperty('--v'); b.el.classList.remove('live'); });
     resetCache();
-    layoutWires();
-    if (reduced.matches || autoPlayed) { render(1); return; }
-    render(0);
-    autoIO.observe(flow);
-    addEventListener('scroll', maybeAuto, { passive: true });
-    maybeAuto();
   }
   function applyMode() {
     if (GATES.some(q => matchMedia(q).matches)) disableScrub();
@@ -229,10 +214,7 @@
   }
   GATES.map(q => matchMedia(q)).forEach(m => m.addEventListener('change', applyMode));
 
-  // Fios acompanham qualquer mudança de tamanho das caixas (fontes, resize, rotação)
-  new ResizeObserver(() => layoutWires()).observe(body);
-  addEventListener('resize', onScroll);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layoutWires(); maybeAuto(); });
+  new ResizeObserver(() => { if (scrubOn) { placeQ(); onScroll(); } }).observe(stage);
 
   applyMode();
 })();
