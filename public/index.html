@@ -49,55 +49,83 @@
 
 <main id="main" tabindex="-1">
 
-<!-- ═══════════ HERO · a fila do dia ═══════════ -->
+<!-- ═══════════ HERO · Um dia na sua empresa ═══════════ -->
 <header class="hero" id="top">
   <div class="stage">
-    <div class="hero-copy">
-      <span class="caption">IA · Automação · Engenharia</span>
-      <h1 class="hero-title">O trabalho repetitivo da sua empresa, feito por uma IA.</h1>
-      <p class="hero-sub">Automação com IA para todos os tipos de negócios.</p>
-      <div class="hero-ctas">
-        <a href="#contato" class="btn btn-primary" data-action="contact"><span>Agendar diagnóstico</span><span class="arr" aria-hidden="true"></span></a>
-        <a href="#dri" class="btn btn-ghost"><span>Conhecer o método DRI</span><span class="arr" aria-hidden="true"></span></a>
+
+    <!-- O filme: a maquete escura atravessada pelo fio verde-água. O scroll é a agulha. -->
+    <div class="film" aria-hidden="true">
+      <img class="film-poster" src="assets/hero/salas/hero-salas-poster.jpg" alt="" width="1728" height="974" fetchpriority="high">
+      <video class="film-video" muted playsinline preload="none" disablepictureinpicture></video>
+      <div class="film-shade"></div>
+      <svg class="film-q" viewBox="530 -12 120 140"><path class="fq-arc" pathLength="1" d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="fq-bar" pathLength="1" d="M 572 118 L 620 118"/></svg>
+    </div>
+
+    <!-- Abertura -->
+    <div class="hero-intro chap" data-t0="0" data-t1="4.2">
+      <img class="chap-img" src="assets/hero/salas/hero-salas-poster.jpg" alt="" width="1280" height="721" loading="lazy">
+      <div class="chap-copy">
+        <span class="caption">IA · Automação · Engenharia</span>
+        <h1 class="hero-title">O trabalho repetitivo da sua empresa, feito por uma IA.</h1>
+        <p class="hero-sub">Entre e veja um dia na sua empresa.</p>
       </div>
     </div>
 
-    <section class="flow" aria-labelledby="flow-title">
-      <div class="flow-head">
-        <h2 class="flow-title" id="flow-title">Sua operação no automático</h2>
-        <span class="flow-status" aria-hidden="true">6 pendentes</span>
-      </div>
-      <p class="sr-only">Cada tarefa repetitiva passa pela Valiqon IA e sai resolvida.</p>
-      <div class="flow-body">
-        <svg class="wires" aria-hidden="true"></svg>
-        <ul class="flow-col flow-in" aria-label="O que chega">
-          <li class="node node-in"><span class="node-name">Perguntas no WhatsApp</span><span class="node-meta">o dia todo</span></li>
-          <li class="node node-in"><span class="node-name">Notas fiscais do dia</span><span class="node-meta">todo dia</span></li>
-          <li class="node node-in"><span class="node-name">Pix, cartão e boleto</span><span class="node-meta">todo dia</span></li>
-          <li class="node node-in"><span class="node-name">Clientes atrasados</span><span class="node-meta">toda semana</span></li>
-          <li class="node node-in"><span class="node-name">Planilha de estoque</span><span class="node-meta">toda semana</span></li>
-          <li class="node node-in"><span class="node-name">Relatório do mês</span><span class="node-meta">todo mês</span></li>
-        </ul>
-        <div class="hub" aria-hidden="true">
-          <div class="hub-core"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></div>
-          <span class="hub-lbl">Valiqon IA</span>
+    <!-- As salas -->
+    <div class="chapters" aria-label="Um dia na sua empresa">
+      <article class="chap" data-t0="5.6" data-t1="14">
+        <img class="chap-img" src="assets/hero/salas/sala-1-atendimento.jpg" alt="" width="1280" height="721" loading="lazy">
+        <div class="chap-copy">
+          <span class="caption">01 · Atendimento</span>
+          <h2 class="chap-title">WhatsApp o dia inteiro.</h2>
+          <p class="chap-sub">Respondido na hora, com o histórico do cliente.</p>
         </div>
-        <ul class="flow-col flow-out" aria-label="O que sai resolvido">
-          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Respondidas na hora</span></li>
-          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Notas emitidas</span></li>
-          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Recebimentos conferidos</span></li>
-          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Atrasados cobrados</span></li>
-          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Estoque atualizado</span></li>
-          <li class="node node-out"><span class="node-check" aria-hidden="true"><svg viewBox="530 -12 120 140"><path d="M 607.1 97 A 50 50 0 1 0 572.9 97"/><path class="qbar" d="M 572 118 L 620 118"/></svg></span><span class="node-name">Relatório pronto</span></li>
-        </ul>
-      </div>
-      <div class="flow-foot">
-        <div class="hours"><span class="hours-num" aria-hidden="true">0h</span><span class="hours-lbl">por semana de volta</span><span class="sr-only">9 horas por semana de volta</span></div>
-        <p class="hours-src">Média de horas que donos de pequenos negócios gastam com burocracia financeira. Pesquisa Nu Empresas e Bridge Research, 2026.</p>
-      </div>
-    </section>
+      </article>
+      <article class="chap" data-t0="15.6" data-t1="24">
+        <img class="chap-img" src="assets/hero/salas/sala-2-financeiro.jpg" alt="" width="1280" height="721" loading="lazy">
+        <div class="chap-copy">
+          <span class="caption">02 · Financeiro</span>
+          <h2 class="chap-title">Notas, Pix, cartão e boleto.</h2>
+          <p class="chap-sub">Notas emitidas e recebimentos conferidos.</p>
+        </div>
+      </article>
+      <article class="chap" data-t0="25.6" data-t1="33.6">
+        <img class="chap-img" src="assets/hero/salas/sala-3-diretoria.jpg" alt="" width="1280" height="721" loading="lazy">
+        <div class="chap-copy">
+          <span class="caption">03 · Diretoria</span>
+          <h2 class="chap-title">Tudo passava por você.</h2>
+          <p class="chap-sub">Agora sobra tempo para o que faz a empresa crescer.</p>
+        </div>
+      </article>
+      <article class="chap chap-end" data-t0="36.6" data-t1="99">
+        <img class="chap-img" src="assets/hero/salas/hero-salas-final.jpg" alt="" width="1728" height="974" loading="lazy">
+        <div class="chap-copy">
+          <span class="caption">04 · Sua empresa</span>
+          <h2 class="chap-title">9h por semana de volta.</h2>
+          <p class="chap-src">Média de horas que donos de pequenos negócios gastam com burocracia financeira. Pesquisa Nu Empresas e Bridge Research, 2026.</p>
+          <div class="hero-ctas">
+            <a href="#contato" class="btn btn-primary" data-action="contact"><span>Agendar diagnóstico</span><span class="arr" aria-hidden="true"></span></a>
+            <a href="#dri" class="btn btn-ghost"><span>Conhecer o método DRI</span><span class="arr" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </article>
+    </div>
 
-    <div class="cue" aria-hidden="true"><span class="cue-line"></span><span>Role para ver</span></div>
+    <!-- Mini-mapa: a planta em traço fino; clicar pula para a sala -->
+    <nav class="minimap" aria-label="Setores da empresa">
+      <p class="mm-label" aria-hidden="true"><span class="mm-num">Entrada</span><span class="mm-name"></span></p>
+      <div class="mm-plan">
+        <span class="mm-door" aria-hidden="true"></span>
+        <button class="mm-room" type="button" data-chap="0">Atendimento</button>
+        <button class="mm-room" type="button" data-chap="1">Financeiro</button>
+        <button class="mm-room" type="button" data-chap="2">Diretoria</button>
+        <svg class="mm-thread" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><path class="mm-base" pathLength="1" d="M0 2 H100"/><path class="mm-live" pathLength="1" d="M0 2 H100"/></svg>
+      </div>
+      <p class="mm-hours" aria-hidden="true"><span class="mm-h">0h</span> por semana de volta</p>
+    </nav>
+
+    <p class="swipe-hint" aria-hidden="true">Arraste para ver as salas</p>
+    <div class="cue" aria-hidden="true"><span class="cue-line"></span><span>Role para entrar</span></div>
   </div>
 </header>
 
