@@ -1,4 +1,6 @@
-# Alluz Tech — Deploy no GCP Cloud Run
+# Valiqon (repo alluztech-site) — Deploy no GCP Cloud Run
+
+> **Fonte oficial do site Valiqon.** Push em `main` deste repositório faz deploy no serviço Cloud Run `alluz-tech` (projeto `alluztech-site`). O repositório `oromanini/valiqon-site` não faz deploy. Veja o [README](README.md).
 
 **Tempo estimado**: 45 minutos (incluindo configuração Terraform)
 
